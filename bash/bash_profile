@@ -1,0 +1,24 @@
+#!/bin/bash
+
+#
+# bash_profile (MXDF::BASH)
+#
+
+# Path to the BASH section
+export MXDF_BASH=$HOME/.bash
+
+# Path to the BIN section (binaries directory)
+export MXDF_BIN=$HOME/.bin
+
+
+
+# Load the '!bash_profile.local.bash' file for any modifications needed.
+# Note this file will not be loaded thru '_load_component()' due to the
+# '!' in the filename.
+[ -s $MXDF_BASH/local/!bash_profile.local.bash ] && source $MXDF_BASH/local/!bash_profile.local.bash
+
+# Include the MXDF_BIN directory in the PATH
+[ -d $MXDF_BIN ] && export PATH=$MXDF_BIN:$PATH
+
+# Load the '~/.bashrc' file
+[ -s $HOME/.bashrc ] && source $HOME/.bashrc
