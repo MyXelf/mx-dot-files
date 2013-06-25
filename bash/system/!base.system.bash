@@ -28,6 +28,39 @@ export WHITE='\033[1;37m'
 export NCOLOR='\033[0m'
 
 # --------------------------------------------------------------------------------------------------
+#  Base Functions
+# --------------------------------------------------------------------------------------------------
+
+#
+# Function: is_command()
+#
+# Determine if the passed argument is a defined 'command'. A 'command' can be
+# any 'alias', 'keyword', 'function', 'builtin' or 'file'. More specific
+# functions could be already implemented in this file.
+#
+is_command () {
+  type "$1" > /dev/null 2>&1
+}
+
+#
+# Function: is_function()
+#
+# Determine if the passed argument is a defined 'function'
+#
+is_function () {
+  declare -F "$1" > /dev/null 2>&1
+}
+
+#
+# Function: is_user_root()
+#
+# Determine if the current user is 'root'
+#
+is_user_root () {
+  [ $EUID -eq 0 ]
+}
+
+# --------------------------------------------------------------------------------------------------
 #  Base Helpers
 # --------------------------------------------------------------------------------------------------
 
