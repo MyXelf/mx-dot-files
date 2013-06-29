@@ -18,5 +18,5 @@ for component in 'aliases' 'completions' 'plugins'; do
 done
 unset component
 
-# Load the 'local' component from the BASH section
-_load_component 'local'
+# Load the <local-component> from the BASH section
+_load_component $BASH_LOCAL_COMPONENT
