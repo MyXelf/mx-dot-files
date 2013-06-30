@@ -19,7 +19,7 @@ PS2='continue-> '
 PS3='#? '
 
 # Prompt Statement 4 :: Debug Mode
-PS4='+ $0:$LINENO - '
+PS4="+ ${I_MAGENTA}"'${BASH_SOURCE##*/}'" : ${I_RED}"'${FUNCNAME}()'" ${I_GREEN}["'${LINENO}'"]${R_COLOR} » "
 
 # Trim the CWD
 export PROMPT_DIRTRIM=5
