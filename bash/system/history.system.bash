@@ -1,5 +1,10 @@
 #!/bin/bash
 
+# Determine if the OOSM must be reactivated
+if [ -n "$OOSM_AUTOSTART" ] || oosm_active; then
+  oosm_reactivate=1
+fi
+
 # History filename
 export HISTFILE=$MXDF_BASH_LOCAL/bash_history
 
@@ -26,4 +31,13 @@ export HISTIGNORE=${HISTIGNORE}":man *:* --help"           # Man pages
 export HISTIGNORE=${HISTIGNORE}":info *:help *:* --help"   # Info & Helps
 export HISTIGNORE=${HISTIGNORE}":bos:oos"                  # Out-Of-Service Mode
 export HISTIGNORE=${HISTIGNORE}":exit"                     # Exit command
+
+# Reactivate OOSM if needed
+if [[ $oosm_reactivate -eq 1 ]]; then
+  history -c       # Clear the current History before reloading it to avoid duplication
+  history -r       # Reload the History right before unsetting it
+  oos              # Activate OOSM
+
+  unset oosm_reactivate
+fi
 
