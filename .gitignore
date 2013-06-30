@@ -4,3 +4,6 @@
 
 # Ignore 'local' directory inside the BASH section.
 bash/local
+
+# Ignore '.ackrc' file
+.ackrc
