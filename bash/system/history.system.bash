@@ -23,11 +23,11 @@ export HISTCONTROL=ignorespace:ignoredups
 # saved in the history.
 #
 export HISTIGNORE="&"                                      # Repeated commands
-export HISTIGNORE=${HISTIGNORE}":..:..[2345?]:cd *"        # Filesystem Navigation
-export HISTIGNORE=${HISTIGNORE}":l:l[slw1]:l\? *"          # Directory Listing
+export HISTIGNORE=${HISTIGNORE}":~:-:..:..[2345?]:cd *"    # Directories Navigation
+export HISTIGNORE=${HISTIGNORE}":l:l[slw1]:l\? *"          # Directories Listings
 export HISTIGNORE=${HISTIGNORE}":g [lsd]:g dc:g ss"        # Git aliases (trivial ones)
 export HISTIGNORE=${HISTIGNORE}":history:h:h? *"           # History
-export HISTIGNORE=${HISTIGNORE}":man *:* --help"           # Man pages
+export HISTIGNORE=${HISTIGNORE}":man *"                    # Man pages
 export HISTIGNORE=${HISTIGNORE}":info *:help *:* --help"   # Info & Helps
 export HISTIGNORE=${HISTIGNORE}":bos:oos"                  # Out-Of-Service Mode
 export HISTIGNORE=${HISTIGNORE}":exit"                     # Exit command
