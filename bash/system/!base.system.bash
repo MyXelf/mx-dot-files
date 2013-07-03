@@ -165,11 +165,10 @@ oos () {
 #
 bos () {
   if [ -n "$OOSM_HFILE" ]; then
-    history -c
-    history -r
-
     export HISTFILE=$OOSM_HFILE
     unset OOSM_HFILE
+    history -c
+    history -r
   fi
 }
 
