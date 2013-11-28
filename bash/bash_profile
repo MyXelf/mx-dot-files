@@ -4,6 +4,9 @@
 # bash_profile (MXDF::BASH)
 #
 
+# Define MXDF as the active Dot Files
+export MXDF_ACTIVE=1
+
 # Path to the BASH section
 export MXDF_BASH=$HOME/.bash
 
