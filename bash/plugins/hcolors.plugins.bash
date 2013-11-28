@@ -51,3 +51,49 @@ hcolors () {
   echo -e "\n ${RED}TIP #3:${R_COLOR} Consider this ${BLACK}${ON_WHITE} Tips ${R_COLOR} as Examples ${I_YELLOW};-)${R_COLOR} ${I_GRAY}(See the Code)${R_COLOR}\n"
 }
 
+#
+# Function: hl()
+#
+# Highlights output making use of the Handy Colors and SED-compatible regular
+# expressions, with multiple sets support.
+#
+# Based on 'mycolorize' Copyright 2008 by Andreas Schamanek <andreas@schamanek.net>
+# Previously distributed under the GPL license.
+#
+# Usage Examples
+# --------------
+#   tail -f <log-file> | hl $I_GREEN '^From: .*'
+#   tail -f <log-file> | hl $WHITE '^From: \/.*' ${YELLOW}${ON_BLUE} 'Folder: .*'
+#   tail -f <log-file> | hl $RED 'for \/\(her\|him\).*$'
+#
+# Notes
+# -----
+#   * Slashes / need no escaping (we use ^A as delimiter)
+#   * \/ splits the coloring (similar to procmailrc. Matches behind get color.
+#
+# See '!base.system.bash'
+#
+hl () {
+  local script color regex
+  local sc=$(echo | tr '\012' '\001')  # Separator Character ^A (for SED)
+  local rc=$(echo -e $R_COLOR)
+
+  # Compile all rules given at command line to one script for SED
+  while [ ! -z "$1" ]; do
+    color=$(echo -e $1)
+    regex=${2:-"."}
+    shift && shift
+
+    # If the regular expression includes \/ we split the substitution
+    if [ "/${regex/*\\\/*/}/" = '//' ]; then
+      regex="${regex/\\\//\)\(}"
+      script="${script};s${sc}\($regex\)${sc}\1${color}\2${rc}${sc}g"
+    else
+      script="${script};s${sc}\($regex\)${sc}${color}\1${rc}${sc}g"
+    fi
+  done
+
+  # Invoke SED
+  sed -e "$script"
+}
+
