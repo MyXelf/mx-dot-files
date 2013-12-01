@@ -28,7 +28,10 @@ export MXDF_BASH_LOCAL=$MXDF_BASH/$BASH_LOCAL_COMPONENT
 [ -s $MXDF_BASH_LOCAL/!bash_profile.$BASH_LOCAL_COMPONENT.bash ] && . $MXDF_BASH_LOCAL/!bash_profile.$BASH_LOCAL_COMPONENT.bash
 
 # Include the MXDF_BIN directory in the PATH
-[ -d $MXDF_BIN ] && export PATH=$MXDF_BIN:$PATH
+[ -d $MXDF_BIN ] && PATH=$MXDF_BIN:$PATH
+
+# Export the PATH variable
+export PATH
 
 # Load the '~/.bashrc' file
 [ -s $HOME/.bashrc ] && source $HOME/.bashrc
