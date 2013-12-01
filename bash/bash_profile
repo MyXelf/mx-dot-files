@@ -25,7 +25,7 @@ export MXDF_BASH_LOCAL=$MXDF_BASH/$BASH_LOCAL_COMPONENT
 # Load the '!bash_profile.<local-component>.bash' file for any modifications
 # needed. Note this file will not be loaded thru '_load_component()' due to the
 # '!' in the filename.
-[ -s $MXDF_BASH_LOCAL/!bash_profile.$BASH_LOCAL_COMPONENT.bash ] && source $MXDF_BASH_LOCAL/!bash_profile.$BASH_LOCAL_COMPONENT.bash
+[ -s $MXDF_BASH_LOCAL/!bash_profile.$BASH_LOCAL_COMPONENT.bash ] && . $MXDF_BASH_LOCAL/!bash_profile.$BASH_LOCAL_COMPONENT.bash
 
 # Include the MXDF_BIN directory in the PATH
 [ -d $MXDF_BIN ] && export PATH=$MXDF_BIN:$PATH
