@@ -97,3 +97,43 @@ hl () {
   sed -e "$script"
 }
 
+#
+# Function: hrainbow()
+#
+# Shows all available ANSI colors codes.
+#
+# Based on 'ansicolors' Copyright 2004 by Nico Golde <nico@ngolde.de>
+#
+hrainbow () {
+  local attr f b
+
+  # Normal Colors
+  for attr in 0 1 4 5 7; do
+    echo '# -------------------------------------------------------------------------------------------------------------------------------------------'
+    echo "#  ESC[${attr};Foreground;Background"
+    echo '# -------------------------------------------------------------------------------------------------------------------------------------------'
+
+    for f in 30 31 32 33 34 35 36 37; do
+      printf '\033[%s;%sm \\033[%s;%02sm  ' $attr $f $attr $f
+      for b in 40 41 42 43 44 45 46 47; do
+        printf '\033[%s;%s;%sm \\033[%s;%02s;%02sm  ' $attr $f $b $attr $f $b
+      done
+      printf '\033[0m\n'
+    done
+  done
+
+  # Intense Colors
+  for attr in 0 1 4 5 7; do
+    echo '# ---------------------------------------------------------------------------------------------------------------------------------------------------'
+    echo "#  ESC[${attr};Foreground;Background"
+    echo '# ---------------------------------------------------------------------------------------------------------------------------------------------------'
+
+    for f in 90 91 92 99 94 95 96 97; do
+      printf '\033[%s;%sm \\033[%s;%02sm  ' $attr $f $attr $f
+      for b in 100 101 102 103 104 105 106 107; do
+        printf '\033[%s;%s;%sm \\033[%s;%02s;%02sm  ' $attr $f $b $attr $f $b
+      done
+      printf '\033[0m\n'
+    done
+  done
+}
