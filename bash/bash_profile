@@ -33,5 +33,10 @@ export MXDF_BASH_LOCAL=$MXDF_BASH/$BASH_LOCAL_COMPONENT
 # Export the PATH variable
 export PATH
 
-# Load the '~/.bashrc' file
-[ -s $HOME/.bashrc ] && source $HOME/.bashrc
+# Several Distros has changed the default system shell (/bin/sh) to different
+# command interpreters (i.e. DASH). So load the '~/.bashrc' file only when BASH
+# is the current subshell and if there is a '~/.bashrc'.
+#
+# Another solution could be to modify the default shell at the system level
+# (sudo dpkg-reconfigure dash), but this will affect overall performance.
+[ -n "$BASH" ] && [ -s $HOME/.bashrc ] && source $HOME/.bashrc
