@@ -133,6 +133,85 @@ _load_component () {
 }
 
 # --------------------------------------------------------------------------------------------------
+#  Echo Helpers
+# --------------------------------------------------------------------------------------------------
+
+#
+# Function: e_hc()
+#
+# Echo with Handy Colors support
+#
+# Also support the '-n' option to the echo built-in.
+#
+e_hc () {
+  echo -e "$@"
+}
+
+#
+# Function: e_hr()
+#
+# Echo a Header
+#
+# If more than one parameter is specified a '::' will be printed after the
+# first one.
+#
+e_hr () {
+  local p1
+  [[ -n "$2" && "$2" != "\n" ]] && p1="$1 :: " || p1=$1
+  shift
+  echo -e "\n${WHITE}${p1}${@}${R_COLOR}"
+}
+
+# Automation Character
+export AC="${I_GREEN}>${R_COLOR}"
+
+#
+# Function: e_ac()
+#
+# Echo a message prepending an Automation Character
+#
+# Support the '-n' option to the echo built-in.
+#
+e_ac () {
+  echo -en "$AC "
+  echo -e "$@"
+}
+
+# Function: e_cm()
+#
+# Echo a Comment Message
+#
+e_cm () {
+  echo -e "${I_GRAY}# ${@}${R_COLOR}"
+}
+
+# Function: e_dm()
+#
+# Echo a Dashed Message
+#
+e_dm () {
+  echo -e "  ${I_GRAY}- $@ -${R_COLOR}"
+}
+
+#
+# Function: e_em()
+#
+# Echo an Error Message
+#
+e_em () {
+  echo -e "${RED}ERROR:${R_COLOR} $@"
+}
+
+#
+# Function: e_wm()
+#
+# Echo a Warning Message
+#
+e_wm () {
+  echo -e "${I_YELLOW}WARNING:${R_COLOR} $@"
+}
+
+# --------------------------------------------------------------------------------------------------
 #  OOSM :: Out-Of-Service Mode
 # --------------------------------------------------------------------------------------------------
 
