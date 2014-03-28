@@ -13,6 +13,9 @@ export MXDF_BASH=$HOME/.bash
 # Path to the BIN section (binaries directory)
 export MXDF_BIN=$HOME/.bin
 
+# Path to the Volatile directory
+export MXDF_VOLATILE=/tmp/v
+
 # Name of the 'local' component (i.e. custom directory) inside the BASH
 # section. Only the name, no leading or trailing '/'.
 export BASH_LOCAL_COMPONENT='local'
