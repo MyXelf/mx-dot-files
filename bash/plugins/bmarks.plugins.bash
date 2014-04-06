@@ -1,21 +1,11 @@
 #
 #  BMARKS - BookMarks Handler [BASH script version]
 #
-#  author    Juan J Gonzalez Cardenas [Jota Jota] - <https://github.com/MyXelf/bmarks.bash>
-#  version   1.0.0.1
-#  date      24.Nov.2013
+#  author    Juan J Gonzalez Cardenas [Jota Jota] - <https://github.com/MyXelf/mx-dot-files>
+#  version   1.0.0.2
+#  date      05.Jan.2014
 #
-#  legal     Copyright (c) 2012-2013
-#
-
-#  history
-#  -------
-#  18.Jun.2012      v1.0.0.0
-#                 * BMARKS - BookMarks Handler
-#
-#  24.Nov.2013      v1.0.0.1
-#                 * Integration with MXDF
-#                 * Make use of the Handy Colors in the bml() function
+#  legal     Copyright (c) 2012-2014. Licensed under the MIT license.
 #
 
 # Define these variables if we are not under the spell of MXDF (and you should)

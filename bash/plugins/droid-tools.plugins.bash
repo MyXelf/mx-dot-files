@@ -1,28 +1,13 @@
 #
 #  DROID-TOOLS - Android Tools Suite [BASH script version]
 #
-#  author    Juan J Gonzalez Cardenas [Jota Jota] - <https://github.com/MyXelf/droid-tools.bash>
-#  version   1.0.0.3
-#  date      24.Nov.2013
+#  author    Juan J Gonzalez Cardenas [Jota Jota] - <https://github.com/MyXelf/mx-dot-files>
+#  version   1.0.0.4
+#  date      12.Jan.2014
 #
-#  legal     Copyright (c) 2012-2013
+#  legal     Copyright (c) 2012-2014. Licensed under the MIT license.
 #
 
-#  history
-#  -------
-#  26.Sep.2012      v1.0.0.0
-#                 * DROID-TOOLS - Android Tools Suite
-#
-#  25.Oct.2012      v1.0.0.1
-#                 * Exclude final hyphen if no version
-#                 * Redirect errors from aapt to /dev/null
-#
-#  18.Jun.2013      v1.0.0.2
-#                 * Minor fixes
-#
-#  24.Nov.2013      v1.0.0.3
-#                 * Integration with MXDF
-#
 
 # Define these variables if we are not under the spell of MXDF (and you should)
 if [ -z "$MXDF_ACTIVE" ]; then
