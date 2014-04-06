@@ -1,4 +1,12 @@
-#!/bin/bash
+#
+#  PRINTENV - Print the Shell Environment [BASH script version]
+#
+#  author    Juan J Gonzalez Cardenas [Jota Jota] - <https://github.com/MyXelf/mx-dot-files>
+#  version   1.0.0.3
+#  date      14.Mar.2014
+#
+#  legal     Copyright (c) 2013-2014. Licensed under the MIT license.
+#
 
 #
 # Function: _penv_filter()
