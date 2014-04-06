@@ -3,9 +3,10 @@
 #
 # Function: hcolors()
 #
-# Shows a demo of the Handy Colors. Instead of keeping this function in sync
-# with the definitions, the declarations are parsed directly from the
-# environment variables.
+# Show a demo of the Handy Colors
+#
+# Instead of keeping this function in sync with the definitions, the
+# declarations are parsed directly from the environment variables.
 #
 # See '!base.system.bash'
 #
@@ -54,8 +55,10 @@ hcolors () {
 #
 # Function: hl()
 #
-# Highlights output making use of the Handy Colors and SED-compatible regular
-# expressions, with multiple sets support.
+# Highlight output
+#
+# Making use of the Handy Colors and SED-compatible regular expressions, with
+# multiple sets support.
 #
 # Based on 'mycolorize' Copyright 2008 by Andreas Schamanek <andreas@schamanek.net>
 # Previously distributed under the GPL license.
@@ -100,7 +103,7 @@ hl () {
 #
 # Function: hrainbow()
 #
-# Shows all available ANSI colors codes.
+# Show all available ANSI colors codes
 #
 # Based on 'ansicolors' Copyright 2004 by Nico Golde <nico@ngolde.de>
 #

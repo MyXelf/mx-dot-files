@@ -11,7 +11,7 @@
 #
 # Function: _penv_filter()
 #
-# Filters the Shell variables to show specific types
+# Filter the Shell Environment to show an specific type
 #
 _penv_filter () {
   # All variables prefixed with the function name to filter them out of the
@@ -63,7 +63,7 @@ _penv_filter () {
 #
 # Function: penv_evars()
 #
-# Displays the 'Environment Variables'
+# Display the 'Environment Variables'
 #
 penv_evars () {
   local case_switch='-s'
@@ -77,7 +77,7 @@ penv_evars () {
 #
 # Function: penv_lvars()
 #
-# Displays the 'Local Variables'
+# Display the 'Local Variables'
 #
 penv_lvars () {
   local case_switch='-s'
@@ -91,7 +91,7 @@ penv_lvars () {
 #
 # Function: penv_funcs()
 #
-# Displays the defined Shell functions
+# Display the defined Shell functions
 #
 penv_funcs () {
   local case_switch='-s'
@@ -105,7 +105,7 @@ penv_funcs () {
 #
 # Function: penv()
 #
-# Displays all Shell variables and functions
+# Display all Shell variables and functions
 #
 penv () {
   for type in 'evars' 'lvars' 'funcs'; do

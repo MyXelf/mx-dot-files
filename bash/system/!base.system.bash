@@ -11,8 +11,10 @@ export E_FAILURE=1
 #
 # Function: _hcolors_definition()
 #
-# Handy Colors definitions. Declared in a function because of the mechanism
-# used to demo the definitions in hcolors(). Also to unclutter this file.
+# Handy Colors definitions
+#
+# Declared in a function because of the mechanism used to demo the definitions
+# in hcolors(). Also to unclutter this file.
 #
 # See 'hcolors.plugins.bash'
 #
@@ -79,9 +81,10 @@ _hcolors_definition
 #
 # Function: is_command()
 #
-# Determine if the passed argument is a defined 'command'. A 'command' can be
-# any 'alias', 'keyword', 'function', 'builtin' or 'file'. More specific
-# functions could be already implemented in this file.
+# Determine if the passed argument is a defined 'command'
+#
+# A 'command' can be any 'alias', 'keyword', 'function', 'builtin' or 'file'.
+# More specific functions could be already implemented in this file.
 #
 is_command () {
   type "$1" > /dev/null 2>&1
@@ -112,7 +115,7 @@ is_user_root () {
 #
 # Function: _load_component_item()
 #
-# Loads an specific 'item' inside a 'component' from the BASH section
+# Load an specific 'item' inside a 'component' from the BASH section
 #
 _load_component_item () {
   [ -s $1 ] && source $1
@@ -121,8 +124,9 @@ _load_component_item () {
 #
 # Function: _load_component()
 #
-# Loads all "enabled items" from the 'component' directory passed as argument.
-# "enabled item" are every file inside the 'component' directory not starting
+# Load all "enabled items" from the 'component' directory passed as argument
+#
+# An "enabled item" is every file inside the 'component' directory not starting
 # with the characters [!_~.] and following the pattern: <prefix>.<component>.bash
 #
 _load_component () {

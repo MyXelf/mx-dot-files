@@ -76,8 +76,7 @@ dtools () {
 #
 # Function: _apkv()
 #
-# Return an array with the relevant information of an .apk file. This function
-# is for internal use only.
+# Return an array with the relevant information of an .apk file
 #
 _apkv () {
   # Regular Expressions patterns
@@ -143,7 +142,7 @@ apki () {
 #
 # Function: apkr()
 #
-# Renames .apk files
+# Rename .apk files
 #
 apkr () {
   echo "$DTOOLS_LABEL :: APK Renamer Script"
@@ -180,7 +179,7 @@ apkr () {
     # Lowercase the filename
     filename_prefix=${filename_prefix,,}
 
-    # Conform the initial filename and lowercase it
+    # Conform the initial filename
     apk_filename=${filename_prefix}.apk
     filename_suffix=
     action="Done!"

@@ -1,10 +1,7 @@
-#!/bin/bash
-
 #
 # Function: path_leader()
 #
-# Displays information related to the 'Current Working Directory' (CWD) and
-# possible navigation around it.
+# Navigate directories around the 'Current Working Directory' (CWD)
 #
 path_leader () {
   local work_path=$PWD

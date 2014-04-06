@@ -19,8 +19,8 @@ export HISTCONTROL=ignorespace:ignoredups
 
 #
 # Ignore commands following this pattern. Beware of the History substitution
-# commands (i.e '!!'), as you may think you are repeating something that is not
-# saved in the history.
+# commands (i.e. '!!'), as you may think you are repeating something that is
+# not saved in the history.
 #
 export HISTIGNORE="&"                                      # Repeated commands
 export HISTIGNORE=${HISTIGNORE}":~:-:..:..[2345?]:cd *"    # Directories Navigation
