@@ -17,30 +17,46 @@ _penv_filter () {
   # All variables prefixed with the function name to filter them out of the
   # 'Local Variables' list
   local __penv_filter_type_filter=$1
-  local __penv_filter_pattern=$2
-  local __penv_filter_suffix
+  local __penv_filter_case_switch=$2
+  local __penv_filter_pattern=$3
+  local __penv_filter_format=${4:-"$AC %-5s %s%s%s\n"}
+  local __penv_filter_joiner=${5:-' = '}
+  local __penv_filter_declare_filter __penv_filter_lvalue __penv_filter_rvalue
 
   case $__penv_filter_type_filter in
     evars ) __penv_filter_declare_filter='x';;     # Environment Variables
     lvars ) __penv_filter_declare_filter='';;      # Local Variables
     funcs ) __penv_filter_declare_filter='F'       # Functions
-            __penv_filter_suffix='()';;
+            __penv_filter_joiner='()';;
   esac
 
   # Based on solution proposed by Stephane Chazelas
   # http://unix.stackexchange.com/questions/72506/how-to-print-shell-variables-and-values-to-be-able-to-copy-paste-them?rq=1
+  #
+  # XXX:
+  #   - The 'shopt' will determine if the pattern match should be case
+  #     sensitive or insensitive. Done there to keep it at the subshell level.
+  #   - 1st return: Besides the first comment in this function, will filter out
+  #     the exported vars from the local variables listing.
+  #   - 2nd return: The pattern match, only happening at the left of the '='.
+  #     Extended to use the RE-Match mechanism of BASH.
   (
-    # Make pattern match case-insensitive
-    # Do it here to keep it at the subshell level
-    shopt -s nocasematch
+    MATCH=$E_FAILURE
+    shopt $__penv_filter_case_switch nocasematch
 
     eval 'declare() {
             [[ $__penv_filter_type_filter = "lvars" && ($1 == *x* || $2 == __penv_filter_*) ]] && return
-            [[ ${2%%=*} != *$__penv_filter_pattern* ]] && return
+            [[ ! ${2%%=*} =~ $__penv_filter_pattern ]] && return
 
-            echo -ne "${I_GREEN}>${R_COLOR}"; printf " %-5s %q%s\n" "$1" "$2" "$__penv_filter_suffix"
+            MATCH=$E_SUCCESS
+            __penv_filter_lvalue=${2%%=*}
+            [[ $__penv_filter_type_filter != "funcs" ]] && __penv_filter_rvalue=${2#*=}
+
+            printf "$__penv_filter_format" "$1" "$__penv_filter_lvalue" "$__penv_filter_joiner" "$__penv_filter_rvalue"
           }'"
           $(declare -p${__penv_filter_declare_filter})"
+
+    [ $MATCH -eq $E_FAILURE ] && e_dm 'No Matches'
   )
 }
 
@@ -50,8 +66,12 @@ _penv_filter () {
 # Displays the 'Environment Variables'
 #
 penv_evars () {
-  echo -e "\n${WHITE}Environment Variables (Exported)${R_COLOR}"
-  _penv_filter evars $1
+  local case_switch='-s'
+  [ "$1" = '-c' ] && case_switch='-u' && shift
+  if [ "$2" != '-' ]; then
+    [ -z "$2" ] && e_hr 'Environment Variables (Exported)' || e_hc $2
+  fi
+  _penv_filter evars $case_switch "$1" "$3" "$4"
 }
 
 #
@@ -60,8 +80,12 @@ penv_evars () {
 # Displays the 'Local Variables'
 #
 penv_lvars () {
-  echo -e "\n${WHITE}Local Variables (Non Exported)${R_COLOR}"
-  _penv_filter lvars $1
+  local case_switch='-s'
+  [ "$1" = '-c' ] && case_switch='-u' && shift
+  if [ "$2" != '-' ]; then
+    [ -z "$2" ] && e_hr 'Local Variables (Non Exported)' || e_hc $2
+  fi
+  _penv_filter lvars $case_switch "$1" "$3" "$4"
 }
 
 #
@@ -70,8 +94,12 @@ penv_lvars () {
 # Displays the defined Shell functions
 #
 penv_funcs () {
-  echo -e "\n${WHITE}Functions${R_COLOR}"
-  _penv_filter funcs $1
+  local case_switch='-s'
+  [ "$1" = '-c' ] && case_switch='-u' && shift
+  if [ "$2" != '-' ]; then
+    [ -z "$2" ] && e_hr 'Functions' || e_hc $2
+  fi
+  _penv_filter funcs $case_switch "$1" "$3" "$4"
 }
 
 #
@@ -81,8 +109,10 @@ penv_funcs () {
 #
 penv () {
   for type in 'evars' 'lvars' 'funcs'; do
-    penv_$type $1
+    penv_$type "$@"
   done
   unset type
+}
+
 }
 
