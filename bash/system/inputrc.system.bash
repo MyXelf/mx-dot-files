@@ -12,7 +12,7 @@ bind 'set completion-ignore-case on'
 bind 'set mark-symlinked-directories on'
 bind 'set skip-completed-text on'
 bind 'set print-completions-horizontally on'
-bind 'set completion-query-items 200'
+bind 'set completion-query-items 300'
 
 # --------------------------------------------------------------------------------------------------
 #  Readline Commands
