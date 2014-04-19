@@ -1,3 +1,8 @@
+# To disable the Handy Colors tips by default at startup, export the following
+# at someplace. For other options read Tip #2 in the hcolors() function.
+#
+# export HC_TIPS=0
+
 #
 # Function: hcolors()
 #
