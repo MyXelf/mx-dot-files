@@ -213,3 +213,38 @@ e_wm () {
   echo -e "${I_YELLOW}WARNING:${R_COLOR} $@"
 }
 
+# --------------------------------------------------------------------------------------------------
+#  MXDF::BASH Section
+# --------------------------------------------------------------------------------------------------
+
+#
+# Function: _mxdf_show_header()
+#
+# Display the information extracted from the header of a MXDF file
+#
+_mxdf_show_header () {
+  local name desc version date
+
+  while read _ item value; do
+    case "$item" in
+      date    ) date=" - [$value]" ;;
+      version ) version=" v$value";;
+      *       ) name=$item
+                [[ $value =~ -' '(.*)' [' ]] && desc=" :: ${BASH_REMATCH[1]}";;
+    esac
+  done < <(head -n9 $1 | grep '^# .*\(version\|date\)')
+
+  [ -n "$name" ] && e_hc "\n${name}${version}${desc}${date}\n"
+}
+
+#
+# Function: _mxdf_show_copyright()
+#
+# Display the copyright banner of the MXDF
+#
+_mxdf_show_copyright () {
+  e_hc "\n8-;"
+  echo '  MXDF :: MyXelf Dot Files - <https://github.com/MyXelf/mx-dot-files>'
+  echo '  Copyright (c) 2013-2014. Juan J Gonzalez Cardenas [Jota Jota]'
+}
+
