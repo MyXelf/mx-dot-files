@@ -108,6 +108,8 @@ penv_funcs () {
 # Display all Shell variables and functions
 #
 penv () {
+  [[ $1 = '-h' || $1 = '--help' ]] && _printenv_plugin_help && return $E_SUCCESS
+
   for type in 'evars' 'lvars' 'funcs'; do
     penv_$type "$@"
   done
@@ -120,6 +122,8 @@ penv () {
 # Display the Help for the plugin and the related functions
 #
 _printenv_plugin_help () {
+  _mxdf_show_header $BASH_SOURCE
+
   echo "penv is capable of printing the shell environment, showing only declarations"
   echo "that match an specified pattern and with deal control of the output format."
   echo
@@ -149,5 +153,7 @@ _printenv_plugin_help () {
   echo "  penv_lvars   print the 'Local Variables'"
   echo "  penv_funcs   print the defined shell 'Functions'"
   echo "  penv         comprise the output of the three tools together"
+
+  _mxdf_show_copyright
 }
 
