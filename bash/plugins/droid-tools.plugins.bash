@@ -84,7 +84,7 @@ _apkv () {
   local pattern_pkg="package: name='(.*)' versionCode='(.*)' versionName='(.*)'"
 
   if [ ! -f "$1" ]; then
-    echo " Please provide a valid .apk file"
+    e_em 'Please provide a valid .apk file.'
     return $E_FAILURE
   fi
 
@@ -118,8 +118,7 @@ _apkv () {
 # Return the relevant information returned from apkv() function
 #
 apki () {
-  echo "$DTOOLS_LABEL :: APK Information Script"
-  echo
+  e_hr 'Android Tools Suite' 'APK Information Tool' '\n'
 
   local apk_file
 
@@ -128,12 +127,11 @@ apki () {
 
     [ $? -eq $E_FAILURE ] && return $E_FAILURE
 
-    echo "# File Name    = $apk_file"
-    echo "> Application  : ${apkv_return[${apkv_pos['label']}]}"
-    echo "> Package Name : ${apkv_return[${apkv_pos["packn"]}]}"
-    echo "> Version Name : ${apkv_return[${apkv_pos["vname"]}]}"
-    echo "> Version Code : ${apkv_return[${apkv_pos["vcode"]}]}"
-    echo
+    e_cm 'File Name    =' $apk_file
+    e_ac 'Application  :' ${apkv_return[${apkv_pos['label']}]}
+    e_ac 'Package Name :' ${apkv_return[${apkv_pos["packn"]}]}
+    e_ac 'Version Name :' ${apkv_return[${apkv_pos["vname"]}]}
+    e_ac 'Version Code :' ${apkv_return[${apkv_pos["vcode"]}]} '\n'
   done
 
   return $E_SUCCESS
@@ -145,8 +143,7 @@ apki () {
 # Rename .apk files
 #
 apkr () {
-  echo "$DTOOLS_LABEL :: APK Renamer Script"
-  echo
+  e_hr 'Android Tools Suite' 'APK Rename Tool' '\n'
 
   local apk_file template_match filename_prefix apk_filename filename_suffix action xtra
 
@@ -191,7 +188,7 @@ apkr () {
       apk_filename=${filename_prefix}${filename_suffix}.apk
     done
 
-    echo -n "> ${apk_file} = ${apk_filename}${xtra} ... "
+    e_ac -n ${apk_file} '=' ${apk_filename}${xtra} '... '
 
     if [ "$action" != "$ACTION_NTD" ]; then
       mv "$apk_file" "$apk_filename" > /dev/null 2>&1

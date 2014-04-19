@@ -9,7 +9,7 @@ path_leader () {
   local now_level=0
   local alias_sfx=''
 
-  echo -e "\n${WHITE}CWD = ${work_path}${R_COLOR}"
+  e_hr "CWD = ${work_path}"
 
   while [[ ${#work_path} > 1 ]] && (( now_level++ < max_level )); do
     work_path=${work_path%/*}
@@ -23,9 +23,9 @@ path_leader () {
   echo # Display the HOME directory and the previous Working Directory
 
   printf "${I_RED}%-6s${R_COLOR}" '~'
-  [ "$HOME" != "$PWD" ] && echo "$HOME" || echo 'You are already at your HOME directory'
+  [ "$HOME" != "$PWD" ] && echo "$HOME" || e_cm 'You are already at your HOME directory'
 
   printf "${I_RED}%-6s${R_COLOR}" '-'
-  [ -n "$OLDPWD" ] && echo "$OLDPWD" || echo 'There is no previuos Working Directory'
+  [ -n "$OLDPWD" ] && echo "$OLDPWD" || e_cm 'There is no previuos Working Directory'
 }
 

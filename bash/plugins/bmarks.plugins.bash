@@ -70,7 +70,7 @@ bmv () {
 
   # Check if BMark name is not empty
   if [ -z "$1" ]; then
-    echo "Please provide a BMark name"
+    e_em "Please provide a BMark name"
     return $E_FAILURE
   fi
 
@@ -78,7 +78,7 @@ bmv () {
   bmark_match=$(grep -m1 "^$1 =" $BMARKS_FILE)
 
   if [ -z "$bmark_match" ]; then
-    echo "Invalid BMark name"
+    e_em "Invalid BMark name"
     return $E_FAILURE
   fi
 
