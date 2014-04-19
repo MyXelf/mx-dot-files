@@ -1,5 +1,3 @@
-#!/bin/bash
-
 # PS Fragment :: LCRV (Last Command Resulting Value)
 PS_LCRV='$([ $LCRV -eq 0 ] && echo -e "\[${WHITE}\]√ " || echo -e "\[${I_RED}\]× ")'
 

@@ -1,5 +1,3 @@
-#!/bin/bash
-
 # Determine if the OOSM must be reactivated
 if [ -n "$OOSM_AUTOSTART" ] || oosm_active; then
   oosm_reactivate=1

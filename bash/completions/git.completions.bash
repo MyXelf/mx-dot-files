@@ -1,5 +1,3 @@
-#!/bin/bash
-
 # g => git
 if [ -r /usr/share/bash-completion/completions/git ]; then
   source /usr/share/bash-completion/completions/git

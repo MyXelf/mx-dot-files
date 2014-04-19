@@ -1,5 +1,3 @@
-#!/bin/bash
-
 # Directories Listings
 alias ls='ls --color=auto'
 alias ll='ls --all --human-readable --classify -l'
