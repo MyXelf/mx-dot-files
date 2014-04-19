@@ -248,3 +248,60 @@ _mxdf_show_copyright () {
   echo '  Copyright (c) 2013-2014. Juan J Gonzalez Cardenas [Jota Jota]'
 }
 
+#
+# Function: _mxdf_bash_reload()
+#
+# Reload a component inside the MXDF::BASH section or the whole section
+#
+_mxdf_bash_reload () {
+  local component=$1
+
+  if [ -z "$component" ]; then
+    e_hc -n "Reloading ${WHITE}MXDF::BASH${R_COLOR} section using ${WHITE}<~/.bashrc>${R_COLOR} ... "
+    _load_component_item $HOME/.bashrc
+  else
+    e_hc -n "Reloading ${WHITE}MXDF::BASH${R_COLOR} component: ${WHITE}<$component>${R_COLOR} ... "
+    _load_component $component
+  fi
+
+  [ $? -eq 0 ] && e_hc "${WHITE}Done!${R_COLOR}" || e_hc "${RED}Error!${R_COLOR}"
+}
+
+#
+# Function: mxdf-bash()
+#
+# Main interface to the MXDF::BASH section
+#
+# Completion enabled function
+#
+mxdf-bash () {
+  _mxdf_bash_$1 $2
+}
+
+#
+# Function: _mxdf_bash_complete()
+#
+# Completion for the mxdf-bash() function
+#
+_mxdf_bash_complete () {
+  local cur prev words cword
+  _init_completion || return
+
+  local command w
+  for ((w = 0; w < ${#words[@]} - 1; w++)); do
+    [[ ${words[w]} == @(list|reload|enable|disable) ]] && command=${words[w]}
+  done
+
+  if [ -n "$command" ]; then
+    COMPREPLY=( $(compgen -W "aliases completions $BASH_LOCAL_COMPONENT plugins system" -- "$cur") )
+    return 0
+  fi
+
+  if [[ "$cur" == -* ]]; then
+    COMPREPLY=( $(compgen -W '-h --help' -- "$cur") )
+  else
+    COMPREPLY=( $(compgen -W 'list reload enable disable help' -- "$cur") )
+  fi
+} &&
+complete -F _mxdf_bash_complete mxdf-bash
+
