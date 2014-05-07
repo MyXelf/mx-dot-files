@@ -29,3 +29,19 @@ path_leader () {
   [ -n "$OLDPWD" ] && echo "$OLDPWD" || e_cm 'There is no previuos Working Directory'
 }
 
+#
+# Function: uxt()
+#
+# Display the specified date/time in several formats
+#
+uxt () {
+  [ -n "$1" ] && local uxt_line="$@" || local uxt_line='now'
+
+  # If only numbers assume a Unix time and prepend the "@"
+  [ -z "${uxt_line//[0-9]/}" ] && uxt_line='@'$uxt_line
+
+  e_ac "$(date -d "$uxt_line" +'%Z   = %a, %d %b %Y %T %z')"
+  e_ac "$(date --utc -d "$uxt_line" +'%Z   = %a, %d %b %Y %T %z')"
+  e_ac "$(date -d "$uxt_line" +'Epoch = %s')"
+}
+
