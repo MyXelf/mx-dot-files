@@ -17,6 +17,7 @@ _apkv () {
   # Regular Expressions patterns
   local pattern_app="application: label='(.*)' icon="
   local pattern_pkg="package: name='(.*)' versionCode='(.*)' versionName='(.*)'"
+  local pattern_sdk="sdkVersion:'(.*)'"
   local apk_line
 
   if [ ! -f "$1" ]; then
@@ -37,6 +38,12 @@ _apkv () {
           apkv_return[${apkv_pos["packn"]}]=${BASH_REMATCH[1]}
           apkv_return[${apkv_pos["vname"]}]=${BASH_REMATCH[3]}
           apkv_return[${apkv_pos["vcode"]}]=${BASH_REMATCH[2]}
+        fi
+        ;;
+
+      'sdkVersion:'* )
+        if [[ $apk_line =~ $pattern_sdk ]]; then
+          apkv_return[${apkv_pos["asdkv"]}]=${BASH_REMATCH[1]}
         fi
         ;;
     esac
@@ -65,7 +72,8 @@ apki () {
     e_ac 'Application  :' ${apkv_return[${apkv_pos['label']}]}
     e_ac 'Package Name :' ${apkv_return[${apkv_pos["packn"]}]}
     e_ac 'Version Name :' ${apkv_return[${apkv_pos["vname"]}]}
-    e_ac 'Version Code :' ${apkv_return[${apkv_pos["vcode"]}]} '\n'
+    e_ac 'Version Code :' ${apkv_return[${apkv_pos["vcode"]}]}
+    e_ac 'Android vOS  :' ${aapi_level[${apkv_return[${apkv_pos["asdkv"]}]}]} '\n'
   done
 
   return $E_SUCCESS
@@ -175,6 +183,29 @@ _droid_tools_plugin_init () {
   apkv_pos['packn']=1     # Package Name
   apkv_pos['vname']=2     # Version Name
   apkv_pos['vcode']=3     # Version Code
+  apkv_pos['asdkv']=4     # SDK Version
+
+  # Android API information
+  declare -a -g aapi_level
+  aapi_level[ 1]='Base (No Code Name) | 1.0           | API  1'
+  aapi_level[ 2]='Base (No Code Name) | 1.1           | API  2'
+  aapi_level[ 3]='Cupcake             | 1.5           | API  3, NDK 1'
+  aapi_level[ 4]='Donut               | 1.6           | API  4, NDK 2'
+  aapi_level[ 5]='Eclair              | 2.0           | API  5'
+  aapi_level[ 6]='Eclair              | 2.0.1         | API  6'
+  aapi_level[ 7]='Eclair              | 2.1           | API  7, NDK 3'
+  aapi_level[ 8]='Froyo               | 2.2.x         | API  8, NDK 4'
+  aapi_level[ 9]='Gingerbread         | 2.3 - 2.3.2   | API  9, NDK 5'
+  aapi_level[10]='Gingerbread         | 2.3.3 - 2.3.7 | API 10'
+  aapi_level[11]='Honeycomb           | 3.0           | API 11'
+  aapi_level[12]='Honeycomb           | 3.1           | API 12, NDK 6'
+  aapi_level[13]='Honeycomb           | 3.2.x         | API 13'
+  aapi_level[14]='Ice Cream Sandwich  | 4.0.1 - 4.0.2 | API 14, NDK 7'
+  aapi_level[15]='Ice Cream Sandwich  | 4.0.3 - 4.0.4 | API 15, NDK 8'
+  aapi_level[16]='Jelly Bean          | 4.1.x         | API 16'
+  aapi_level[17]='Jelly Bean          | 4.2.x         | API 17'
+  aapi_level[18]='Jelly Bean          | 4.3.x         | API 18'
+  aapi_level[19]='KitKat              | 4.4 - 4.4.4   | API 19'
 } &&
 _droid_tools_plugin_init
 
