@@ -17,6 +17,7 @@ _apkv () {
   # Regular Expressions patterns
   local pattern_app="application: label='(.*)' icon="
   local pattern_pkg="package: name='(.*)' versionCode='(.*)' versionName='(.*)'"
+  local apk_line
 
   if [ ! -f "$1" ]; then
     e_em 'Please provide a valid .apk file.'
@@ -25,15 +26,13 @@ _apkv () {
 
   while read apk_line; do
     case "$apk_line" in
-      #
-      "application: "* )
+      'application: '* )
         if [[ $apk_line =~ $pattern_app ]]; then
           apkv_return[${apkv_pos["label"]}]=${BASH_REMATCH[1]}
         fi
         ;;
 
-      #
-      "package: "* )
+      'package: '* )
         if [[ $apk_line =~ $pattern_pkg ]]; then
           apkv_return[${apkv_pos["packn"]}]=${BASH_REMATCH[1]}
           apkv_return[${apkv_pos["vname"]}]=${BASH_REMATCH[3]}
@@ -114,7 +113,14 @@ apkr () {
     # Conform the initial filename
     apk_filename=${filename_prefix}.apk
     filename_suffix=
-    action="Done!"
+
+    # "Nothing to Do" action return value
+    local ACTION_NTD=2
+
+    # TODO
+    # Here is an error in the logic of the unclashing process. The NTD
+    # action must be determined before checking if the current file exists. If
+    # there are 2 files (t.apk => x.apk) and (x.apk => z.apk) ... TBC
 
     # Determine the needed suffix to avoid clashing with already existent files
     while [ -f "$apk_filename" ]; do
@@ -131,26 +137,15 @@ apkr () {
     fi
 
     # Output the result of the operation
-    case $action in
-      $ACTION_NTD )
-        echo "NTD"
-        ;;
-
-      $E_SUCCESS )
-        echo "D!"
-        ;;
-
-      $E_FAILURE )
-        echo "I/O Error"
-        ;;
-
-      * )
-        echo "Unknown Error"
-        ;;
+    case "$action" in
+      $ACTION_NTD ) echo 'NTD';;
+      $E_SUCCESS  ) echo 'D!';;
+      $E_FAILURE  ) echo 'I/O Error';;
+      *           ) echo 'Unknown Error';;
     esac
   done
 
-  return $action
+  return $E_SUCCESS
 }
 
 #
