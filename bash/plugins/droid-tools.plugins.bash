@@ -8,71 +8,6 @@
 #  legal     Copyright (c) 2012-2014. Licensed under the MIT license.
 #
 
-
-# Define these variables if we are not under the spell of MXDF (and you should)
-if [ -z "$MXDF_ACTIVE" ]; then
-  E_SUCCESS=0
-  E_FAILURE=1
-fi
-
-DTOOLS_LABEL="DROID Tools"
-DTOOLS_VERSION='1.0.0.3'
-DTOOLS_DATE='24.Nov.2013'
-
-# Define the location of the templates for the apkr() function
-[ -z "$MXDF_ACTIVE" ] && APKR_TEMPLATES=$HOME/droid-tools.apkr || APKR_TEMPLATES=$MXDF_BASH_LOCAL/droid-tools.apkr
-
-# "Nothing to Do" action return value
-ACTION_NTD=2
-
-# The array returning the values from the apkv() function
-declare -a -g apkv_return
-
-# Values positions in the returning array
-declare -A -g apkv_pos
-apkv_pos["label"]=0     # Application Label
-apkv_pos["packn"]=1     # Package Name
-apkv_pos["vname"]=2     # Version Name
-apkv_pos["vcode"]=3     # Version Code
-
-#
-# Function: dtools()
-#
-# Helper function to know everything about the DROID Tools
-#
-dtools () {
-  echo
-  echo "$DTOOLS_LABEL v$DTOOLS_VERSION - Android Tools Suite [BASH script version - $DTOOLS_DATE]"
-  echo "                       Copyright (c) 2012-2013. Juan J Gonzalez Cardenas [Jota Jota]"
-  echo
-  echo "A suite of tools to ease the interaction with Android devices. Including the"
-  echo "handling of .apk files."
-  echo
-  echo "TOOLS"
-  echo "   _apkv"
-  echo "        Returns an array with the relevant information of an .apk file."
-  echo "        This function is for internal use only."
-  echo
-  echo "    apki"
-  echo "        Returns the relevant information retrieved from the _apkv() function."
-  echo
-  echo "    apkr"
-  echo "        Renames .apk files. This function will avoid overwriting existing files."
-  echo "        There is a template file that will define the output pattern."
-  echo "        The template file should be located in $APKR_TEMPLATES"
-  echo
-  echo "        The possible results are:"
-  echo "          D!            - Done!"
-  echo "          NTD           - Nothing to Do. Resulting filename is the same as the current one."
-  echo "          I/O Error     - Some error, probably renaming the file."
-  echo "          Unknown Error - That's it."
-  echo
-  echo "HOMEPAGE"
-  echo "    https://github.com/MyXelf/droid-tools.bash"
-
-  return $E_SUCCESS
-}
-
 #
 # Function: _apkv()
 #
@@ -216,5 +151,69 @@ apkr () {
   done
 
   return $action
+}
+
+#
+# Function: dtools()
+#
+# Display the Help for the plugin and the related functions
+#
+dtools () {
+  _droid_tools_plugin_help
+}
+
+#
+# Function: _droid_tools_plugin_init()
+#
+# Setup the plugin required environment (Autoloading Function)
+#
+_droid_tools_plugin_init () {
+  # Define the location of the templates for the apkr() function
+  [ -z "$MXDF_ACTIVE" ] && APKR_TEMPLATES=$MXDF_BASH_LOCAL/droid-tools.apkr
+
+  # The array returning the values from the _apkv() function
+  declare -a -g apkv_return
+
+  # Values positions in the returning array
+  declare -A -g apkv_pos
+  apkv_pos['label']=0     # Application Label
+  apkv_pos['packn']=1     # Package Name
+  apkv_pos['vname']=2     # Version Name
+  apkv_pos['vcode']=3     # Version Code
+} &&
+_droid_tools_plugin_init
+
+#
+# Function: _droid_tools_plugin_help()
+#
+# Display the Help for the plugin and the related functions
+#
+_droid_tools_plugin_help () {
+  _mxdf_show_header $BASH_SOURCE
+
+  echo "A suite of tools to ease the interaction with Android devices. Including the"
+  echo "handling of .apk files."
+  echo
+  echo "TOOLS"
+  echo "   _apkv"
+  echo "        Returns an array with the relevant information of an .apk file."
+  echo "        This function is for internal use only."
+  echo
+  echo "    apki"
+  echo "        Returns the relevant information retrieved from the _apkv() function."
+  echo
+  echo "    apkr"
+  echo "        Renames .apk files. This function will avoid overwriting existing files."
+  echo "        There is a template file that will define the output pattern."
+  echo "        The template file should be located in $APKR_TEMPLATES"
+  echo
+  echo "        The possible results are:"
+  echo "          D!            - Done!"
+  echo "          NTD           - Nothing to Do. Resulting filename is the same as the current one."
+  echo "          I/O Error     - Some error, probably renaming the file."
+  echo "          Unknown Error - That's it."
+  echo
+
+  _mxdf_show_copyright
 }
 
