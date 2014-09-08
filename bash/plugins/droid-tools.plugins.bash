@@ -9,6 +9,113 @@
 #
 
 #
+# Function: asdk()
+#
+# Display information about the Android Software Development Kit
+#
+asdk () {
+  e_hr 'Android Tools Suite' 'Software Development Kit' '\n'
+
+  echo "Android development happens around families of releases, which use code names"
+  echo "ordered alphabetically after tasty treats. The code names match the following"
+  echo "version numbers, along with API levels and NDK releases:"
+  echo
+
+  e_cm "Code Name             Version         API Level"
+  for api_level in "${aapi_level[@]}"; do
+    e_ac "$api_level"
+  done
+
+  [[ $1 != '-v' && $1 != '--verbose' ]] && return $E_SUCCESS
+
+  # Source Code Tags and Builds
+  echo
+  echo 'Starting with Donut, the exact list of tags and builds is in the following table'
+  echo
+
+  e_cm 'Build        Branch                   Version                 Supported Devices'
+  e_ac 'KTU84Q       android-4.4.4_r2         KitKat                  Nexus 5 (hammerhead) (For 2Degrees/NZ, Telstra/AUS and India ONLY)'
+  e_ac 'KTU84P       android-4.4.4_r1         KitKat                  Nexus 5, Nexus 7 (flo/grouper/tilapia), Nexus 4, Nexus 10'
+  e_ac 'KTU84M       android-4.4.3_r1.1       KitKat                  Nexus 5 (hammerhead)'
+  e_ac 'KTU84L       android-4.4.3_r1         KitKat                  Nexus 7 (flo/deb/grouper/tilapia), Nexus 4, Nexus 10'
+  e_ac 'KVT49L       android-4.4.2_r2         KitKat                  Nexus 7 (deb Verizon)'
+  e_ac 'KOT49H       android-4.4.2_r1         KitKat                  Nexus 5, Nexus 7 (flo/deb/grouper/tilapia), Nexus 4, Nexus 10'
+  e_ac 'KOT49E       android-4.4.1_r1         KitKat                  Nexus 5, Nexus 7 (flo/deb/grouper/tilapia), Nexus 4, Nexus 10'
+  e_ac 'KRT16S       android-4.4_r1.2         KitKat                  Nexus 7 (flo/deb/grouper/tilapia), Nexus 4, Nexus 10'
+  e_ac 'KRT16M       android-4.4_r1           KitKat                  Nexus 5 (hammerhead)'
+  e_ac 'JLS36I       android-4.3.1_r1         Jelly Bean              Nexus 7 (deb)'
+  e_ac 'JLS36C       android-4.3_r3           Jelly Bean              Nexus 7 (deb)'
+  e_ac 'JSS15R       android-4.3_r2.3         Jelly Bean              Nexus 7 (flo)'
+  e_ac 'JSS15Q       android-4.3_r2.2         Jelly Bean              Nexus 7 (flo)'
+  e_ac 'JSS15J       android-4.3_r2.1         Jelly Bean              Nexus 7 (flo/deb)'
+  e_ac 'JSR78D       android-4.3_r2           Jelly Bean              Nexus 7 (deb)'
+  e_ac 'JWR66Y       android-4.3_r1.1         Jelly Bean              Galaxy Nexus, Nexus 7 (grouper/tilapia), Nexus 4, Nexus 10'
+  e_ac 'JWR66V       android-4.3_r1           Jelly Bean              Galaxy Nexus, Nexus 7 (grouper/tilapia), Nexus 4, Nexus 10'
+  e_ac 'JWR66N       android-4.3_r0.9.1       Jelly Bean              Galaxy Nexus, Nexus 7 (grouper/tilapia/flo), Nexus 4, Nexus 10'
+  e_ac 'JWR66L       android-4.3_r0.9         Jelly Bean              Nexus 7'
+  e_ac 'JDQ39E       android-4.2.2_r1.2       Jelly Bean              Nexus 4'
+  e_ac 'JDQ39B       android-4.2.2_r1.1       Jelly Bean              Nexus 7'
+  e_ac 'JDQ39        android-4.2.2_r1         Jelly Bean              Galaxy Nexus, Nexus 7, Nexus 4, Nexus 10'
+  e_ac 'JOP40G       android-4.2.1_r1.2       Jelly Bean              Nexus 4'
+  e_ac 'JOP40F       android-4.2.1_r1.1       Jelly Bean              Nexus 10'
+  e_ac 'JOP40D       android-4.2.1_r1         Jelly Bean              Galaxy Nexus, Nexus 7, Nexus 4, Nexus 10'
+  e_ac 'JOP40C       android-4.2_r1           Jelly Bean              Galaxy Nexus, Nexus 7, Nexus 4, Nexus 10'
+  e_ac 'JZO54M       android-4.1.2_r2.1       Jelly Bean'
+  e_ac 'JZO54L       android-4.1.2_r2         Jelly Bean'
+  e_ac 'JZO54K       android-4.1.2_r1         Jelly Bean              Nexus S, Galaxy Nexus, Nexus 7'
+  e_ac 'JRO03S       android-4.1.1_r6.1       Jelly Bean              Nexus 7'
+  e_ac 'JRO03R       android-4.1.1_r6         Jelly Bean              Nexus S 4G'
+  e_ac 'JRO03O       android-4.1.1_r5         Jelly Bean              Galaxy Nexus'
+  e_ac 'JRO03L       android-4.1.1_r4         Jelly Bean              Nexus S'
+  e_ac 'JRO03H       android-4.1.1_r3         Jelly Bean'
+  e_ac 'JRO03E       android-4.1.1_r2         Jelly Bean              Nexus S'
+  e_ac 'JRO03D       android-4.1.1_r1.1       Jelly Bean              Nexus 7'
+  e_ac 'JRO03C       android-4.1.1_r1         Jelly Bean              Galaxy Nexus'
+  e_ac 'IMM76L       android-4.0.4_r2.1       Ice Cream Sandwich'
+  e_ac 'IMM76K       android-4.0.4_r2         Ice Cream Sandwich      Galaxy Nexus'
+  e_ac 'IMM76I       android-4.0.4_r1.2       Ice Cream Sandwich      Galaxy Nexus'
+  e_ac 'IMM76D       android-4.0.4_r1.1       Ice Cream Sandwich      Nexus S, Nexus S 4G, Galaxy Nexus'
+  e_ac 'IMM76        android-4.0.4_r1         Ice Cream Sandwich'
+  e_ac 'IML77        android-4.0.3_r1.1       Ice Cream Sandwich'
+  e_ac 'IML74K       android-4.0.3_r1         Ice Cream Sandwich      Nexus S'
+  e_ac 'ICL53F       android-4.0.2_r1         Ice Cream Sandwich      Galaxy Nexus'
+  e_ac 'ITL41F       android-4.0.1_r1.2       Ice Cream Sandwich      Galaxy Nexus'
+  e_ac 'ITL41D       android-4.0.1_r1.1       Ice Cream Sandwich      Galaxy Nexus'
+  e_ac 'ITL41D       android-4.0.1_r1         Ice Cream Sandwich      Galaxy Nexus'
+  e_ac 'GWK74        android-2.3.7_r1         Gingerbread             Nexus S 4G'
+  e_ac 'GRK39F       android-2.3.6_r1         Gingerbread             Nexus One, Nexus S'
+  e_ac 'GRK39C       android-2.3.6_r0.9       Gingerbread             Nexus S'
+  e_ac 'GRJ90        android-2.3.5_r1         Gingerbread             Nexus S 4G'
+  e_ac 'GRJ22        android-2.3.4_r1         Gingerbread             Nexus One, Nexus S, Nexus S 4G'
+  e_ac 'GRJ06D       android-2.3.4_r0.9       Gingerbread             Nexus S 4G'
+  e_ac 'GRI54        android-2.3.3_r1.1       Gingerbread             Nexus S'
+  e_ac 'GRI40        android-2.3.3_r1         Gingerbread             Nexus One, Nexus S'
+  e_ac 'GRH78C       android-2.3.2_r1         Gingerbread             Nexus S'
+  e_ac 'GRH78        android-2.3.1_r1         Gingerbread             Nexus S'
+  e_ac 'GRH55        android-2.3_r1           Gingerbread             earliest Gingerbread version, Nexus S'
+  e_ac 'FRK76C       android-2.2.3_r2         Froyo'
+  e_ac 'FRK76        android-2.2.3_r1         Froyo'
+  e_ac 'FRG83G       android-2.2.2_r1         Froyo                   Nexus One'
+  e_ac 'FRG83D       android-2.2.1_r2         Froyo                   Nexus One'
+  e_ac 'FRG83        android-2.2.1_r1         Froyo                   Nexus One'
+  e_ac 'FRG22D       android-2.2_r1.3         Froyo'
+  e_ac 'FRG01B       android-2.2_r1.2         Froyo'
+  e_ac 'FRF91        android-2.2_r1.1         Froyo                   Nexus One'
+  e_ac 'FRF85B       android-2.2_r1           Froyo                   Nexus One'
+  e_ac 'EPF21B       android-2.1_r2.1p2       Eclair'
+  e_ac 'ESE81        android-2.1_r2.1s        Eclair'
+  e_ac 'EPE54B       android-2.1_r2.1p        Eclair                  Nexus One'
+  e_ac 'ERE27        android-2.1_r2           Eclair                  Nexus One'
+  e_ac 'ERD79        android-2.1_r1           Eclair                  Nexus One'
+  e_ac 'ESD56        android-2.0.1_r1         Eclair'
+  e_ac 'ESD20        android-2.0_r1           Eclair'
+  e_ac 'DMD64        android-1.6_r1.5         Donut'
+  e_ac 'DRD20        android-1.6_r1.4'
+  e_ac 'DRD08        android-1.6_r1.3'
+  e_ac 'DRC92        android-1.6_r1.2'
+}
+
+#
 # Function: _apkv()
 #
 # Return an array with the relevant information of an .apk file
