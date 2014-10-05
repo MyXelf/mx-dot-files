@@ -13,7 +13,7 @@ export MXDF_BASH=$HOME/.bash
 # Path to the BIN section (binaries directory)
 export MXDF_BIN=$HOME/.bin
 
-# Path to the Volatile directory
+# Path to the 'Volatile' workspace
 export MXDF_VOLATILE=/tmp/v
 
 # Name of the 'local' component inside the BASH section and part of the suffix
@@ -35,6 +35,9 @@ export MXDF_BASH_LOCAL=$MXDF_BASH/$BASH_LOCAL_COMPONENT
 
 # Export the PATH variable
 export PATH
+
+# Create 'Volatile' workspace
+[ -d $(dirname $MXDF_VOLATILE) ] && [ ! -d $MXDF_VOLATILE ] && mkdir $MXDF_VOLATILE
 
 # Several Distros has changed the default system shell (/bin/sh) to different
 # command interpreters (i.e. DASH). So load the '~/.bashrc' file only when BASH
