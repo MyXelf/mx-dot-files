@@ -2,28 +2,11 @@
 #  BMARKS - BookMarks Handler [BASH script version]
 #
 #  author    Juan J Gonzalez Cardenas [Jota Jota] - <https://github.com/MyXelf/mx-dot-files>
-#  version   1.0.0.2
-#  date      05.Jan.2014
+#  version   1.0.0.3
+#  date      05.Oct.2014
 #
 #  legal     Copyright (c) 2012-2014. Licensed under the MIT license.
 #
-
-# Define these variables if we are not under the spell of MXDF (and you should)
-if [ -z "$MXDF_ACTIVE" ]; then
-  E_SUCCESS=0
-  E_FAILURE=1
-  I_GRAY='\033[1;30m'
-  I_RED='\033[1;31m'
-  R_COLOR='\033[0m'
-fi
-
-# Define the BMARKS_FILE variable if undefined
-if [ -z "$BMARKS_FILE" ]; then
-  [ -z "$MXDF_ACTIVE" ] && BMARKS_FILE=$HOME/bmarks.bmarks || BMARKS_FILE=$MXDF_BASH_LOCAL/bmarks.bmarks
-fi
-
-# Create the BMARKS_FILE if it doesn't exist
-[ ! -f "$BMARKS_FILE" ] && touch $BMARKS_FILE
 
 #
 # Function: bms()
@@ -31,15 +14,13 @@ fi
 # Save BMark
 #
 bms () {
-  local bmark_match
-  local bmark_name
-  local bmark
+  local bmark_match bmark_name bmark
 
   # Directory already BMarked
   bmark_match=$(grep -m1 " = ${PWD}$" $BMARKS_FILE)
 
   if [ ! -z "$bmark_match" ]; then
-    echo "Directory already BMarked: '$bmark_match'"
+    e_em "Directory already BMarked: '$bmark_match'"
     return $E_FAILURE
   fi
 
@@ -93,7 +74,7 @@ bmv () {
 #
 # Function: bm()
 #
-# Jump to BMark
+# Jump to a previously saved BMark
 #
 # Completion enabled function
 #
@@ -103,11 +84,11 @@ bm () {
   # Get the BMark value
   bmark_value=$(bmv $1)
 
-  # Failure
-  if [ $? -eq $E_FAILURE ]; then
-    echo $bmark_value
-    return $E_FAILURE
-  fi
+  # Invalid BMark name
+  [ $? -eq $E_FAILURE ] && echo $bmark_value && return $E_FAILURE
+
+  # Valid BMark name pointing to non-existent directory
+  [ ! -d "$bmark_value" ] && e_em 'Valid BMark pointing to non-existent directory' && return $E_FAILURE
 
   # Jump to the BMark
   echo "Jumping to: '$bmark_value'"
@@ -117,7 +98,7 @@ bm () {
 #
 # Function: bml()
 #
-# List BMarks
+# List all the defined BMarks
 #
 bml () {
   if [ "$1" = "-v" -o "$1" = "--verbose" ]; then
@@ -133,6 +114,32 @@ bml () {
 #  Base Functions
 # --------------------------------------------------------------------------------------------------
 
+#
+# Function: _bmarks_plugin_init()
+#
+# Setup the plugin required environment (Autoloading Function)
+#
+_bmarks_plugin_init () {
+  # Define the BMARKS_FILE variable if undefined
+  [ -z "$BMARKS_FILE" ] && BMARKS_FILE=$MXDF_BASH_LOCAL/bmarks.bmarks
+
+  # Create the BMARKS_FILE if it doesn't exist
+  [ ! -f "$BMARKS_FILE" ] && touch $BMARKS_FILE
+} &&
+_bmarks_plugin_init
+
+#
+# Function: _bmarks_plugin_help()
+#
+# Display the Help for the plugin and the related functions
+#
+_bmarks_plugin_help () {
+  _mxdf_show_header $BASH_SOURCE
+
+  echo "bmarks is capable of ..."
+
+  _mxdf_show_copyright
+}
 
 # --------------------------------------------------------------------------------------------------
 #  Completion Helpers
