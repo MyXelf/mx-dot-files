@@ -65,6 +65,8 @@ bms () {
 #
 # Return BMark value
 #
+# Completion enabled function
+#
 bmv () {
   local bmark_match
 
@@ -92,6 +94,8 @@ bmv () {
 # Function: bm()
 #
 # Jump to BMark
+#
+# Completion enabled function
 #
 bm () {
   local bmark_value
@@ -125,17 +129,26 @@ bml () {
   fi
 }
 
+# --------------------------------------------------------------------------------------------------
+#  Base Functions
+# --------------------------------------------------------------------------------------------------
+
+
+# --------------------------------------------------------------------------------------------------
+#  Completion Helpers
+# --------------------------------------------------------------------------------------------------
+
 #
 # Function: _bmarks_complete()
 #
-# Word completion for BMarks functions
+# Completion for the BMarks functions
 #
 _bmarks_complete () {
-  local bmark_names cur
+  local cur prev words cword bmarks
+  _init_completion || return
 
-  cur="${COMP_WORDS[COMP_CWORD]}"
-  bmark_names=$(grep -o '^[^# ].*=' $BMARKS_FILE | cut -d' ' -f1)
-  COMPREPLY=( $(compgen -W "$bmark_names" -- "$cur") )
+  bmarks=$(grep -o '^[^# ].*=' $BMARKS_FILE | cut -d' ' -f1)
+  COMPREPLY=( $(compgen -W "$bmarks" -- "$cur") )
 } &&
 complete -F _bmarks_complete bm bmv
 
