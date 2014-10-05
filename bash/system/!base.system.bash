@@ -89,6 +89,15 @@ is_command () {
 }
 
 #
+# Function: is_alias()
+#
+# Determine if the passed argument is a defined 'alias'
+#
+is_alias () {
+  alias "$1" > /dev/null 2>&1
+}
+
+#
 # Function: is_function()
 #
 # Determine if the passed argument is a defined 'function'
