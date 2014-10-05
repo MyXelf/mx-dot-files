@@ -1,9 +1,12 @@
-#
-# MyXelf Dot Files (mx-dot-files) :: Git Ignore File
-#
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# .gitignore - Git Ignore File (MXDF)
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-# Ignore 'local' directory inside the BASH section.
-bash/local
+# Ignore 'Active Items' index files
+.active-items.index
 
-# Ignore '.ackrc' file
-.ackrc
+# Ignore 'local' component inside the BASH section
+bash/local/*
+
+# Ignore 'local' items
+*.local.bash
