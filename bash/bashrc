@@ -1,6 +1,6 @@
-#
+# ~~~~~~~~~~~~~~~~~~~
 # bashrc (MXDF::BASH)
-#
+# ~~~~~~~~~~~~~~~~~~~
 
 # Load '!base.system.bash' first, so the needed functions can be used.
 # Note this file will not be loaded thru '_load_component()' due to the

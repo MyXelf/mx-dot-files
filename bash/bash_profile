@@ -1,8 +1,8 @@
 #!/bin/bash
 
-#
+# ~~~~~~~~~~~~~~~~~~~~~~~~~
 # bash_profile (MXDF::BASH)
-#
+# ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 # Define MXDF as the active Dot Files
 export MXDF_ACTIVE=1
