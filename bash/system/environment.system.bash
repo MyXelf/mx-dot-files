@@ -16,7 +16,7 @@ export MANPAGER='pager -+F --hilite-search --ignore-case --jump-target=.5 -+X --
 # --------------------------------------------------------------------------------------------------
 
 # Ack
-export ACKRC=$MXDF_BASH_LOCAL/ackrc-types
+export ACKRC=$MXDF_BASH_RC/ackrc-types
 export ACK_OPTIONS='--smart-case --sort-files --pager'
 export ACK_COLOR_FILENAME='bold magenta'
 export ACK_COLOR_LINENO='bold green'
@@ -40,7 +40,7 @@ export LESS_TERMCAP_ue=$'\033[0m'                # Matching after Keywords
 is_command lesspipe && eval "$(lesspipe)"
 
 # LS_COLORS (enable 'ls' command to distinguish file types using colors)
-[ -s $MXDF_BASH_LOCAL/dircolors ] && eval "$(dircolors --bourne-shell $MXDF_BASH_LOCAL/dircolors)" || eval "$(dircolors --bourne-shell)"
+[ -s $MXDF_BASH_RC/dircolors ] && eval "$(dircolors --bourne-shell $MXDF_BASH_RC/dircolors)" || eval "$(dircolors --bourne-shell)"
 
 # --------------------------------------------------------------------------------------------------
 #  Environment for Plugins :: See 'plugins' component

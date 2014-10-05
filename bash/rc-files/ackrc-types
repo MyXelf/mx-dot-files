@@ -1,0 +1,15 @@
+# Drupal
+--type-set=drupal:ext:php,module,inc,info,install,engine,theme,profile,test
+
+# MyXelf Information Files
+--type-set=mxinfo:ext:mxinfo
+
+# Markdown
+--type-set=markdown:ext:md,mkd,mkdn,mdown,markd,markdown
+
+# QML
+--type-set=qml:ext:qml
+
+# VIM
+--type-add=vim:is:vimrc
+--type-add=vim:is:.vimrc

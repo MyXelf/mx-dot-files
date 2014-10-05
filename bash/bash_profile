@@ -22,6 +22,9 @@ export BASH_LOCAL_COMPONENT='local'
 
 # --------------------------------------------------------------------------------------------------
 
+# Path to the 'rc-files' component inside the BASH section
+export MXDF_BASH_RC=$MXDF_BASH/rc-files
+
 # Path to the 'local' component inside the BASH section
 export MXDF_BASH_LOCAL=$MXDF_BASH/$BASH_LOCAL_COMPONENT
 
