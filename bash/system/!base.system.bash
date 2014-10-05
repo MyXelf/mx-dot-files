@@ -131,16 +131,46 @@ _load_component_item () {
 #
 # Function: _load_component()
 #
-# Load all "enabled items" from the 'component' directory passed as argument
+# Load all "active items" from the 'component' directory passed as argument
 #
-# An "enabled item" is every file inside the 'component' directory not starting
-# with the characters [!_~.] and following the pattern: <prefix>.<component>.bash
+# On the first cycle, the active items will be the 'upstream' files that are
+# reflected inside the '.active-items.index' file. Only the files following the
+# pattern <prefix>.<component>.bash will be included. If there is no index
+# file, all the files matching the same pattern will be loaded.
+#
+# On the second cycle, the active items will be the 'local' files following
+# the pattern: <prefix>.<component>.<local-component>.bash
+#
+# On both cases all the files starting with the characters [!_~.] will be
+# excluded.
 #
 _load_component () {
-  local component=$1
-  for item in $MXDF_BASH/$component/[^!_~]*.$component.bash; do
+  local component=$1 item
+  local component_dir=$MXDF_BASH/$component
+  local items_index=$component_dir/.active-items.index
+
+  # Load 'upstream' items (including the 'local' component)
+  if [ -s $items_index ]; then
+    # Load valid items reflected in the '.active-items.index' file
+    while read item; do
+      _load_component_item $component_dir/$item.$component.bash
+    done < <(grep '^[^!_~.#]' $items_index)
+  else
+    # Load all valid items because there is no index file
+    for item in $component_dir/[^!_~]*.$component.bash; do
+      _load_component_item $item
+    done
+  fi
+
+  # The 'local' component loads as 'upstream'
+  [ "$component" == 'local' ] && return $E_SUCCESS
+
+  # Load 'local' items
+  for item in $component_dir/[^!_~]*.$component.$BASH_LOCAL_COMPONENT.bash; do
     _load_component_item $item
   done
+
+  return $E_SUCCESS
 }
 
 # --------------------------------------------------------------------------------------------------
