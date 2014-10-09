@@ -42,6 +42,9 @@ is_command lesspipe && eval "$(lesspipe)"
 # LS_COLORS (enable 'ls' command to distinguish file types using colors)
 [ -s $MXDF_BASH_RC/dircolors ] && eval "$(dircolors --bourne-shell $MXDF_BASH_RC/dircolors)" || eval "$(dircolors --bourne-shell)"
 
+# Readline Variables and Key Bindings
+[ -s $MXDF_BASH_RC/inputrc ] && export INPUTRC=$MXDF_BASH_RC/inputrc
+
 # --------------------------------------------------------------------------------------------------
 #  Environment for Plugins :: See 'plugins' component
 # --------------------------------------------------------------------------------------------------
