@@ -3,7 +3,7 @@
 #
 #  author    Juan J Gonzalez Cardenas [Jota Jota] - <https://github.com/MyXelf/mx-dot-files>
 #  version   1.0.0.0
-#  date      09.Mar.2014
+#  date      12.Oct.2014
 #
 #  legal     Copyright (c) 2014. Licensed under the MIT license.
 #
@@ -16,42 +16,100 @@
 av () {
   # Process command line options
   case "$1" in
-    # Display information about the found updates
-    "" )
-      e_hr 'Antivirus Updates' 'Information' '\n'
-
-      IFS=$'\n'
-      local ufile uversion platform ufound
-
-      # NOD32
-      for ufile in $(find -type f -name 'update.ver' -printf '%P\n' | sort -s); do
-        uversion=$(grep '^version=' $ufile | sort -r --key=2.3,2.10 --key=1.9,1.12n | head -1 | cut -d= -f2 | tr '()' '[]')
-        platform=$(grep '^platform=' $ufile | sort -u | cut -d= -f2 | tr '\r\n' '\0.')
-        ufound=1
-
-        e_cm "Update File = $ufile"
-        e_ac "Application : NOD32 .${platform}"
-        e_ac "DB Version  : ${I_YELLOW}${uversion}${R_COLOR}\n"
-      done
-
-      # Kaspersky
-      for ufile in $(find -type f -path '*/index/u0607g.xml' -printf '%P\n' | sort -s); do
-        uversion=$(grep -m1 'UpdateDate=' $ufile | sed -re 's/.*"([0-9]{2})([0-9]{2})([0-9]{4}) ([0-9]{4}).*"/\3\2\1-\4/')
-        ufound=1
-
-        e_cm "Update File = $ufile"
-        e_ac "Application : Kaspersky"
-        e_ac "DB Version  : ${I_YELLOW}${uversion}${R_COLOR}\n"
-      done
-
-      [ -z "$ufound" ] && e_dm 'No Updates Found'
+    --info | -i | '' )
+      local opt_info=1
+      local ehr_title='Information'
       ;;
 
-    # The Help
+    --rename | -r )
+      local opt_rename=1
+      local ehr_title='Rename Tool'
+      ;;
+
     --help | -h )
       _av_updates_plugin_help $FUNCNAME
+      return $E_SUCCESS
+      ;;
+
+    * )
+      e_em "Unknown parameter in command line: $@\n       Try '$FUNCNAME --help' for more information."
+      return $E_FAILURE
       ;;
   esac
+
+  # Available AV Engines. Declare all the engines to be processed
+  local av_engines=( nod kav )
+
+  # AV Engine: NOD32
+  local engine_nod_idxfile='update.ver'
+  local engine_nod_product='NOD32'
+  local engine_nod_version="grep '^version='  \$ufile | sort -r --key=2.3,2.10 --key=1.9,1.12n | head -1 | cut -d= -f2 | tr '()' '[]'"
+  local engine_nod_platfrm="grep '^platform=' \$ufile | sort -u | cut -d= -f2 | tr '\r\n' '\0.'"
+  local engine_nod_dformat="nod32-update \$uversion"
+
+  # AV Engine: Kaspersky
+  local engine_kav_idxfile='index/u0607g.xml'
+  local engine_kav_product='KAV'
+  local engine_kav_version="grep -m1 'UpdateDate=' \$ufile | sed -re 's/.*([0-9]{2})([0-9]{2})([0-9]{4}) ([0-9]{4}).*/\3\2\1-\4/'"
+  local engine_kav_platfrm=''
+  local engine_kav_dformat="kav-update [\${uversion}]"
+
+  e_hr 'Antivirus Updates' $ehr_title '\n'
+
+  local engine ufile product uversion platform ufound action IFS=$'\n'
+  local ivar_idxfile ivar_product ivar_version ivar_platfrm ivar_dformat
+
+  # "Nothing to Do" action return value
+  local ACTION_NTD=2
+
+  # Cycle thru all the previously declared AV Engines
+  for engine in "${av_engines[@]}"; do
+    # Use indirect variables to reference the variables of the current engine
+    ivar_idxfile=engine_${engine}_idxfile
+    ivar_product=engine_${engine}_product
+    ivar_version=engine_${engine}_version
+    ivar_platfrm=engine_${engine}_platfrm
+    ivar_dformat=engine_${engine}_dformat
+
+    for ufile in $(find -type f -path "*/*/${!ivar_idxfile}" -printf '%P\n' 2>/dev/null | sort -s); do
+      product=${!ivar_product}
+      uversion=$(eval ${!ivar_version})
+      platform=$(eval ${!ivar_platfrm})
+      ufound=1
+
+      # Option: Information
+      if [ -n "$opt_info" ]; then
+        e_cm "Update File = $ufile"
+        e_ac "AV Engine   : ${product} ${platform}"
+        e_ac "DB Version  : ${I_YELLOW}${uversion}${R_COLOR}\n"
+      fi
+
+      # Option: Rename
+      if [ -n "$opt_rename" ]; then
+        local source_dir=${ufile%/${!ivar_idxfile}}
+        local target_dir=$(dirname $source_dir)/$(eval echo ${!ivar_dformat})
+        target_dir=${target_dir#./}
+
+        local action=$ACTION_NTD
+
+        e_ac -n "${I_GRAY}${product}${R_COLOR}" \'${source_dir}\' '->' \'${target_dir}\' '... '
+        if [ "$source_dir" != "$target_dir" ]; then
+          mv "$source_dir" "$target_dir" > /dev/null 2>&1
+          action=$?
+        fi
+
+        # Output the result of the operation
+        case "$action" in
+          $ACTION_NTD ) echo 'NTD';;
+          $E_SUCCESS  ) echo 'D!';;
+          $E_FAILURE  ) echo 'I/O Error';;
+          *           ) echo 'Unknown Error';;
+        esac
+      fi
+    done
+  done
+
+  [ -z "$ufound" ] && e_dm 'No Updates Found' || return $E_SUCCESS
 }
 
 # --------------------------------------------------------------------------------------------------
