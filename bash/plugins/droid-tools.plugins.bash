@@ -328,28 +328,20 @@ _droid_tools_plugin_init
 _droid_tools_plugin_help () {
   _mxdf_show_header $BASH_SOURCE
 
-  echo "A suite of tools to ease the interaction with Android devices. Including the"
-  echo "handling of .apk files."
-  echo
-  echo "TOOLS"
-  echo "   _apkv"
-  echo "        Returns an array with the relevant information of an .apk file."
-  echo "        This function is for internal use only."
-  echo
-  echo "    apki"
-  echo "        Returns the relevant information retrieved from the _apkv() function."
-  echo
-  echo "    apkr"
-  echo "        Renames .apk files. This function will avoid overwriting existing files."
-  echo "        There is a template file that will define the output pattern."
-  echo "        The template file should be located in $APKR_TEMPLATES"
-  echo
-  echo "        The possible results are:"
-  echo "          D!            - Done!"
-  echo "          NTD           - Nothing to Do. Resulting filename is the same as the current one."
-  echo "          I/O Error     - Some error, probably renaming the file."
-  echo "          Unknown Error - That's it."
-  echo
+  case "$1" in
+    apk ) cat <<__HEREDOC_APK_HELP
+TBW!
+__HEREDOC_APK_HELP
+      ;;
+
+    afwi ) cat <<__HEREDOC_AFWI_HELP
+TBW!
+__HEREDOC_AFWI_HELP
+      ;;
+
+    * ) _describe_component_item $BASH_SOURCE
+      ;;
+  esac
 
   _mxdf_show_copyright
 }

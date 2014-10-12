@@ -136,7 +136,15 @@ _bmarks_plugin_init
 _bmarks_plugin_help () {
   _mxdf_show_header $BASH_SOURCE
 
-  echo "bmarks is capable of ..."
+  case "$1" in
+    bm ) cat <<__HEREDOC_BM_HELP
+TBW!
+__HEREDOC_BM_HELP
+      ;;
+
+    * ) _describe_component_item $BASH_SOURCE
+      ;;
+  esac
 
   _mxdf_show_copyright
 }

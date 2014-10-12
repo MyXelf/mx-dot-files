@@ -108,7 +108,7 @@ penv_funcs () {
 # Display all Shell variables and functions
 #
 penv () {
-  [[ $1 = '-h' || $1 = '--help' ]] && _printenv_plugin_help && return $E_SUCCESS
+  [[ $1 = '-h' || $1 = '--help' ]] && _printenv_plugin_help $FUNCNAME && return $E_SUCCESS
 
   for type in 'evars' 'lvars' 'funcs'; do
     penv_$type "$@"
@@ -128,35 +128,43 @@ penv () {
 _printenv_plugin_help () {
   _mxdf_show_header $BASH_SOURCE
 
-  echo "penv is capable of printing the shell environment, showing only declarations"
-  echo "that match an specified pattern and with deal control of the output format."
-  echo
-  echo "Usage:"
-  echo "  penv [<option>] [<pattern>] [<header>] [<format>] [<joiner>]"
-  echo
-  echo "  <pattern>    an Extended RE to filter the declarations to output, the match"
-  echo "               is only done on the left-value part of the declarations"
-  echo "  <header>     output string that will precede the results, use '-' to display"
-  echo "               no header"
-  echo "  <format>     string supported by printf() defining the format of the output,"
-  echo "               with 4 placeholders for the predefined variables"
-  echo "  <joiner>     string to print between the left-value and the right-value of"
-  echo "               the declarations to output"
-  echo
-  echo "Example:"
-  echo "  penv_lvars 'bash_(arg|ver)' 'BASH Vars Demo' '%-5s %s %s %s\n' '<=>'"
-  echo
-  echo "Options:"
-  echo "  -c           pattern matching case-sensitive, by default is case-insensitive"
-  echo "  -h, --help   print this help message and exit (valid option only for penv)"
-  echo
-  echo "There are three predefined categories to work on. For each category there is a"
-  echo "helper tool to aid in the filtering:"
-  echo
-  echo "  penv_evars   print the 'Environment Variables (Exported)'"
-  echo "  penv_lvars   print the 'Local Variables'"
-  echo "  penv_funcs   print the defined shell 'Functions'"
-  echo "  penv         comprise the output of the three tools together"
+  case "$1" in
+    penv ) cat <<__HEREDOC_PENV_HELP
+$1 is capable of printing the shell environment, showing only declarations
+that match an specified pattern and with deal control of the output format.
+
+Usage:
+  $1 [<option>] [<pattern>] [<header>] [<format>] [<joiner>]
+
+  <pattern>    an Extended RE to filter the declarations to output, the match
+               is only done on the left-value part of the declarations
+  <header>     output string that will precede the results, use '-' to display
+               no header
+  <format>     string supported by printf() defining the format of the output,
+               with 4 placeholders for the predefined variables
+  <joiner>     string to print between the left-value and the right-value of
+               the declarations to output
+
+Example:
+  penv_lvars 'bash_(arg|ver)' 'BASH Vars Demo' '%-5s %s %s %s\n' '<=>'
+
+Options:
+  -c           pattern matching case-sensitive, by default is case-insensitive
+  -h, --help   print this help message and exit (valid option only for penv)
+
+There are three predefined categories to work on. For each category there is a
+helper tool to aid in the filtering:
+
+  penv_evars   print the 'Environment Variables (Exported)'
+  penv_lvars   print the 'Local Variables'
+  penv_funcs   print the defined shell 'Functions'
+  penv         comprise the output of the three tools together
+__HEREDOC_PENV_HELP
+      ;;
+
+    * ) _describe_component_item $BASH_SOURCE
+      ;;
+  esac
 
   _mxdf_show_copyright
 }

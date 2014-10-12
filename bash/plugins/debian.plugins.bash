@@ -43,34 +43,7 @@ alinks () {
         ;;
 
       --help | -h )
-        _mxdf_show_header $BASH_SOURCE
-
-        echo "alinks is a front-end to the \"apt-get --print-uris\" command to ease the handling"
-        echo "of packages URLs. Each line will contain the size (in human readable format),"
-        echo "the URL and optionally the MD5 checksum of the related package."
-        echo
-        echo "The URLs of the selected packages can be output (or appended) to a file that can"
-        echo "be used later with a Download Manager (-f option)."
-        echo
-        echo "The default is 'dist-upgrade' if no command is specified. BASH completion is"
-        echo "available for the commands, options and packages names."
-        echo
-        echo "Usage:"
-        echo "  alinks [<options>] [upgrade | dist-upgrade]"
-        echo "  alinks [<options>] install <dpk1> [<dpk2> ...]"
-        echo
-        echo "Example:"
-        echo "  alinks -f install kdevelop"
-        echo
-        echo "Options:"
-        echo "  -a, --append    append the results to the output file (implies -f)"
-        echo "  -f, --file      output only the URLs to the file \"${output_file}\""
-        echo "  -l, --list      display the content of the default output file"
-        echo "  -v, --verbose   be verbose (include the MD5 checksum for each package)"
-        echo "  -h, --help      print this help message and exit"
-
-        _mxdf_show_copyright
-
+        _debian_plugin_help $FUNCNAME
         return $E_SUCCESS
         ;;
 
@@ -132,6 +105,48 @@ alinks () {
   return $E_SUCCESS
 }
 
+#
+# Function: _debian_plugin_help()
+#
+# Display the Help for the plugin and the related functions
+#
+_debian_plugin_help () {
+  _mxdf_show_header $BASH_SOURCE
+
+  case "$1" in
+    alinks ) cat <<__HEREDOC_ALINKS_HELP
+alinks is a front-end to the "apt-get --print-uris" command to ease the
+handling of packages URLs. Each line will contain the size (in human readable
+format), the URL and optionally the MD5 checksum of the related package.
+
+The URLs of the selected packages can be output (or appended) to a file that
+can be used later with a Download Manager (-f option).
+
+The default is 'dist-upgrade' if no command is specified. BASH completion is
+available for the commands, options and packages names.
+
+Usage:
+  alinks [<options>] [upgrade | dist-upgrade]
+  alinks [<options>] install <dpk1> [<dpk2> ...]
+
+Example:
+  alinks -f install kdevelop
+
+Options:
+  -a, --append    append the results to the output file (implies -f)
+  -f, --file      output only the URLs to the file "${output_file}"
+  -l, --list      display the content of the default output file
+  -v, --verbose   be verbose (include the MD5 checksum for each package)
+  -h, --help      print this help message and exit
+__HEREDOC_ALINKS_HELP
+      ;;
+
+    * ) _describe_component_item $BASH_SOURCE
+      ;;
+  esac
+
+  _mxdf_show_copyright
+}
 
 # --------------------------------------------------------------------------------------------------
 #  Aliases Definitions

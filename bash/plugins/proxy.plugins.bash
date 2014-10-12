@@ -177,7 +177,7 @@ proxy () {
 
     # The Help
     --help | -h )
-      _proxy_plugin_help
+      _proxy_plugin_help $FUNCNAME
       ;;
 
     # Unknown Option
@@ -214,7 +214,15 @@ _proxy_plugin_init
 _proxy_plugin_help () {
   _mxdf_show_header $BASH_SOURCE
 
-  echo "proxy is capable of ..."
+  case "$1" in
+    proxy ) cat <<__HEREDOC_PROXY_HELP
+TBW!
+__HEREDOC_PROXY_HELP
+      ;;
+
+    * ) _describe_component_item $BASH_SOURCE
+      ;;
+  esac
 
   _mxdf_show_copyright
 }

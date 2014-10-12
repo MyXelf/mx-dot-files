@@ -48,7 +48,7 @@ av () {
 
     # The Help
     --help | -h )
-      _av_updates_plugin_help
+      _av_updates_plugin_help $FUNCNAME
       ;;
   esac
 }
@@ -61,7 +61,39 @@ av () {
 _av_updates_plugin_help () {
   _mxdf_show_header $BASH_SOURCE
 
-  echo "av-updates is capable of ..."
+  case "$1" in
+    av ) cat <<__HEREDOC_AV_HELP
+$1 is meant to ease the process of dealing with everyday offline Antivirus
+updates by providing information that can be handy and not obvious by simple
+eye inspection.
+
+The reported data will vary, depending on the information provided by the AV
+engine in question, but will always include the AV engine name and the version
+of the updates files.
+
+$1 works at the containing folder level meaning that invoking it from inside
+the updates directory will report '- No Updates Found -'. If in doubt go up one
+level in the directory hierarchy and execute the command again.
+
+$1 will descend through the directory tree of the current working directory, so
+it can be used to quickly spot AV updates contained inside huge applications
+repositories or an entire partition if desired.
+
+Usage:
+  $1 [<option>]
+
+  When no <option> specified, same as --info (-i)
+
+Options:
+  -i, --info      print information about the found AV updates
+  -r, --rename    rename the container folders of the available AV engines
+  -h, --help      print this help message and exit
+__HEREDOC_AV_HELP
+      ;;
+
+    * ) _describe_component_item $BASH_SOURCE
+      ;;
+  esac
 
   _mxdf_show_copyright
 }
