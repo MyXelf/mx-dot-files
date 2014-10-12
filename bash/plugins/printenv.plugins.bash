@@ -3,7 +3,7 @@
 #
 #  author    Juan J Gonzalez Cardenas [Jota Jota] - <https://github.com/MyXelf/mx-dot-files>
 #  version   1.0.0.3
-#  date      14.Mar.2014
+#  date      12.Oct.2014
 #
 #  legal     Copyright (c) 2013-2014. Licensed under the MIT license.
 #

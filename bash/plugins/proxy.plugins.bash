@@ -3,7 +3,7 @@
 #
 #  author    Juan J Gonzalez Cardenas [Jota Jota] - <https://github.com/MyXelf/mx-dot-files>
 #  version   1.0.0.0
-#  date      02.Jan.2014
+#  date      12.Oct.2014
 #
 #  legal     Copyright (c) 2014. Licensed under the MIT license.
 #
@@ -146,7 +146,7 @@ _proxy_activate_preset () {
 #
 # Function: proxy()
 #
-# Interface to the 'Proxy Handler'
+# Helper tool to work with the Proxy settings at the system level
 #
 proxy () {
   case "$1" in
@@ -175,12 +175,10 @@ proxy () {
       $EDITOR $PROXY_PRESETS_FILE
       ;;
 
-    # The Help
     --help | -h )
       _proxy_plugin_help $FUNCNAME
       ;;
 
-    # Unknown Option
     * )
       e_em "Unknown parameter in command line: $@\n       Try '$FUNCNAME --help' for more information."
       ;;

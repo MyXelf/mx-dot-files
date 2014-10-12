@@ -128,7 +128,7 @@ _apkv () {
   local apk_line
 
   if [ ! -f "$1" ]; then
-    e_em 'Please provide a valid .apk file.'
+    e_em "No $1 file. Please provide a valid .apk file." '\n'
     return $E_FAILURE
   fi
 
@@ -173,7 +173,7 @@ apki () {
   for apk_file in "$@"; do
     _apkv "$apk_file"
 
-    [ $? -eq $E_FAILURE ] && return $E_FAILURE
+    [ $? -eq $E_FAILURE ] && continue
 
     e_cm 'File Name    =' $apk_file
     e_ac 'Application  :' ${apkv_return[${apkv_pos['label']}]}
@@ -352,3 +352,4 @@ __HEREDOC_AFWI_HELP
 
 alias fastboot='sudo fastboot'
 alias fb='fastboot'
+

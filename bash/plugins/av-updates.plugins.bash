@@ -11,9 +11,10 @@
 #
 # Function: av()
 #
-# Interface to the 'Antivirus Updates Helper'
+# Handle the common operations on the known Antivirus Updates files
 #
 av () {
+  # Process command line options
   case "$1" in
     # Display information about the found updates
     "" )
@@ -52,6 +53,10 @@ av () {
       ;;
   esac
 }
+
+# --------------------------------------------------------------------------------------------------
+#  Base Functions
+# --------------------------------------------------------------------------------------------------
 
 #
 # Function: _av_updates_plugin_help()

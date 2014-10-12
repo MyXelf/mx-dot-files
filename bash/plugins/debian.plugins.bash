@@ -22,7 +22,7 @@ alinks () {
   local url_pattern="(.*/)([^_]*)(.*)"
   local grand_size=0 count=0
 
-  # Process functions options
+  # Process command line options
   while [ ! -z "$1" ]; do
     case "$1" in
       --append | -a )
@@ -104,6 +104,10 @@ alinks () {
 
   return $E_SUCCESS
 }
+
+# --------------------------------------------------------------------------------------------------
+#  Base Functions
+# --------------------------------------------------------------------------------------------------
 
 #
 # Function: _debian_plugin_help()
