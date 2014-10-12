@@ -173,6 +173,23 @@ _load_component () {
   return $E_SUCCESS
 }
 
+#
+# Function: _describe_component_item()
+#
+# Display the relevant information from an specific item
+#
+_describe_component_item () {
+  # TODO: Prototype TBDev!
+  local item
+
+  while read item; do
+    case "$item" in
+      '# Function:'* ) echo $item;;
+      '# '*          ) echo -e $item '\n';;
+    esac
+  done < <(grep -A3 '^# Function: [^_]' $1)
+}
+
 # --------------------------------------------------------------------------------------------------
 #  Echo Helpers
 # --------------------------------------------------------------------------------------------------
@@ -262,7 +279,7 @@ e_wm () {
 # Display the information extracted from the header of a MXDF file
 #
 _mxdf_show_header () {
-  local name desc version date
+  local item value name desc version date
 
   while read _ item value; do
     case "$item" in
