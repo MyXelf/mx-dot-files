@@ -2,8 +2,8 @@
 #  DROID-TOOLS - Android Tools Suite [BASH script version]
 #
 #  author    Juan J Gonzalez Cardenas [Jota Jota] - <https://github.com/MyXelf/mx-dot-files>
-#  version   1.0.0.4
-#  date      12.Jan.2014
+#  version   1.0.0.5
+#  date      12.Oct.2014
 #
 #  legal     Copyright (c) 2012-2014. Licensed under the MIT license.
 #
@@ -257,6 +257,101 @@ apkr () {
       $E_SUCCESS  ) echo 'D!';;
       $E_FAILURE  ) echo 'I/O Error';;
       *           ) echo 'Unknown Error';;
+    esac
+  done
+
+  return $E_SUCCESS
+}
+
+#
+# Function: afwi()
+#
+# Return the relevant information obtained from FW files
+#
+afwi () {
+  # Process command line options
+  case "$1" in
+    --list | -l )
+      local opt_list=1
+      shift
+      ;;
+
+    --help | -h )
+      _droid_tools_plugin_help $FUNCNAME
+      return $E_SUCCESS
+      ;;
+  esac
+
+  e_hr 'Android Tools Suite' 'Firmware Information Tool' '\n'
+
+  local fw_file m_prop m_value e_md5 e_rfn n_md5 embedded_length rcode
+
+  for fw_file in "$@"; do
+    if [ ! -f "$fw_file" ]; then
+      e_em "No $fw_file file. Please provide a valid Android Firmware file." '\n'
+      continue
+    fi
+
+    e_cm 'AFW File Name      =' $fw_file
+
+    case $fw_file in
+      # Sony / Sony Ericsson FW file
+      *.ftf )
+        e_ac 'FW Manufacturer    : Sony / Sony Ericsson'
+        e_ac 'FW Flashing Tool   : FlashTool'
+
+        # Read Manifest interesting values
+        IFS=': '
+        while read m_prop m_value; do
+          case "$m_prop" in
+            device   ) e_ac 'Manifest Device    :' $m_value;;
+            branding ) e_ac 'Manifest Branding  :' $m_value;;
+            version  ) e_ac 'Manifest Version   :' $m_value;;
+          esac
+        done < <(unzip -p "$fw_file" META-INF/MANIFEST.MF)
+
+        echo
+        [ -n "$opt_list" ] && unzip -v "$fw_file" | grep -F '%' | column -t | sed 's/^/  /' && echo
+        ;;
+
+      # Samsung FW file
+      *.tar.md5 )
+        # Workaround: Obtain the last 256 characters from the end of the file
+        # and extract the MD5 and the original filename from that region.
+        IFS='  ' read -r e_md5 e_rfn < <(tail -c256 $fw_file 2> /dev/null)
+
+        e_ac 'FW Manufacturer    : Samsung'
+        e_ac 'FW Flashing Tool   : Heimdall / Odin'
+
+        [[ -z $e_rfn || -z $e_md5 ]] && echo -n '  ' && e_em 'Malformed or corrupt Samsung Firmware file' '\n' && continue
+
+        e_ac 'Embedded File Name :' $e_rfn
+        e_ac 'Embedded MD5 Check :' $e_md5
+
+        # Calculate MD5 for validation purposes (unless asked for TAR content)
+        if [ -z "$opt_list" ]; then
+          echo -en "  ${I_GRAY}- Calculating MD5 Sum -${R_COLOR}"
+
+          # Amount of content (in characters) to exclude from actual MD5 sum
+          # equals to MD5 length + Filename length + 3 (2 spaces + \0A)
+          let "embedded_length = ${#e_md5} + ${#e_rfn} + 3"
+          read n_md5 _ < <(head --bytes=-$embedded_length $fw_file | md5sum)
+
+          [ "$e_md5" = "$n_md5" ] && rcode="${I_YELLOW}OK!${R_COLOR}" || rcode="${RED}FAILED!${R_COLOR}"
+
+          echo -en '\r'; e_ac 'Calculated MD5 Sum :' $n_md5 "-" $rcode '\n'
+        else
+          echo
+          # Include the TAR file content (if option given)
+          tar --list --verbose --file $fw_file | column -t | sed 's/^/  /' && echo
+        fi
+        ;;
+
+      # Unknown FW file
+      * )
+        e_dm 'Unknown Android Firmware format'
+        echo
+        ;;
     esac
   done
 
