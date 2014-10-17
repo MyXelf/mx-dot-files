@@ -1,14 +1,14 @@
 # PS Fragment :: LCRV (Last Command Resulting Value)
-PS_LCRV='$([ $LCRV -eq 0 ] && echo -e "\[${WHITE}\]√ " || echo -e "\[${I_RED}\]× ")'
+PS_LCRV='$([ $LCRV -eq 0 ] && echo -e "\[${WHITE}\]✔ \[${GRAY}\]\t\[${R_COLOR}\]" || echo -e "\[${RED}\]✘ \[${I_RED}\]\t\[${R_COLOR}\]")'
 
 # PS Fragment :: OOSM (Out-Of-Service Mode)
-PS_OOSM='$(oosm_active && echo -e " \[${WHITE}\]○\[${R_COLOR}\] " || echo " ")'
+PS_OOSM='$(oosm_active && echo -e " \[${WHITE}\]⭤\[${R_COLOR}\] " || echo " ")'
 
 # PS Fragment :: USER_COLOR (Root or Regular Users)
 is_user_root && PS_USER_COLOR=${RED} || PS_USER_COLOR=${I_GREEN}
 
 # Prompt Statement 1 :: Interactive Default
-PS1="\n${PS_LCRV}\t${PS_OOSM}\[${PS_USER_COLOR}\]\u@\h\[${WHITE}\]:\[${I_BLUE}\]\w\[${R_COLOR}\] \[${I_MAGENTA}\]\$(__git_ps1 '[%s] ')\[${WHITE}\]»\[${R_COLOR}\] "
+PS1="\n${PS_LCRV}${PS_OOSM}\[${PS_USER_COLOR}\]\u@\h\[${WHITE}\]:\[${I_BLUE}\]\w\[${R_COLOR}\] \[${I_MAGENTA}\]\$(__git_ps1 '⭠ %s ')\[${WHITE}\]»\[${R_COLOR}\] "
 
 # Prompt Statement 2 :: Interactive Continuation
 PS2='continue-> '
