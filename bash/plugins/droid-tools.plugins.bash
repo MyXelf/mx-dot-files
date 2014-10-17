@@ -445,6 +445,7 @@ __HEREDOC_AFWI_HELP
 #  Aliases Definitions
 # --------------------------------------------------------------------------------------------------
 
+alias @adb='adb shell'
 alias fastboot='sudo fastboot'
 alias fb='fastboot'
 
