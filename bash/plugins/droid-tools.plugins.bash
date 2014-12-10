@@ -194,7 +194,7 @@ apki () {
 apkr () {
   e_hr 'Android Tools Suite' 'APK Rename Tool' '\n'
 
-  local apk_file template_match filename_prefix apk_filename filename_suffix action xtra
+  local apk_file template_match filename_prefix apk_filename filename_suffix xtra
 
   for apk_file in "$@"; do
     _apkv "$apk_file"
@@ -230,7 +230,7 @@ apkr () {
     filename_suffix=
 
     # "Nothing to Do" action return value
-    local ACTION_NTD=2
+    local ACTION_NTD=2 action=
 
     # TODO
     # Here is an error in the logic of the unclashing process. The NTD
