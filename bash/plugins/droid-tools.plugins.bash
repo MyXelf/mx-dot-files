@@ -26,6 +26,9 @@ asdk () {
     e_ac "$api_level"
   done
 
+  echo
+  e_cm "Reference: https://source.android.com/source/build-numbers.html"
+
   [[ $1 != '-v' && $1 != '--verbose' ]] && return $E_SUCCESS
 
   # Source Code Tags and Builds
@@ -34,6 +37,15 @@ asdk () {
   echo
 
   e_cm 'Build        Branch                   Version                 Supported Devices'
+  e_ac 'LRX22C       android-5.0.1_r1         Lollipop                Nexus 7 (flo), Nexus 9 (volantis), Nexus 10'
+  e_ac 'LRX21V       android-5.0.0_r7.0.1     Lollipop                Nexus Player (fugu)'
+  e_ac 'LRX21T       android-5.0.0_r6.0.1     Lollipop                Nexus 4'
+  e_ac 'LRX21R       android-5.0.0_r5.1.0.1   Lollipop                Nexus 9 (volantis)'
+  e_ac 'LRX21Q       android-5.0.0_r5.0.1     Lollipop                Nexus 9 (volantis)'
+  e_ac 'LRX21P       android-5.0.0_r4.0.1     Lollipop                Nexus 7 (flo/grouper), Nexus 10'
+  e_ac 'LRX21O       android-5.0.0_r3.0.1     Lollipop                Nexus 5 (hammerhead), Nexus 6 (shamu)'
+  e_ac 'LRX21M       android-5.0.0_r2.0.1     Lollipop                Nexus Player (fugu)'
+  e_ac 'LRX21L       android-5.0.0_r1.0.1     Lollipop                Nexus 9 (volantis)'
   e_ac 'KTU84Q       android-4.4.4_r2         KitKat                  Nexus 5 (hammerhead) (For 2Degrees/NZ, Telstra/AUS and India ONLY)'
   e_ac 'KTU84P       android-4.4.4_r1         KitKat                  Nexus 5, Nexus 7 (flo/grouper/tilapia), Nexus 4, Nexus 10'
   e_ac 'KTU84M       android-4.4.3_r1.1       KitKat                  Nexus 5 (hammerhead)'
@@ -412,6 +424,7 @@ _droid_tools_plugin_init () {
   aapi_level[17]='Jelly Bean          | 4.2.x         | API 17'
   aapi_level[18]='Jelly Bean          | 4.3.x         | API 18'
   aapi_level[19]='KitKat              | 4.4 - 4.4.4   | API 19'
+  aapi_level[21]='Lollipop            | 5.0           | API 21'
 } &&
 _droid_tools_plugin_init
 
