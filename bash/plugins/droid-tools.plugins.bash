@@ -3,7 +3,7 @@
 #
 #  author    Juan J Gonzalez Cardenas [Jota Jota] - <https://github.com/MyXelf/mx-dot-files>
 #  version   1.0.0.5
-#  date      12.Oct.2014
+#  date      10.Dec.2014
 #
 #  legal     Copyright (c) 2012-2014. Licensed under the MIT license.
 #
@@ -123,7 +123,7 @@ asdk () {
 _apkv () {
   # Regular Expressions patterns
   local pattern_app="application: label='(.*)' icon="
-  local pattern_pkg="package: name='(.*)' versionCode='(.*)' versionName='(.*)'"
+  local pattern_pkg="package: name='(.*)' versionCode='(.*)' versionName='([^']*)'"
   local pattern_sdk="sdkVersion:'(.*)'"
   local apk_line
 
