@@ -128,11 +128,11 @@ asdk () {
 }
 
 #
-# Function: _apkv()
+# Function: _apk_xtract_values()
 #
 # Return an array with the relevant information of an .apk file
 #
-_apkv () {
+_apk_xtract_values () {
   # Regular Expressions patterns
   local pattern_app="application: label='(.*)' icon="
   local pattern_pkg="package: name='(.*)' versionCode='(.*)' versionName='([^']*)'"
@@ -173,106 +173,145 @@ _apkv () {
 }
 
 #
-# Function: apki()
+# Function: _apk_information()
 #
-# Return the relevant information returned from apkv() function
+# Display the relevant information from an .apk file
 #
-apki () {
-  e_hr 'Android Tools Suite' 'APK Information Tool' '\n'
+_apk_information () {
+  local apk_file=$1
 
-  local apk_file
+  _apk_xtract_values "$apk_file"
 
-  for apk_file in "$@"; do
-    _apkv "$apk_file"
+  [ $? -eq $E_FAILURE ] && return $E_FAILURE
 
-    [ $? -eq $E_FAILURE ] && continue
-
-    e_cm 'File Name    =' $apk_file
-    e_ac 'Application  :' ${apkv_return[${apkv_pos['label']}]}
-    e_ac 'Package Name :' ${apkv_return[${apkv_pos["packn"]}]}
-    e_ac 'Version Name :' ${apkv_return[${apkv_pos["vname"]}]}
-    e_ac 'Version Code :' ${apkv_return[${apkv_pos["vcode"]}]}
-    e_ac 'Android vOS  :' ${aapi_level[${apkv_return[${apkv_pos["asdkv"]}]}]} '\n'
-  done
+  e_cm 'File Name    =' $apk_file
+  e_ac 'Application  :' ${apkv_return[${apkv_pos['label']}]}
+  e_ac 'Package Name :' ${apkv_return[${apkv_pos["packn"]}]}
+  e_ac 'Version Name :' ${apkv_return[${apkv_pos["vname"]}]}
+  e_ac 'Version Code :' ${apkv_return[${apkv_pos["vcode"]}]}
+  e_ac 'Android vOS  :' ${aapi_level[${apkv_return[${apkv_pos["asdkv"]}]}]} '\n'
 
   return $E_SUCCESS
 }
 
 #
-# Function: apkr()
+# Function: _apk_rename_file()
 #
-# Rename .apk files
+# Rename a single .apk file
 #
-apkr () {
-  e_hr 'Android Tools Suite' 'APK Rename Tool' '\n'
+_apk_rename_file () {
+  local apk_file=$1 template_match filename_prefix apk_filename filename_suffix xtra
 
-  local apk_file template_match filename_prefix apk_filename filename_suffix xtra
+  _apk_xtract_values "$apk_file"
 
-  for apk_file in "$@"; do
-    _apkv "$apk_file"
+  [ $? -eq $E_FAILURE ] && return $E_FAILURE
 
-    [ $? -eq $E_FAILURE ] && return $E_FAILURE
+  # Look for the package name inside the templates and obtain the prefix to use
+  # TODO: Use BASH_REMATCH instead of the pipe, to improve performance
+  [ -f $APKR_TEMPLATES ] && template_match=$(grep -m1 "^${apkv_return[${apkv_pos["packn"]}]} =" $APKR_TEMPLATES | cut -d' ' -f3-)
 
-    # Look for the package name inside the templates and obtain the prefix to use
-    # TODO: Use BASH_REMATCH instead of the pipe, to improve performance
-    [ -f $APKR_TEMPLATES ] && template_match=$(grep -m1 "^${apkv_return[${apkv_pos["packn"]}]} =" $APKR_TEMPLATES | cut -d' ' -f3-)
+  # Reflect if a template was found
+  if [ -n "$template_match" ]; then
+    filename_prefix=$template_match
+    xtra=" ${RED}[T]${R_COLOR}"
+  else
+    # Use the application name or the package name as the filename prefix
+    [ -n "${apkv_return[${apkv_pos['label']}]}" ] && filename_prefix=${apkv_return[${apkv_pos['label']}]} || filename_prefix=${apkv_return[${apkv_pos["packn"]}]}
+    xtra=
+  fi
 
-    # Reflect if a template was found
-    if [ -n "$template_match" ]; then
-      filename_prefix=$template_match
-      xtra=" [T]"
-    else
-      # Use the application name or the package name as the filename prefix
-      [ -n "${apkv_return[${apkv_pos['label']}]}" ] && filename_prefix=${apkv_return[${apkv_pos['label']}]} || filename_prefix=${apkv_return[${apkv_pos["packn"]}]}
-      xtra=
-    fi
+  # Append the version name (if existent)
+  [ -n "${apkv_return[${apkv_pos["vname"]}]}" ] && filename_prefix=${filename_prefix}-${apkv_return[${apkv_pos["vname"]}]}
 
-    # Append the version name (if existent)
-    [ -n "${apkv_return[${apkv_pos["vname"]}]}" ] && filename_prefix=${filename_prefix}-${apkv_return[${apkv_pos["vname"]}]}
+  # Replace spaces with hyphens
+  # TODO: Filter the rest of invalid characters in $filename_prefix
+  filename_prefix=${filename_prefix// /-}
 
-    # Replace spaces with hyphens
-    # TODO: Filter the rest of invalid characters in $filename_prefix
-    filename_prefix=${filename_prefix// /-}
+  # Lowercase the filename
+  filename_prefix=${filename_prefix,,}
 
-    # Lowercase the filename
-    filename_prefix=${filename_prefix,,}
+  # Conform the initial filename
+  apk_filename=${filename_prefix}.apk
+  filename_suffix=
 
-    # Conform the initial filename
-    apk_filename=${filename_prefix}.apk
-    filename_suffix=
+  # "Nothing to Do" action return value
+  local ACTION_NTD=2 action=
 
-    # "Nothing to Do" action return value
-    local ACTION_NTD=2 action=
+  # TODO
+  # Here is an error in the logic of the unclashing process. The NTD
+  # action must be determined before checking if the current file exists. If
+  # there are 2 files (t.apk => x.apk) and (x.apk => z.apk) ... TBC
 
-    # TODO
-    # Here is an error in the logic of the unclashing process. The NTD
-    # action must be determined before checking if the current file exists. If
-    # there are 2 files (t.apk => x.apk) and (x.apk => z.apk) ... TBC
-
-    # Determine the needed suffix to avoid clashing with already existent files
-    while [ -f "$apk_filename" ]; do
-      [ "$apk_file" = "$apk_filename" ] && action=$ACTION_NTD && break
-      let filename_suffix--
-      apk_filename=${filename_prefix}${filename_suffix}.apk
-    done
-
-    e_ac -n ${apk_file} '=' ${apk_filename}${xtra} '... '
-
-    if [ "$action" != "$ACTION_NTD" ]; then
-      mv "$apk_file" "$apk_filename" > /dev/null 2>&1
-      action=$?
-    fi
-
-    # Output the result of the operation
-    case "$action" in
-      $ACTION_NTD ) echo 'NTD';;
-      $E_SUCCESS  ) echo 'D!';;
-      $E_FAILURE  ) echo 'I/O Error';;
-      *           ) echo 'Unknown Error';;
-    esac
+  # Determine the needed suffix to avoid clashing with already existent files
+  while [ -f "$apk_filename" ]; do
+    [ "$apk_file" = "$apk_filename" ] && action=$ACTION_NTD && break
+    let filename_suffix--
+    apk_filename=${filename_prefix}${filename_suffix}.apk
   done
 
+  e_ac -n ${apk_file} "${WHITE}->${R_COLOR}" ${apk_filename}${xtra} "${WHITE}...${R_COLOR} "
+
+  if [ "$action" != "$ACTION_NTD" ]; then
+    mv "$apk_file" "$apk_filename" > /dev/null 2>&1
+    action=$?
+  fi
+
+  # Output the result of the operation
+  case "$action" in
+    $ACTION_NTD ) e_hc "${I_GRAY}NTD${R_COLOR}";;
+    $E_SUCCESS  ) e_hc "${I_YELLOW}D!${R_COLOR}";;
+    $E_FAILURE  ) echo 'I/O Error';;
+    *           ) echo 'Unknown Error';;
+  esac
+
   return $E_SUCCESS
+}
+
+#
+# Function: apk()
+#
+# Interface to ease the handling of Android Package files
+#
+apk () {
+  # Process command line options
+  case "$1" in
+    --info | -i )
+      local opt_action='info'
+      local ehr_title='APK Information Tool'
+      ;;
+
+    --rename | -r )
+      local opt_action='rename'
+      local ehr_title='APK Rename Tool'
+      ;;
+
+    # Edit the APKR_TEMPLATES file
+    --edit | -e )
+      $EDITOR $APKR_TEMPLATES
+      return $?
+      ;;
+
+    --help | -h )
+      _droid_tools_plugin_help $FUNCNAME
+      return $E_SUCCESS
+      ;;
+
+    * )
+      e_em "Unknown parameter in command line: $@\n       Try '$FUNCNAME --help' for more information."
+      return $E_FAILURE
+      ;;
+  esac
+  shift
+
+  e_hr 'Android Tools Suite' $ehr_title '\n'
+
+  local apk_file
+  for apk_file in ${@:-*.apk}; do
+    case "$opt_action" in
+      info   ) _apk_information "$apk_file";;
+      rename ) _apk_rename_file "$apk_file";;
+    esac
+  done
 }
 
 #
@@ -389,10 +428,10 @@ dtools () {
 # Setup the plugin required environment (Autoloading Function)
 #
 _droid_tools_plugin_init () {
-  # Define the location of the templates for the apkr() function
+  # Define the location of the templates file
   [ -z "$MXDF_ACTIVE" ] && APKR_TEMPLATES=$MXDF_BASH_LOCAL/droid-tools.apkr
 
-  # The array returning the values from the _apkv() function
+  # The array returning the values from the _apk_xtract_values() function
   declare -a -g apkv_return
 
   # Values positions in the returning array
