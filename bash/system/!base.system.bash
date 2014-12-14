@@ -184,8 +184,8 @@ _describe_component_item () {
 
   while read item; do
     case "$item" in
-      '# Function:'* ) echo $item;;
-      '# '*          ) echo -e $item '\n';;
+      '# Function:'* ) e_ac "Function: ${WHITE}${item:12}${R_COLOR}";;
+      '# '*          ) e_hc "  ${I_GRAY}${item:2}${R_COLOR}" '\n';;
     esac
   done < <(grep -A3 '^# Function: [^_]' $1)
 }
