@@ -137,7 +137,8 @@ _apk_xtract_values () {
   local pattern_app="application: label='(.*)' icon="
   local pattern_pkg="package: name='(.*)' versionCode='(.*)' versionName='([^']*)'"
   local pattern_sdk="sdkVersion:'(.*)'"
-  local apk_line
+  local pattern_act="launchable-activity: name='([^']*)'"
+  local apk_line tmp_var
 
   if [ ! -f "$1" ]; then
     e_em "No $1 file. Please provide a valid .apk file." '\n'
@@ -165,8 +166,14 @@ _apk_xtract_values () {
           apkv_return[${apkv_pos["asdkv"]}]=${BASH_REMATCH[1]}
         fi
         ;;
-    esac
 
+      'launchable-activity:'* )
+        if [[ $apk_line =~ $pattern_act ]]; then
+          tmp_var=${apkv_return[${apkv_pos["packn"]}]}
+          apkv_return[${apkv_pos["actvc"]}]=${tmp_var}'/'${BASH_REMATCH[1]##${tmp_var}}
+        fi
+        ;;
+    esac
   done < <(aapt dump badging "$1" 2> /dev/null)
 
   return $E_SUCCESS
@@ -189,7 +196,8 @@ _apk_information () {
   e_ac 'Package Name :' ${apkv_return[${apkv_pos["packn"]}]}
   e_ac 'Version Name :' ${apkv_return[${apkv_pos["vname"]}]}
   e_ac 'Version Code :' ${apkv_return[${apkv_pos["vcode"]}]}
-  e_ac 'Android vOS  :' ${aapi_level[${apkv_return[${apkv_pos["asdkv"]}]}]} '\n'
+  e_ac 'Android vOS  :' ${aapi_level[${apkv_return[${apkv_pos["asdkv"]}]}]}
+  e_ac 'Activity     :' ${apkv_return[${apkv_pos["actvc"]}]:--} '\n'
 
   return $E_SUCCESS
 }
@@ -441,6 +449,7 @@ _droid_tools_plugin_init () {
   apkv_pos['vname']=2     # Version Name
   apkv_pos['vcode']=3     # Version Code
   apkv_pos['asdkv']=4     # SDK Version
+  apkv_pos['actvc']=5     # Activity Component
 
   # Android API information
   declare -a -g aapi_level
