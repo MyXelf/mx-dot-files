@@ -477,12 +477,24 @@ _droid_tools_plugin_help () {
 
   case "$1" in
     apk ) cat <<__HEREDOC_APK_HELP
-TBW!
+$1 is meant to ease the process of dealing with Android Packages files.
+
+Usage:
+  $1 [<option>] [<.apk1> <.apk2> ...]
+
+  When no <option> is specified, same as --info (-i)
+  When no <.apk> filename is specified, implies '*.apk' in the current directory
+
+Options:
+  -i, --info      print relevant information about the APK files
+  -r, --rename    rename the APK files
+  -e, --edit      edit the template file for the -r action
+  -h, --help      print this help message and exit
 __HEREDOC_APK_HELP
       ;;
 
     afwi ) cat <<__HEREDOC_AFWI_HELP
-TBW!
+AFWI - TBW!
 __HEREDOC_AFWI_HELP
       ;;
 
