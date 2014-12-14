@@ -133,6 +133,8 @@ asdk () {
 # Return an array with the relevant information of an .apk file
 #
 _apk_xtract_values () {
+  apkv_return=()
+
   # Regular Expressions patterns
   local pattern_app="application: label='(.*)' icon="
   local pattern_pkg="package: name='(.*)' versionCode='(.*)' versionName='([^']*)'"
