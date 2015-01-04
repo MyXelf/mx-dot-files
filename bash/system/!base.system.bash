@@ -317,7 +317,7 @@ _mxdf_show_header () {
 _mxdf_show_copyright () {
   e_hc "\n8-;"
   echo '  MXDF :: MyXelf Dot Files - <https://github.com/MyXelf/mx-dot-files>'
-  echo '  Copyright (c) 2013-2014. Juan J Gonzalez Cardenas [Jota Jota]'
+  echo '  Copyright (c) 2013-2015. Juan J Gonzalez Cardenas [Jota Jota]'
 }
 
 #
