@@ -133,7 +133,7 @@ asdk () {
 # Return an array with the relevant information of an .apk file
 #
 _apk_xtract_values () {
-  apkv_return=()
+  apk_values=()
 
   # Regular Expressions patterns
   local pattern_app="application: label='(.*)' icon="
@@ -151,28 +151,28 @@ _apk_xtract_values () {
     case "$apk_line" in
       'application: '* )
         if [[ $apk_line =~ $pattern_app ]]; then
-          apkv_return[${apkv_pos["label"]}]=${BASH_REMATCH[1]}
+          apk_values['application.label']=${BASH_REMATCH[1]}
         fi
         ;;
 
       'package: '* )
         if [[ $apk_line =~ $pattern_pkg ]]; then
-          apkv_return[${apkv_pos["packn"]}]=${BASH_REMATCH[1]}
-          apkv_return[${apkv_pos["vname"]}]=${BASH_REMATCH[3]}
-          apkv_return[${apkv_pos["vcode"]}]=${BASH_REMATCH[2]}
+          apk_values['package.name']=${BASH_REMATCH[1]}
+          apk_values['version.name']=${BASH_REMATCH[3]}
+          apk_values['version.code']=${BASH_REMATCH[2]}
         fi
         ;;
 
       'sdkVersion:'* )
         if [[ $apk_line =~ $pattern_sdk ]]; then
-          apkv_return[${apkv_pos["asdkv"]}]=${BASH_REMATCH[1]}
+          apk_values['asdk.code']=${BASH_REMATCH[1]}
         fi
         ;;
 
       'launchable-activity:'* )
         if [[ $apk_line =~ $pattern_act ]]; then
-          tmp_var=${apkv_return[${apkv_pos["packn"]}]}
-          apkv_return[${apkv_pos["actvc"]}]=${tmp_var}'/'${BASH_REMATCH[1]##${tmp_var}}
+          tmp_var=${apk_values['package.name']}
+          apk_values['activity.component']=${tmp_var}'/'${BASH_REMATCH[1]##${tmp_var}}
         fi
         ;;
     esac
@@ -190,16 +190,15 @@ _apk_information () {
   local apk_file=$1
 
   _apk_xtract_values "$apk_file"
-
   [ $? -eq $E_FAILURE ] && return $E_FAILURE
 
   e_cm 'File Name    =' $apk_file
-  e_ac 'Application  :' ${apkv_return[${apkv_pos['label']}]}
-  e_ac 'Package Name :' ${apkv_return[${apkv_pos["packn"]}]}
-  e_ac 'Version Name :' ${apkv_return[${apkv_pos["vname"]}]}
-  e_ac 'Version Code :' ${apkv_return[${apkv_pos["vcode"]}]}
-  e_ac 'Android vOS  :' ${aapi_level[${apkv_return[${apkv_pos["asdkv"]}]}]}
-  e_ac 'Activity     :' ${apkv_return[${apkv_pos["actvc"]}]:--} '\n'
+  e_ac 'Application  :' ${apk_values['application.label']}
+  e_ac 'Package Name :' ${apk_values['package.name']}
+  e_ac 'Version Name :' ${apk_values['version.name']}
+  e_ac 'Version Code :' ${apk_values['version.code']}
+  e_ac 'Android vOS  :' ${aapi_level[${apk_values['asdk.code']}]}
+  e_ac 'Activity     :' ${apk_values['activity.component']:--} '\n'
 
   return $E_SUCCESS
 }
@@ -216,7 +215,7 @@ _apk_rename_file () {
   [ $? -eq $E_FAILURE ] && return $E_FAILURE
 
   # Look for the package name in the templates and obtain the prefix to use
-  [ -f $DTOOLS_RC ] && IFS='=' read -r _ template_match < <(grep -m1 "^T \+${apkv_return[${apkv_pos["packn"]}]} \+=" $DTOOLS_RC 2> /dev/null)
+  [ -f $DTOOLS_RC ] && IFS='=' read -r _ template_match < <(grep -m1 "^T \+${apk_values['package.name']} \+=" $DTOOLS_RC 2> /dev/null)
 
   # Trim the $template_match variable (by reference)
   trim_var_whitespace template_match
@@ -227,12 +226,12 @@ _apk_rename_file () {
     xtra=" ${RED}[T]${R_COLOR}"
   else
     # Use the application name or the package name as the filename prefix
-    [ -n "${apkv_return[${apkv_pos['label']}]}" ] && filename_prefix=${apkv_return[${apkv_pos['label']}]} || filename_prefix=${apkv_return[${apkv_pos["packn"]}]}
+    [ -n "${apk_values['application.label']}" ] && filename_prefix=${apk_values['application.label']} || filename_prefix=${apk_values['package.name']}
     xtra=
   fi
 
   # Append the version name (if existent)
-  [ -n "${apkv_return[${apkv_pos["vname"]}]}" ] && filename_prefix=${filename_prefix}-${apkv_return[${apkv_pos["vname"]}]}
+  [ -n "${apk_values['version.name']}" ] && filename_prefix=${filename_prefix}-${apk_values['version.name']}
 
   # Replace spaces with hyphens
   # TODO: Filter the rest of invalid characters in $filename_prefix
@@ -446,16 +445,7 @@ _droid_tools_plugin_init () {
   [ -z "$MXDF_ACTIVE" ] && DTOOLS_RC=$MXDF_BASH_LOCAL/droid-tools.rc
 
   # The array returning the values from the _apk_xtract_values() function
-  declare -a -g apkv_return
-
-  # Values positions in the returning array
-  declare -A -g apkv_pos
-  apkv_pos['label']=0     # Application Label
-  apkv_pos['packn']=1     # Package Name
-  apkv_pos['vname']=2     # Version Name
-  apkv_pos['vcode']=3     # Version Code
-  apkv_pos['asdkv']=4     # SDK Version
-  apkv_pos['actvc']=5     # Activity Component
+  declare -A -g apk_values
 
   # Android API information
   declare -a -g aapi_level
