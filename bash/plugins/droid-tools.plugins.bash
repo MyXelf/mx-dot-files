@@ -316,13 +316,16 @@ apk () {
 
   e_hr 'Android Tools Suite' $ehr_title '\n'
 
-  local apk_file
+  local apk_file oifs=$IFS nifs=$'\n' IFS=$nifs
   for apk_file in ${@:-*.apk}; do
+    IFS=$oifs
     case "$opt_action" in
       info   ) _apk_information "$apk_file";;
       rename ) _apk_rename_file "$apk_file";;
     esac
+    IFS=$nifs
   done
+  IFS=$oifs
 }
 
 #
