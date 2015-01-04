@@ -213,12 +213,13 @@ _apk_rename_file () {
   local apk_file=$1 template_match filename_prefix apk_filename filename_suffix xtra
 
   _apk_xtract_values "$apk_file"
-
   [ $? -eq $E_FAILURE ] && return $E_FAILURE
 
-  # Look for the package name inside the templates and obtain the prefix to use
-  # TODO: Use BASH_REMATCH instead of the pipe, to improve performance
-  [ -f $DTOOLS_RC ] && template_match=$(grep -m1 "^${apkv_return[${apkv_pos["packn"]}]} =" $DTOOLS_RC | cut -d' ' -f3-)
+  # Look for the package name in the templates and obtain the prefix to use
+  [ -f $DTOOLS_RC ] && IFS='=' read -r _ template_match < <(grep -m1 "^T \+${apkv_return[${apkv_pos["packn"]}]} \+=" $DTOOLS_RC 2> /dev/null)
+
+  # Trim the $template_match variable (by reference)
+  trim_var_whitespace template_match
 
   # Reflect if a template was found
   if [ -n "$template_match" ]; then
