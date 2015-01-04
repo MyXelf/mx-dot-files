@@ -49,8 +49,8 @@ is_command lesspipe && eval "$(lesspipe)"
 #  Environment for Plugins :: See 'plugins' component
 # --------------------------------------------------------------------------------------------------
 
-# Android Tools Suite [DROID Tools]
-export APKR_TEMPLATES=$MXDF_BASH_LOCAL/droid-tools.apkr
+# Android Tools Suite RC file [DROID Tools]
+export DTOOLS_RC=$MXDF_BASH_LOCAL/droid-tools.rc
 
 # BookMarks Handler [BMarks]
 export BMARKS_FILE=$MXDF_BASH_LOCAL/bmarks.bmarks

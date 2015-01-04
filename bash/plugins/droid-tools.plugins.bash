@@ -218,7 +218,7 @@ _apk_rename_file () {
 
   # Look for the package name inside the templates and obtain the prefix to use
   # TODO: Use BASH_REMATCH instead of the pipe, to improve performance
-  [ -f $APKR_TEMPLATES ] && template_match=$(grep -m1 "^${apkv_return[${apkv_pos["packn"]}]} =" $APKR_TEMPLATES | cut -d' ' -f3-)
+  [ -f $DTOOLS_RC ] && template_match=$(grep -m1 "^${apkv_return[${apkv_pos["packn"]}]} =" $DTOOLS_RC | cut -d' ' -f3-)
 
   # Reflect if a template was found
   if [ -n "$template_match" ]; then
@@ -295,9 +295,9 @@ apk () {
       local ehr_title='APK Rename Tool'
       ;;
 
-    # Edit the APKR_TEMPLATES file
+    # Edit the Droid Tools RC file
     --edit | -e )
-      $EDITOR $APKR_TEMPLATES
+      $EDITOR $DTOOLS_RC
       return $?
       ;;
 
@@ -438,8 +438,8 @@ dtools () {
 # Setup the plugin required environment (Autoloading Function)
 #
 _droid_tools_plugin_init () {
-  # Define the location of the templates file
-  [ -z "$MXDF_ACTIVE" ] && APKR_TEMPLATES=$MXDF_BASH_LOCAL/droid-tools.apkr
+  # Define the location of the Droid Tools RC file
+  [ -z "$MXDF_ACTIVE" ] && DTOOLS_RC=$MXDF_BASH_LOCAL/droid-tools.rc
 
   # The array returning the values from the _apk_xtract_values() function
   declare -a -g apkv_return
