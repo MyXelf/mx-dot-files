@@ -384,6 +384,10 @@ afwi () {
         # and extract the MD5 and the original filename from that region.
         IFS='  ' read -r e_md5 e_rfn < <(tail -c256 $fw_file 2> /dev/null)
 
+        # Lowercase embedded MD5 to avoid case mismatch (thanks to
+        # S5310XXAMF1_S5310MSTAMF1_S5310XXAME1_HOME.tar.md5 :-)
+        e_md5=${e_md5,,}
+
         e_ac 'FW Manufacturer    : Samsung'
         e_ac 'FW Flashing Tool   : Heimdall / Odin'
 
