@@ -2,8 +2,8 @@
 #  DROID-TOOLS - Android Tools Suite [BASH script version]
 #
 #  author    Juan J Gonzalez Cardenas [Jota Jota] - <https://github.com/MyXelf/mx-dot-files>
-#  version   1.0.0.5
-#  date      10.Dec.2014
+#  version   1.0.0.7
+#  date      20.Mar.2015
 #
 #  legal     Copyright (c) 2012-2015. Licensed under the MIT license.
 #
@@ -37,7 +37,9 @@ asdk () {
   echo
 
   e_cm 'Build        Branch                   Version                 Supported Devices'
-  e_ac 'LRX22C       android-5.0.1_r1         Lollipop                Nexus 7 (flo), Nexus 9 (volantis), Nexus 10'
+  e_ac 'LMY47D       android-5.1.0_r1         Lollipop                Nexus 5, Nexus 6, Nexus 7 (grouper), Nexus 10'
+  e_ac 'LRX22G       android-5.0.2_r1         Lollipop                Nexus 7 (flo/deb/grouper/tilapia), Nexus 10'
+  e_ac 'LRX22C       android-5.0.1_r1         Lollipop                Nexus 4, Nexus 5, Nexus 6 (shamu), Nexus 7 (flo), Nexus 9 (volantis/volantisg), Nexus 10'
   e_ac 'LRX21V       android-5.0.0_r7.0.1     Lollipop                Nexus Player (fugu)'
   e_ac 'LRX21T       android-5.0.0_r6.0.1     Lollipop                Nexus 4'
   e_ac 'LRX21R       android-5.0.0_r5.1.0.1   Lollipop                Nexus 9 (volantis)'
@@ -473,6 +475,7 @@ _droid_tools_plugin_init () {
   aapi_level[18]='Jelly Bean          | 4.3.x         | API 18'
   aapi_level[19]='KitKat              | 4.4 - 4.4.4   | API 19'
   aapi_level[21]='Lollipop            | 5.0           | API 21'
+  aapi_level[22]='Lollipop            | 5.1           | API 22'
 } &&
 _droid_tools_plugin_init
 
