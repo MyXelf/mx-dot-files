@@ -2,8 +2,8 @@
 #  AV-UPDATES - Antivirus Updates Helper [BASH script version]
 #
 #  author    Juan J Gonzalez Cardenas [Jota Jota] - <https://github.com/MyXelf/mx-dot-files>
-#  version   1.0.0.0
-#  date      12.Oct.2014
+#  version   1.0.0.1
+#  date      08.May.2015
 #
 #  legal     Copyright (c) 2014-2015. Licensed under the MIT license.
 #
@@ -43,7 +43,7 @@ av () {
   # AV Engine: NOD32
   local engine_nod_idxfile='update.ver'
   local engine_nod_product='NOD32'
-  local engine_nod_version="grep '^version='  \$ufile | sort -r --key=2.3,2.10 --key=1.9,1.12n | head -1 | cut -d= -f2 | tr '()' '[]'"
+  local engine_nod_version="grep '^version='  \$ufile | sort -r --key=2.3,2.10 --key=1.9,1.12n | head -1 | cut -d= -f2 | tr '()\r' '[]\0'"
   local engine_nod_platfrm="grep '^platform=' \$ufile | sort -u | cut -d= -f2 | tr '\r\n' '\0.'"
   local engine_nod_dformat="nod32-update \$uversion"
 
