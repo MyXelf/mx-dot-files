@@ -37,7 +37,12 @@ asdk () {
   echo
 
   e_cm 'Build        Branch                   Version                 Supported Devices'
-  e_ac 'LMY47D       android-5.1.0_r1         Lollipop                Nexus 5, Nexus 6, Nexus 7 (grouper), Nexus 10'
+  e_ac 'LMY47X       android-5.1.1_r2         Lollipop                Nexus 9 (volantis)'
+  e_ac 'LMY47V       android-5.1.1_r1         Lollipop                Nexus 7 (flo/grouper), Nexus 10, Nexus Player'
+  e_ac 'LMY47O       android-5.1.0_r5         Lollipop                Nexus 4, Nexus 7 (flo/deb)'
+  e_ac 'LMY47I       android-5.1.0_r3         Lollipop                Nexus 5, Nexus 6'
+  e_ac 'LMY47D       android-5.1.0_r1         Lollipop                Nexus 5, Nexus 6, Nexus 7 (grouper/tilapia), Nexus 10, Nexus Player'
+  e_ac 'LRX22L       android-5.0.2_r3         Lollipop                Nexus 9 (volantis/volantisg)'
   e_ac 'LRX22G       android-5.0.2_r1         Lollipop                Nexus 7 (flo/deb/grouper/tilapia), Nexus 10'
   e_ac 'LRX22C       android-5.0.1_r1         Lollipop                Nexus 4, Nexus 5, Nexus 6 (shamu), Nexus 7 (flo), Nexus 9 (volantis/volantisg), Nexus 10'
   e_ac 'LRX21V       android-5.0.0_r7.0.1     Lollipop                Nexus Player (fugu)'
@@ -49,7 +54,7 @@ asdk () {
   e_ac 'LRX21M       android-5.0.0_r2.0.1     Lollipop                Nexus Player (fugu)'
   e_ac 'LRX21L       android-5.0.0_r1.0.1     Lollipop                Nexus 9 (volantis)'
   e_ac 'KTU84Q       android-4.4.4_r2         KitKat                  Nexus 5 (hammerhead) (For 2Degrees/NZ, Telstra/AUS and India ONLY)'
-  e_ac 'KTU84P       android-4.4.4_r1         KitKat                  Nexus 5, Nexus 7 (flo/grouper/tilapia), Nexus 4, Nexus 10'
+  e_ac 'KTU84P       android-4.4.4_r1         KitKat                  Nexus 5, Nexus 7 (flo/deb/grouper/tilapia), Nexus 4, Nexus 10'
   e_ac 'KTU84M       android-4.4.3_r1.1       KitKat                  Nexus 5 (hammerhead)'
   e_ac 'KTU84L       android-4.4.3_r1         KitKat                  Nexus 7 (flo/deb/grouper/tilapia), Nexus 4, Nexus 10'
   e_ac 'KVT49L       android-4.4.2_r2         KitKat                  Nexus 7 (deb Verizon)'
