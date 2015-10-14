@@ -235,6 +235,7 @@ e_ac () {
   echo -e "$@"
 }
 
+#
 # Function: e_cm()
 #
 # Echo a Comment Message
@@ -243,6 +244,7 @@ e_cm () {
   echo -e "${I_GRAY}# ${@}${R_COLOR}"
 }
 
+#
 # Function: e_dm()
 #
 # Echo a Dashed Message
