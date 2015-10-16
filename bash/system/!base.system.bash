@@ -235,6 +235,21 @@ e_ac () {
   echo -e "$@"
 }
 
+# Information Character
+export IC="${I_GREEN}*${R_COLOR}"
+
+#
+# Function: e_ic()
+#
+# Echo a message prepending an Information Character
+#
+# Support the '-n' option to the echo built-in.
+#
+e_ic () {
+  echo -en "$IC "
+  echo -e "$@"
+}
+
 #
 # Function: e_cm()
 #
