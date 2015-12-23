@@ -16,6 +16,9 @@ alias -- -='cd -'
 
 mkcd () { mkdir -p "$@" && cd "$@"; }
 
+# Grep
+alias grep='grep --color=auto --exclude-dir=.bzr --exclude-dir=.cvs --exclude-dir=.git --exclude-dir=.hg --exclude-dir=.svn'
+
 # Verbose File Operations
 alias cp='cp -v'
 alias mv='mv -v'

@@ -23,7 +23,6 @@ export ACK_COLOR_LINENO='bold green'
 export ACK_COLOR_MATCH='red'
 
 # Grep
-export GREP_OPTIONS='--color=auto --exclude-dir=.bzr --exclude-dir=.cvs --exclude-dir=.git --exclude-dir=.hg --exclude-dir=.svn'
 export GREP_COLORS='sl=:cx=:ms=31:mc=31:fn=1;35:ln=1;32:bn=1;32:se=1;30'
 
 # Less
