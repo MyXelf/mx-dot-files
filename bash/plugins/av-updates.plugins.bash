@@ -43,7 +43,7 @@ av () {
   # AV Engine: NOD32
   local engine_nod_idxfile='update.ver'
   local engine_nod_product='NOD32'
-  local engine_nod_version="grep '^version='  \$ufile | sort -r --key=2.3,2.10 --key=1.9,1.12n | head -1 | cut -d= -f2 | tr '()\r' '[]\0'"
+  local engine_nod_version="grep '^version='  \$ufile | sort --key=1.9,1nr --key=2.3,2.10r | head -1 | cut -d= -f2 | tr '()\r' '[]\0'"
   local engine_nod_platfrm="grep '^platform=' \$ufile | sort -u | cut -d= -f2 | tr '\r\n' '\0.'"
   local engine_nod_dformat="nod32-update \$uversion"
 
