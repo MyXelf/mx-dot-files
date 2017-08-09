@@ -157,6 +157,9 @@ set fillchars=stl:\ ,stlnc:\ ,vert:\ ,fold:\ ,diff:-
 "  ShaDa :: Views :: Sessions :: Swapfiles
 " ----------------------------------------------------------------------------------------------------------------------
 
+" Sessions
+set sessionoptions-=options
+
 
 " ----------------------------------------------------------------------------------------------------------------------
 "  Global Abbreviations
@@ -169,6 +172,13 @@ ab        dt dd.mmm.yyyy
 "  Global Mappings
 " ----------------------------------------------------------------------------------------------------------------------
 
+" Wrapped lines goes down/up to next row, rather than next line in file
+nnoremap j gj
+nnoremap k gk
+
+" Visual shifting (does not exit Visual mode)
+vnoremap < <gv
+vnoremap > >gv
 
 " ----------------------------------------------------------------------------------------------------------------------
 "  Leader Mappings
