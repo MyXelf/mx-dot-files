@@ -19,6 +19,19 @@
 "  Global Configuration
 " ----------------------------------------------------------------------------------------------------------------------
 
+" Variables Declarations {{
+
+" Neovim Base Path
+let $NVIM_BASE = fnamemodify(expand($MYVIMRC), ':h')
+
+" Neovim RC :: Main
+let $NVIMRC_MAIN = $MYVIMRC
+
+" Neovim RC :: Local
+let $NVIMRC_LOCAL = $MYVIMRC . '.local'
+
+" }}
+
 
 " ----------------------------------------------------------------------------------------------------------------------
 "  UI Configuration
@@ -94,6 +107,9 @@
 "  Neovim Local RC
 " ----------------------------------------------------------------------------------------------------------------------
 
+if filereadable($NVIMRC_LOCAL)
+  source $NVIMRC_LOCAL
+endif
 
 " ----------------------------------------------------------------------------------------------------------------------
 "  Sandbox Playground
