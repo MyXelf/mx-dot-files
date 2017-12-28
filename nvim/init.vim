@@ -112,6 +112,14 @@ set hidden
 " Allow the cursor to go into _invalid_ places
 set virtualedit=all
 
+" Status Line Format
+set statusline=%<%f
+set statusline+=\ %m\ %R%H\ %#StatusLineWarn#%{SL_Alert_Extra_Space_Tab()}%*
+set statusline+=\ %=%-9(%03b-0x%02B%)
+set statusline+=\ B#%-1n
+set statusline+=\ [%{&ff}%{&fenc!=''?'.'.&fenc:''}%{&ft!=''?'.'.&ft:''}]
+set statusline+=\ \ %10(%4l:%c%V%)\ [%LL\ -\ %P]
+
 " ----------------------------------------------------------------------------------------------------------------------
 "  Windows
 " ----------------------------------------------------------------------------------------------------------------------
@@ -155,7 +163,6 @@ vnoremap > >gv
 "  Auto Commands
 " ----------------------------------------------------------------------------------------------------------------------
 
-
 " ----------------------------------------------------------------------------------------------------------------------
 "  Commands
 " ----------------------------------------------------------------------------------------------------------------------
@@ -165,6 +172,23 @@ vnoremap > >gv
 "  Functions
 " ----------------------------------------------------------------------------------------------------------------------
 
+" Status Line alert Extra Characters {{
+"
+" Tabs are only alerted while ExpandTab is set
+"
+function! SL_Alert_Extra_Space_Tab()
+  if !exists('b:sl_alert_extra_space_tab')
+    if &modifiable
+      let wspace = search('\s\+$', 'nw') != 0 ? '[$]' : ''
+      let wtab   = &expandtab && search('\t\+', 'nw') != 0 ? '[→]' : ''
+      let b:sl_alert_extra_space_tab = wspace . wtab
+    else
+      let b:sl_alert_extra_space_tab = ''
+    endif
+  endif
+  return b:sl_alert_extra_space_tab
+endfunction
+" }}
 
 " ----------------------------------------------------------------------------------------------------------------------
 "  Filetype Detection
