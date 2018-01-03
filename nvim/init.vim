@@ -30,6 +30,9 @@ let $NVIMRC_MAIN = $MYVIMRC
 " Neovim RC :: Local
 let $NVIMRC_LOCAL = $MYVIMRC . '.local'
 
+" Neovim Storage Base
+let $NVIM_BASE_STORAGE = $NVIM_BASE . '/storage'
+
 " }}
 
 " Change all Leaders to <SPACE>
@@ -131,9 +134,17 @@ set splitbelow splitright
 set fillchars=stl:\ ,stlnc:\ ,vert:\ ,fold:\ ,diff:-
 
 " ----------------------------------------------------------------------------------------------------------------------
-"  ShaDa :: Views :: Sessions :: Swapfiles
+"  ShaDa :: Swap Files :: Remote Plugin :: Sessions :: Views
 " ----------------------------------------------------------------------------------------------------------------------
 
+" ShaDa
+set shada+=n$NVIM_BASE_STORAGE/shada/main.shada
+
+" Swap Files
+set directory=$NVIM_BASE_STORAGE/swap//
+
+" Remote Plugin
+let $NVIM_RPLUGIN_MANIFEST = $NVIM_BASE_STORAGE . '/rplugin/rplugin'
 
 " ----------------------------------------------------------------------------------------------------------------------
 "  Global Abbreviations
