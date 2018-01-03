@@ -169,6 +169,11 @@ vnoremap > >gv
 "  Leader Mappings
 " ----------------------------------------------------------------------------------------------------------------------
 
+" Plugin :: Fugitive
+nmap <silent> <leader>gd    :Gdiff<CR>
+nmap <silent> <leader>gs    :Gstatus<CR>
+vmap <silent> <leader>dg    :diffget \| diffupdate<CR>
+vmap <silent> <leader>dp    :diffput \| diffupdate<CR>
 
 " ----------------------------------------------------------------------------------------------------------------------
 "  Auto Commands
@@ -226,6 +231,7 @@ if dein#load_state(s:nvim_pm_base)
   call dein#add('Shougo/dein.vim')
 
   " Enabled Plugins {{
+    call dein#add('tpope/vim-fugitive')
   " }}
 
   " Disabled Plugins {{
