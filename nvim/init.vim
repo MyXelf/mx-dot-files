@@ -165,6 +165,10 @@ nnoremap k gk
 vnoremap < <gv
 vnoremap > >gv
 
+" Toggle Folding
+nmap <silent> , za
+vmap <silent> , za
+
 " ----------------------------------------------------------------------------------------------------------------------
 "  Leader Mappings
 " ----------------------------------------------------------------------------------------------------------------------
@@ -187,6 +191,24 @@ vmap <silent> <leader>dp    :diffput \| diffupdate<CR>
 " ----------------------------------------------------------------------------------------------------------------------
 "  Functions
 " ----------------------------------------------------------------------------------------------------------------------
+
+" Fold Text {{
+"
+function! Fold_Text()
+  " Get first line, remove fold_markers and trailing spaces
+  let fhead = substitute(getline(v:foldstart), '\s*\(' . substitute(&fmr, ',', '\\|', '') . '\)\d\=', '', 'g')
+  let ftail = ' ── ' . (v:foldend - v:foldstart + 1) . ' Lns ★  ' . v:foldlevel . ' ── '
+  let stail = strchars(ftail)
+
+  if winwidth(0) < &tw || !&tw
+    let size = winwidth(0) - &fdc - &nuw * &nu
+  else
+    let size = &tw
+  endif
+
+  return printf("%*s%s", -size + stail, fhead, ftail)
+endfunction
+" }}
 
 " Status Line alert Extra Characters {{
 "
