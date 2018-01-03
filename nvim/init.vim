@@ -3,17 +3,10 @@
 "
 "  Author:    Juan J Gonzalez Cardenas [Jota Jota] - <https://github.com/MyXelf/mx-dot-files>
 "  Version:   2.0
-"  Date:      07.Aug.2017
+"  Date:      03.Jan.2018
 "
-"  Legal:     Copyright (c) 2011-2017. Licensed under the MIT license.
+"  Legal:     Copyright (c) 2011-2018. Licensed under the MIT license.
 "
-"  History:                                                                   {{
-"             07.Aug.2017     v2.0
-"                           * Initial Migration from Vim to Neovim
-"
-"
-" }}
-
 
 " ----------------------------------------------------------------------------------------------------------------------
 "  Global Configuration
