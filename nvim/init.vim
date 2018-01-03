@@ -214,6 +214,148 @@ endfunction
 "  Plugins Settings
 " ----------------------------------------------------------------------------------------------------------------------
 
+" LightLine {{
+
+  " Status Line Configuration {{
+  let g:lightline = {
+    \   'colorscheme': 'mx_black',
+    \
+    \   'enable': {
+    \     'statusline': 1,
+    \     'tabline': 1,
+    \   },
+    \
+    \   'active': {
+    \     'left': [
+    \       ['mode', 'paste'],
+    \       ['fugitive'],
+    \       ['readonly', 'filename'],
+    \     ],
+    \     'right': [
+    \       ['lineinfo'],
+    \       ['file_fet'],
+    \       ['charinfo'],
+    \       ['alert_st'],
+    \     ]
+    \   },
+    \
+    \   'inactive': {
+    \     'left': [
+    \       ['mode'],
+    \       ['readonly', 'filename'],
+    \     ],
+    \     'right': [
+    \       ['lineinfo'],
+    \       ['file_fet'],
+    \     ]
+    \   },
+    \
+    \   'component': {
+    \     'charinfo': '%8(%03b-0x%02B%)',
+    \     'file_fet': '%{&ff}%{&fenc != "" ? "  ○ " . &fenc : ""}%{&ft != "" ? "  ○ " . &ft : ""}',
+    \     'lineinfo': '%8(%4l:%-3v%)  %L ☰ %P',
+    \     'alert_st': '%#StatusLineWarn#%{SL_Alert_Extra_Space_Tab()}%*',
+    \   },
+    \
+    \   'component_function': {
+    \     'mode':     'LightLine_Mode',
+    \     'fugitive': 'LightLine_Fugitive',
+    \     'filename': 'LightLine_Filename_Modified',
+    \     'readonly': 'LightLine_ReadOnly',
+    \   },
+    \
+    \   'component_type': {
+    \     'readonly': 'raw',
+    \   },
+    \
+    \   'mode_map': {
+    \     'n': 'N',
+    \     'i': 'I',
+    \     'R': 'R',
+    \     'v': 'V',
+    \     'V': 'L',
+    \     'c': 'CMD',
+    \     's': 'SELECT',
+    \     'S': 'S-LINE',
+    \     't': 'TERMINAL',
+    \     "\<C-v>": 'B',
+    \     "\<C-s>": 'S-B',
+    \   },
+    \
+    \   'separator':    { 'left': '', 'right': '' },
+    \   'subseparator': { 'left': '', 'right': '' },
+    \ }
+  " }}
+
+  " Tab Line Configuration {{
+  let g:lightline_tabline = {
+    \   'tabline_separator':    { 'left': '', 'right': '' },
+    \   'tabline_subseparator': { 'left': '', 'right': '' },
+    \ }
+  " }}
+
+  " Merge Status Line and Tab Line configuration {{
+  call extend(g:lightline, g:lightline_tabline)
+  " }}
+
+  " LightLine_Mode {{
+  function! LightLine_Mode()
+    let fname = expand('%:t')
+    return &buftype == 'quickfix' ? 'QuickFix' :
+      \ fname == '__Tagbar__' ? 'Tagbar' :
+      \ fname == 'ControlP' ? 'CtrlP' :
+      \ fname == '__Gundo__' ? 'Gundo' :
+      \ fname == '__Gundo_Preview__' ? 'Gundo Preview' :
+      \ fname =~ 'NERD_tree' ? 'NERDTree' :
+      \ &ft == 'help' ? 'Help' :
+      \ &ft == 'unite' ? 'Unite' :
+      \ &ft == 'vimfiler' ? 'VimFiler' :
+      \ &ft == 'vimshell' ? 'VimShell' :
+      \ &previewwindow ? 'Preview' : lightline#mode()
+  endfunction
+  " }}
+
+  " LightLine_Fugitive {{
+  function! LightLine_Fugitive()
+    if expand('%:t') !~? 'Tagbar\|Gundo\|NERD' && &ft !~? 'vimfiler' && exists('*fugitive#head')
+      let branch = fugitive#head()
+      return branch !=# '' ? ' ' . branch : ''
+    endif
+    return ''
+  endfunction
+  " }}
+
+  " LightLine_Filename_Modified {{
+  function! LightLine_Filename_Modified()
+    let fname = expand('%:t')
+    let fresult = &buftype == 'quickfix' ? '' :
+      \ fname == 'ControlP' && has_key(g:lightline, 'ctrlp_item') ? g:lightline.ctrlp_item :
+      \ fname == '__Tagbar__' ? g:lightline.fname :
+      \ fname =~ '__Gundo\|NERD_tree' ? '' :
+      \ &ft == 'vimfiler' ? vimfiler#get_status_string() :
+      \ &ft == 'unite' ? unite#get_status_string() :
+      \ &ft == 'vimshell' ? vimshell#get_status_string() :
+      \ (fname != '' ? fname : '[No Name]')
+    let wmodify = &modified ? '●' : &modifiable ? '' : '-'
+    return fresult . ' ' . wmodify
+  endfunction
+  " }}
+
+  " LightLine_ReadOnly {{
+  function! LightLine_ReadOnly()
+    return &readonly ? ' ' : ''
+  endfunction
+  " }}
+
+  " LightLine_Reload {{
+  function! LightLine_Reload()
+    call lightline#init()
+    call lightline#colorscheme()
+    call lightline#update()
+  endfunction
+  " }}
+
+" }}
 
 " ----------------------------------------------------------------------------------------------------------------------
 "  Dein :: Neovim Plugin Manager
@@ -232,6 +374,7 @@ if dein#load_state(s:nvim_pm_base)
 
   " Enabled Plugins {{
     call dein#add('tpope/vim-fugitive')
+    call dein#add('itchyny/lightline.vim', { 'hook_add': 'set noshowmode' })
   " }}
 
   " Disabled Plugins {{
