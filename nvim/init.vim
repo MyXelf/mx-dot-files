@@ -341,61 +341,65 @@ endif
   call extend(g:lightline, g:lightline_tabline)
   " }}
 
-  " LightLine_Mode {{
-  function! LightLine_Mode()
-    let fname = expand('%:t')
-    return &buftype == 'quickfix' ? 'QuickFix' :
-      \ fname == '__Tagbar__' ? 'Tagbar' :
-      \ fname == 'ControlP' ? 'CtrlP' :
-      \ fname == '__Gundo__' ? 'Gundo' :
-      \ fname == '__Gundo_Preview__' ? 'Gundo Preview' :
-      \ fname =~ 'NERD_tree' ? 'NERDTree' :
-      \ &ft == 'help' ? 'Help' :
-      \ &ft == 'unite' ? 'Unite' :
-      \ &ft == 'vimfiler' ? 'VimFiler' :
-      \ &ft == 'vimshell' ? 'VimShell' :
-      \ &previewwindow ? 'Preview' : lightline#mode()
-  endfunction
-  " }}
+  " LightLine Components Functions {{
 
-  " LightLine_Fugitive {{
-  function! LightLine_Fugitive()
-    if expand('%:t') !~? 'Tagbar\|Gundo\|NERD' && &ft !~? 'vimfiler' && exists('*fugitive#head')
-      let branch = fugitive#head()
-      return branch !=# '' ? ' ' . branch : ''
-    endif
-    return ''
-  endfunction
-  " }}
+    " LightLine_Mode {{
+    function! LightLine_Mode()
+      let fname = expand('%:t')
+      return &buftype == 'quickfix' ? 'QuickFix' :
+        \ fname == '__Tagbar__' ? 'Tagbar' :
+        \ fname == 'ControlP' ? 'CtrlP' :
+        \ fname == '__Gundo__' ? 'Gundo' :
+        \ fname == '__Gundo_Preview__' ? 'Gundo Preview' :
+        \ fname =~ 'NERD_tree' ? 'NERDTree' :
+        \ &ft == 'help' ? 'Help' :
+        \ &ft == 'unite' ? 'Unite' :
+        \ &ft == 'vimfiler' ? 'VimFiler' :
+        \ &ft == 'vimshell' ? 'VimShell' :
+        \ &previewwindow ? 'Preview' : lightline#mode()
+    endfunction
+    " }}
 
-  " LightLine_Filename_Modified {{
-  function! LightLine_Filename_Modified()
-    let fname = expand('%:t')
-    let fresult = &buftype == 'quickfix' ? '' :
-      \ fname == 'ControlP' && has_key(g:lightline, 'ctrlp_item') ? g:lightline.ctrlp_item :
-      \ fname == '__Tagbar__' ? g:lightline.fname :
-      \ fname =~ '__Gundo\|NERD_tree' ? '' :
-      \ &ft == 'vimfiler' ? vimfiler#get_status_string() :
-      \ &ft == 'unite' ? unite#get_status_string() :
-      \ &ft == 'vimshell' ? vimshell#get_status_string() :
-      \ (fname != '' ? fname : '[No Name]')
-    let wmodify = &modified ? '●' : &modifiable ? '' : '-'
-    return fresult . ' ' . wmodify
-  endfunction
-  " }}
+    " LightLine_Fugitive {{
+    function! LightLine_Fugitive()
+      if expand('%:t') !~? 'Tagbar\|Gundo\|NERD' && &ft !~? 'vimfiler' && exists('*fugitive#head')
+        let branch = fugitive#head()
+        return branch !=# '' ? ' ' . branch : ''
+      endif
+      return ''
+    endfunction
+    " }}
 
-  " LightLine_ReadOnly {{
-  function! LightLine_ReadOnly()
-    return &readonly ? ' ' : ''
-  endfunction
-  " }}
+    " LightLine_Filename_Modified {{
+    function! LightLine_Filename_Modified()
+      let fname = expand('%:t')
+      let fresult = &buftype == 'quickfix' ? '' :
+        \ fname == 'ControlP' && has_key(g:lightline, 'ctrlp_item') ? g:lightline.ctrlp_item :
+        \ fname == '__Tagbar__' ? g:lightline.fname :
+        \ fname =~ '__Gundo\|NERD_tree' ? '' :
+        \ &ft == 'vimfiler' ? vimfiler#get_status_string() :
+        \ &ft == 'unite' ? unite#get_status_string() :
+        \ &ft == 'vimshell' ? vimshell#get_status_string() :
+        \ (fname != '' ? fname : '[No Name]')
+      let wmodify = &modified ? '●' : &modifiable ? '' : '-'
+      return fresult . ' ' . wmodify
+    endfunction
+    " }}
 
-  " LightLine_Reload {{
-  function! LightLine_Reload()
-    call lightline#init()
-    call lightline#colorscheme()
-    call lightline#update()
-  endfunction
+    " LightLine_ReadOnly {{
+    function! LightLine_ReadOnly()
+      return &readonly ? ' ' : ''
+    endfunction
+    " }}
+
+    " LightLine_Reload {{
+    function! LightLine_Reload()
+      call lightline#init()
+      call lightline#colorscheme()
+      call lightline#update()
+    endfunction
+    " }}
+
   " }}
 
 " }}
