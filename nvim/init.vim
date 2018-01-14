@@ -345,8 +345,15 @@ endif
 
     " LightLine_Mode {{
     function! LightLine_Mode()
+      if exists('*win_getid') && exists('*getwininfo')
+        let dict = getwininfo(win_getid())
+        if len(dict) > 0 && get(dict[0], 'quickfix', 0)
+          return get(dict[0], 'loclist', 0) ? 'Location' : 'QuickFix'
+        endif
+      endif
+
       let fname = expand('%:t')
-      return &buftype == 'quickfix' ? 'QuickFix' :
+      return &buftype == 'quickfix' ? 'QFix/Loc' :
         \ fname == '__Tagbar__' ? 'Tagbar' :
         \ fname == 'ControlP' ? 'CtrlP' :
         \ fname == '__Gundo__' ? 'Gundo' :
