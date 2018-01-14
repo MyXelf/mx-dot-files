@@ -226,6 +226,34 @@ endfunction
 " ----------------------------------------------------------------------------------------------------------------------
 
 " ----------------------------------------------------------------------------------------------------------------------
+"  Dein :: Neovim Plugin Manager
+" ----------------------------------------------------------------------------------------------------------------------
+
+" Neovim Plugin Manager Base Path
+let s:nvim_pm_base = $NVIM_BASE . '/bundle'
+
+execute 'set runtimepath+=' . s:nvim_pm_base . '/repos/github.com/Shougo/dein.vim'
+
+if dein#load_state(s:nvim_pm_base)
+  call dein#begin(s:nvim_pm_base)
+
+  " Dein handling Dein (Required!)
+  call dein#add('Shougo/dein.vim')
+
+  " Enabled Plugins {{
+    call dein#add('tpope/vim-fugitive')
+    call dein#add('itchyny/lightline.vim', { 'hook_add': 'set noshowmode' })
+  " }}
+
+  " Disabled Plugins {{
+  " }}
+
+  " Required by the Plugin Manager
+  call dein#end()
+  call dein#save_state()
+endif
+
+" ----------------------------------------------------------------------------------------------------------------------
 "  Plugins Settings
 " ----------------------------------------------------------------------------------------------------------------------
 
@@ -371,34 +399,6 @@ endfunction
   " }}
 
 " }}
-
-" ----------------------------------------------------------------------------------------------------------------------
-"  Dein :: Neovim Plugin Manager
-" ----------------------------------------------------------------------------------------------------------------------
-
-" Neovim Plugin Manager Base Path
-let s:nvim_pm_base = $NVIM_BASE . '/bundle'
-
-execute 'set runtimepath+=' . s:nvim_pm_base . '/repos/github.com/Shougo/dein.vim'
-
-if dein#load_state(s:nvim_pm_base)
-  call dein#begin(s:nvim_pm_base)
-
-  " Dein handling Dein (Required!)
-  call dein#add('Shougo/dein.vim')
-
-  " Enabled Plugins {{
-    call dein#add('tpope/vim-fugitive')
-    call dein#add('itchyny/lightline.vim', { 'hook_add': 'set noshowmode' })
-  " }}
-
-  " Disabled Plugins {{
-  " }}
-
-  " Required by the Plugin Manager
-  call dein#end()
-  call dein#save_state()
-endif
 
 " ----------------------------------------------------------------------------------------------------------------------
 "  Neovim Local RC
