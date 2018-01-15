@@ -259,8 +259,9 @@ if dein#load_state(s:nvim_pm_base)
   call dein#add('Shougo/dein.vim')
 
   " Enabled Plugins {{
-    call dein#add('tpope/vim-fugitive')
     call dein#add('itchyny/lightline.vim', { 'hook_add': 'set noshowmode' })
+    call dein#add('tpope/vim-fugitive')
+    call dein#add('tpope/vim-unimpaired')
     call dein#add('w0rp/ale')
   " }}
 
