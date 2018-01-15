@@ -166,6 +166,9 @@ vmap <silent> , za
 "  Leader Mappings
 " ----------------------------------------------------------------------------------------------------------------------
 
+" Plugin :: ALE
+nmap <silent> <leader>tk    :ALEToggleBuffer \| call Echo('Buffer Syntax Check Mode [ALE]: ' . (b:ale_enabled ? 'Enabled' : 'Disabled'))<CR>
+
 " Plugin :: Fugitive
 nmap <silent> <leader>gd    :Gdiff<CR>
 nmap <silent> <leader>gs    :Gstatus<CR>
@@ -175,6 +178,14 @@ vmap <silent> <leader>dp    :diffput \| diffupdate<CR>
 " ----------------------------------------------------------------------------------------------------------------------
 "  Auto Commands
 " ----------------------------------------------------------------------------------------------------------------------
+
+" Plugin :: ALE {{
+  augroup ale_filetype_user
+    autocmd!
+    autocmd FileType                   *                             ALEDisableBuffer
+    autocmd User                       ALELint                       call lightline#update()
+  augroup end
+" }}
 
 " ----------------------------------------------------------------------------------------------------------------------
 "  Commands
@@ -250,6 +261,7 @@ if dein#load_state(s:nvim_pm_base)
   " Enabled Plugins {{
     call dein#add('tpope/vim-fugitive')
     call dein#add('itchyny/lightline.vim', { 'hook_add': 'set noshowmode' })
+    call dein#add('w0rp/ale')
   " }}
 
   " Disabled Plugins {{
@@ -419,6 +431,55 @@ endif
 
   " }}
 
+" }}
+
+" ALE {{
+
+  " LightLine Integration {{
+
+    " Status Line Sections {{
+    let g:lightline.component_expand = {
+      \  'linter_ok': 'LightLine_Linter_OK',
+      \  'linter_w':  'LightLine_Linter_Warnings',
+      \  'linter_e':  'LightLine_Linter_Errors',
+      \ }
+    " }}
+
+    " LightLine_Linter_OK {{
+    function! LightLine_Linter_OK() abort
+      if get(g:, 'ale_enabled', 0) && get(b:, 'ale_enabled', 0)
+        let l:counts = ale#statusline#Count(bufnr(''))
+        return l:counts.total == 0 ? '✔' : ''
+      endif
+      return ''
+    endfunction
+    " }}
+
+    " LightLine_Linter_Warnings {{
+    function! LightLine_Linter_Warnings() abort
+      let l:counts = ale#statusline#Count(bufnr(''))
+      let l:all_non_errors = l:counts.total - (l:counts.error + l:counts.style_error)
+      return l:all_non_errors == 0 ? '' : 'W:' . all_non_errors
+    endfunction
+    " }}
+
+    " LightLine_Linter_Errors {{
+    function! LightLine_Linter_Errors() abort
+      let l:counts = ale#statusline#Count(bufnr(''))
+      let l:all_errors = l:counts.error + l:counts.style_error
+      return l:all_errors == 0 ? '' : 'E:' . all_errors
+    endfunction
+    " }}
+
+  " }}
+
+  let g:ale_sign_error = '✘'
+  let g:ale_sign_warning = 'Δ'
+
+  let g:ale_echo_msg_info_str    = 'I'
+  let g:ale_echo_msg_error_str   = 'E'
+  let g:ale_echo_msg_warning_str = 'W'
+  let g:ale_echo_msg_format      = '[%severity%] <%linter%> %(code) %:: %s'
 " }}
 
 " ----------------------------------------------------------------------------------------------------------------------
