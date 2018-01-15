@@ -282,6 +282,7 @@ endif
     \       ['readonly', 'filename'],
     \     ],
     \     'right': [
+    \       ['linter_e', 'linter_w', 'linter_ok'],
     \       ['lineinfo'],
     \       ['file_fet'],
     \       ['charinfo'],
@@ -316,6 +317,8 @@ endif
     \
     \   'component_type': {
     \     'readonly': 'raw',
+    \     'linter_w': 'warning',
+    \     'linter_e': 'error',
     \   },
     \
     \   'mode_map': {
