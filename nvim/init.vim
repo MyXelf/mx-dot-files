@@ -185,6 +185,13 @@ vmap <silent> <leader>dp    :diffput \| diffupdate<CR>
 "  Functions
 " ----------------------------------------------------------------------------------------------------------------------
 
+" Echo with Highlighting {{
+"
+function! Echo(message)
+  echohl ModeMsg | echo '--' a:message '--' | echohl None
+endfunction
+" }}
+
 " Fold Text {{
 "
 function! Fold_Text()
