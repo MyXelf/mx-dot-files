@@ -5,7 +5,7 @@
 #  version   1.0.0.3
 #  date      05.Oct.2014
 #
-#  legal     Copyright (c) 2012-2017. Licensed under the MIT license.
+#  legal     Copyright (c) 2012-2019. Licensed under the MIT license.
 #
 
 #
