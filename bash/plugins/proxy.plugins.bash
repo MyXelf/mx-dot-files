@@ -31,8 +31,8 @@ _proxy_set () {
   # For every $proxy_var the same action will happen to the $PROXY_VAR counterpart
   for proxy_var in 'all_proxy' 'http_proxy' 'https_proxy' 'ftp_proxy' 'rsync_proxy'; do
     case "$action" in
-      export ) export $proxy_var="$proxy_uri" ${proxy_var^^}="$proxy_uri";;
-      unset  ) unset $proxy_var ${proxy_var^^};;
+      export ) export $proxy_var="$proxy_uri" ${proxy_var^^}="$proxy_uri" ;;
+      unset  ) unset $proxy_var ${proxy_var^^} ;;
     esac
   done
 
@@ -40,8 +40,8 @@ _proxy_set () {
   [ -n "$proxy_skip" ] && local action='export' || local action='unset'
   proxy_var='no_proxy'
   case "$action" in
-    export ) export $proxy_var="$proxy_skip" ${proxy_var^^}="$proxy_skip";;
-    unset  ) unset $proxy_var ${proxy_var^^};;
+    export ) export $proxy_var="$proxy_skip" ${proxy_var^^}="$proxy_skip" ;;
+    unset  ) unset $proxy_var ${proxy_var^^} ;;
   esac
 
   # Update the Active Preset

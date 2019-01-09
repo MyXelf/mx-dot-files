@@ -100,10 +100,10 @@ av () {
 
         # Output the result of the operation
         case "$action" in
-          $ACTION_NTD ) echo 'NTD';;
-          $E_SUCCESS  ) echo 'D!';;
-          $E_FAILURE  ) echo 'I/O Error';;
-          *           ) echo 'Unknown Error';;
+          $ACTION_NTD ) echo 'NTD' ;;
+          $E_SUCCESS  ) echo 'D!' ;;
+          $E_FAILURE  ) echo 'I/O Error' ;;
+          *           ) echo 'Unknown Error' ;;
         esac
       fi
     done

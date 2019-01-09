@@ -24,10 +24,10 @@ _penv_filter () {
   local __penv_filter_declare_filter __penv_filter_lvalue __penv_filter_rvalue
 
   case $__penv_filter_type_filter in
-    evars ) __penv_filter_declare_filter='x';;     # Environment Variables
-    lvars ) __penv_filter_declare_filter='';;      # Local Variables
-    funcs ) __penv_filter_declare_filter='F'       # Functions
-            __penv_filter_joiner='()';;
+    evars ) __penv_filter_declare_filter='x' ;;     # Environment Variables
+    lvars ) __penv_filter_declare_filter='' ;;      # Local Variables
+    funcs ) __penv_filter_declare_filter='F'        # Functions
+            __penv_filter_joiner='()' ;;
   esac
 
   # Based on solution proposed by Stephane Chazelas
