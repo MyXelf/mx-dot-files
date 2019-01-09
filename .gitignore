@@ -10,3 +10,4 @@ bash/local/*
 
 # Ignore 'local' items
 *.local.bash
+*.local
