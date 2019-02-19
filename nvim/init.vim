@@ -186,7 +186,9 @@ vmap <silent> <leader>dp    :diffput \| diffupdate<CR>
   augroup ale_filetype_user
     autocmd!
     autocmd FileType                   *                             ALEDisableBuffer
-    autocmd User                       ALELint                       call lightline#update()
+    autocmd User                       ALEJobStarted                 call lightline#update()
+    autocmd User                       ALELintPost                   call lightline#update()
+    autocmd User                       ALEFixPost                    call lightline#update()
   augroup end
 " }}
 
@@ -298,7 +300,7 @@ endif
     \       ['readonly', 'filename'],
     \     ],
     \     'right': [
-    \       ['linter_e', 'linter_w', 'linter_ok'],
+    \       ['linter_c', 'linter_e', 'linter_w'],
     \       ['lineinfo'],
     \       ['file_fet'],
     \       ['charinfo'],
@@ -443,19 +445,23 @@ endif
 
     " Status Line Sections {{
     let g:lightline.component_expand = {
-      \  'linter_ok': 'LightLine_Linter_OK',
-      \  'linter_w':  'LightLine_Linter_Warnings',
+      \  'linter_c':  'LightLine_Linter_Checking',
       \  'linter_e':  'LightLine_Linter_Errors',
+      \  'linter_w':  'LightLine_Linter_Warnings',
       \ }
     " }}
 
-    " LightLine_Linter_OK {{
-    function! LightLine_Linter_OK() abort
-      if get(g:, 'ale_enabled', 0) && get(b:, 'ale_enabled', 0)
-        let l:counts = ale#statusline#Count(bufnr(''))
-        return l:counts.total == 0 ? '✔' : ''
+    " LightLine_Linter_Checking {{
+    function! LightLine_Linter_Checking() abort
+      if ale#engine#IsCheckingBuffer(bufnr(''))
+        return '⚑'
+      else
+        if get(g:, 'ale_enabled', 0) && get(b:, 'ale_enabled', 0) > 0
+          let l:counts = ale#statusline#Count(bufnr(''))
+          return l:counts.total == 0 ? '✔' : ''
+        endif
+        return ''
       endif
-      return ''
     endfunction
     " }}
 
