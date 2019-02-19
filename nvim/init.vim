@@ -321,7 +321,7 @@ endif
     \
     \   'component': {
     \     'charinfo': '%8(%03b-0x%02B%)',
-    \     'file_fet': '%{&ff}%{&fenc != "" ? "  ○ " . &fenc : ""}%{&ft != "" ? "  ○ " . &ft : ""}',
+    \     'file_fet': '%{&ff}%{&fenc != "" ? "  ◆ " . &fenc : ""}%{&ft != "" ? "  ◆ " . &ft : ""}',
     \     'lineinfo': '%8(%4l:%-3v%)  %L ☰ %P',
     \     'alert_st': '%#StatusLineWarn#%{SL_Alert_Extra_Space_Tab()}%*',
     \   },
