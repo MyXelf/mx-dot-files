@@ -43,8 +43,8 @@ av () {
   # AV Engine: NOD32
   local engine_nod_idxfile='update.ver'
   local engine_nod_product='NOD32'
-  local engine_nod_version="grep '^version='  \$ufile | sort --key=1.9,1nr --key=2.3,2.10r | head -1 | cut -d= -f2 | tr '()\r' '[]\0'"
-  local engine_nod_platfrm="grep '^platform=' \$ufile | sort -u | cut -d= -f2 | tr '\r\n' '\0.'"
+  local engine_nod_version="command grep '^version='  \$ufile | sort --key=1.9,1nr --key=2.3,2.10r | head -1 | cut -d= -f2 | tr '()' '[]' | tr -d '\r'"
+  local engine_nod_platfrm="command grep '^platform=' \$ufile | sort -u | cut -d= -f2 | tr '\n' '.' | tr -d '\r'"
   local engine_nod_dformat="nod32-update \$uversion"
 
   # AV Engine: Kaspersky
