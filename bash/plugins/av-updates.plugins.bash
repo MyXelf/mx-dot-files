@@ -92,7 +92,8 @@ av () {
 
         local action=$ACTION_NTD
 
-        e_ac -n "${I_GRAY}${product}${R_COLOR}" \'${source_dir}\' '->' \'${target_dir}\' '... '
+        e_ac -n "${I_GRAY}${product}${R_COLOR}" \'${source_dir}\' "${WHITE}->${R_COLOR}" \'${target_dir}\' "${WHITE}...${R_COLOR} "
+
         if [ "$source_dir" != "$target_dir" ]; then
           mv "$source_dir" "$target_dir" > /dev/null 2>&1
           action=$?
@@ -100,8 +101,8 @@ av () {
 
         # Output the result of the operation
         case "$action" in
-          $ACTION_NTD ) echo 'NTD' ;;
-          $E_SUCCESS  ) echo 'D!' ;;
+          $ACTION_NTD ) e_hc "${I_GRAY}NTD${R_COLOR}" ;;
+          $E_SUCCESS  ) e_hc "${I_YELLOW}D!${R_COLOR}" ;;
           $E_FAILURE  ) echo 'I/O Error' ;;
           *           ) echo 'Unknown Error' ;;
         esac
