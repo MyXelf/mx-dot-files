@@ -184,8 +184,8 @@ _describe_component_item () {
 
   while read item; do
     case "$item" in
-      '# Function:'* ) e_ac "Function: ${WHITE}${item:12}${R_COLOR}";;
-      '# '*          ) e_hc "  ${I_GRAY}${item:2}${R_COLOR}" '\n';;
+      '# Function:'* ) e_ac "Function: ${WHITE}${item:12}${R_COLOR}" ;;
+      '# '*          ) e_hc "  ${I_GRAY}${item:2}${R_COLOR}" '\n' ;;
     esac
   done < <(grep -A3 '^# Function: [^_]' $1)
 }
@@ -317,9 +317,9 @@ _mxdf_show_header () {
   while read _ item value; do
     case "$item" in
       date    ) date=" - [$value]" ;;
-      version ) version=" v$value";;
+      version ) version=" v$value" ;;
       *       ) name=$item
-                [[ $value =~ -' '(.*)' [' ]] && desc=" :: ${BASH_REMATCH[1]}";;
+                [[ $value =~ -' '(.*)' [' ]] && desc=" :: ${BASH_REMATCH[1]}" ;;
     esac
   done < <(head -n9 $1 | grep '^# .*\(version\|date\)')
 

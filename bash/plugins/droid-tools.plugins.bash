@@ -636,10 +636,10 @@ _apk_rename_file () {
 
   # Output the result of the operation
   case "$action" in
-    $ACTION_NTD ) e_hc "${I_GRAY}NTD${R_COLOR}";;
-    $E_SUCCESS  ) e_hc "${I_YELLOW}D!${R_COLOR}";;
-    $E_FAILURE  ) echo 'I/O Error';;
-    *           ) echo 'Unknown Error';;
+    $ACTION_NTD ) e_hc "${I_GRAY}NTD${R_COLOR}" ;;
+    $E_SUCCESS  ) e_hc "${I_YELLOW}D!${R_COLOR}" ;;
+    $E_FAILURE  ) echo 'I/O Error' ;;
+    *           ) echo 'Unknown Error' ;;
   esac
 
   return $E_SUCCESS
@@ -687,8 +687,8 @@ apk () {
   for apk_file in ${@:-*.apk}; do
     IFS=$oifs
     case "$opt_action" in
-      info   ) _apk_information "$apk_file";;
-      rename ) _apk_rename_file "$apk_file";;
+      info   ) _apk_information "$apk_file" ;;
+      rename ) _apk_rename_file "$apk_file" ;;
     esac
     IFS=$nifs
   done
@@ -736,9 +736,9 @@ afwi () {
         IFS=': '
         while read m_prop m_value; do
           case "$m_prop" in
-            device   ) e_ac 'Manifest Device    :' $m_value;;
-            branding ) e_ac 'Manifest Branding  :' $m_value;;
-            version  ) e_ac 'Manifest Version   :' $m_value;;
+            device   ) e_ac 'Manifest Device    :' $m_value ;;
+            branding ) e_ac 'Manifest Branding  :' $m_value ;;
+            version  ) e_ac 'Manifest Version   :' $m_value ;;
           esac
         done < <(unzip -p "$fw_file" META-INF/MANIFEST.MF)
 
