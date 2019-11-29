@@ -34,7 +34,7 @@ hcolors () {
       printf "%-20s %-15s ${hc_code} %s ${R_COLOR}\n" "$hc_name" "$hc_code" "$hc_caption"
       (( hc_index++ % 8 == 0 )) && echo
     fi
-  done < <(declare -f $hc_function 2> /dev/null)
+  done < <(declare -f $hc_function 2>/dev/null)
 
   # Doing anything from "Tip #2" will avoid showing the Tips
   [[ -n "$1" || -n "$HC_TIPS" ]] && return $E_SUCCESS

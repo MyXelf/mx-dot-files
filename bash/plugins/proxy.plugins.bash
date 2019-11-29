@@ -60,7 +60,7 @@ _proxy_retrieve_active_preset_name () {
 
   if [ -f "$PROXY_PRESETS_FILE" ]; then
     # Retrieve the value of the 'active_preset' entry from the PROXY_PRESETS_FILE
-    IFS='= ' read -r _ pfile_active_preset < <(grep -m1 '^active_preset' "$PROXY_PRESETS_FILE" 2> /dev/null)
+    IFS='= ' read -r _ pfile_active_preset < <(grep -m1 '^active_preset' "$PROXY_PRESETS_FILE" 2>/dev/null)
 
     if [ -z "$pfile_active_preset" ]; then
       e_wm "No 'active_preset' specified in the 'Proxy Presets' file."

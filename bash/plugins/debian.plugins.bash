@@ -65,7 +65,7 @@ alinks () {
   [ -z "$action" ] && local action='dist-upgrade'
 
   # Remove previously existent file if no appending content
-  [[ -n "$opt_tofile" && -z "$opt_append" ]] && rm -f "$output_file" > /dev/null 2>&1
+  [[ -n $opt_tofile && -z $opt_append ]] && rm -f "$output_file" &>/dev/null
 
   while read pack_url _ pack_size pack_md5; do
     # Remove single quotes
@@ -171,7 +171,7 @@ _alinks_complete () {
 
   case $prev in
     install )
-      COMPREPLY=( $(apt-cache --no-generate pkgnames "$cur" 2> /dev/null) )
+      COMPREPLY=( $(apt-cache --no-generate pkgnames "$cur" 2>/dev/null) )
       return 0
       ;;
   esac

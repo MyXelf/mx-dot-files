@@ -95,7 +95,7 @@ av () {
         e_ac -n "${I_GRAY}${product}${R_COLOR}" \'${source_dir}\' "${WHITE}->${R_COLOR}" \'${target_dir}\' "${WHITE}...${R_COLOR} "
 
         if [ "$source_dir" != "$target_dir" ]; then
-          mv "$source_dir" "$target_dir" > /dev/null 2>&1
+          mv "$source_dir" "$target_dir" &>/dev/null
           action=$?
         fi
 

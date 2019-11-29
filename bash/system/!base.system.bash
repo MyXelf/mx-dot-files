@@ -85,7 +85,7 @@ _hcolors_definition
 # More specific functions could be already implemented in this file.
 #
 is_command () {
-  type "$1" > /dev/null 2>&1
+  type "$1" &>/dev/null
 }
 
 #
@@ -94,7 +94,7 @@ is_command () {
 # Determine if the passed argument is a defined 'alias'
 #
 is_alias () {
-  alias "$1" > /dev/null 2>&1
+  alias "$1" &>/dev/null
 }
 
 #
@@ -103,7 +103,7 @@ is_alias () {
 # Determine if the passed argument is a defined 'function'
 #
 is_function () {
-  declare -F "$1" > /dev/null 2>&1
+  declare -F "$1" &>/dev/null
 }
 
 #

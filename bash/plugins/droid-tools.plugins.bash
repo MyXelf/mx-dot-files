@@ -544,7 +544,7 @@ _apk_xtract_values () {
         fi
         ;;
     esac
-  done < <(aapt dump badging "$1" 2> /dev/null)
+  done < <(aapt dump badging "$1" 2>/dev/null)
 
   return $E_SUCCESS
 }
@@ -583,7 +583,7 @@ _apk_rename_file () {
   [ $? -eq $E_FAILURE ] && return $E_FAILURE
 
   # Look for the package name in the templates and obtain the prefix to use
-  [ -f $DTOOLS_RC ] && IFS='=' read -r _ template_match < <(grep -m1 "^T \+${apk_values['package.name']} \+=" $DTOOLS_RC 2> /dev/null)
+  [ -f $DTOOLS_RC ] && IFS='=' read -r _ template_match < <(grep -m1 "^T \+${apk_values['package.name']} \+=" $DTOOLS_RC 2>/dev/null)
 
   # Trim the $template_match variable (by reference)
   trim_var_whitespace template_match
@@ -630,7 +630,7 @@ _apk_rename_file () {
   e_ac -n ${apk_file} "${WHITE}->${R_COLOR}" ${apk_filename}${xtra} "${WHITE}...${R_COLOR} "
 
   if [ "$action" != "$ACTION_NTD" ]; then
-    mv "$apk_file" "$apk_filename" > /dev/null 2>&1
+    mv "$apk_file" "$apk_filename" &>/dev/null
     action=$?
   fi
 
@@ -750,7 +750,7 @@ afwi () {
       *.tar.md5 )
         # Workaround: Obtain the last 256 characters from the end of the file
         # and extract the MD5 and the original filename from that region.
-        IFS='  ' read -r e_md5 e_rfn < <(tail -c256 $fw_file 2> /dev/null)
+        IFS='  ' read -r e_md5 e_rfn < <(tail -c256 $fw_file 2>/dev/null)
 
         # Lowercase embedded MD5 to avoid case mismatch (thanks to
         # S5310XXAMF1_S5310MSTAMF1_S5310XXAME1_HOME.tar.md5 :-)
