@@ -25,8 +25,8 @@ set completion-query-items 300
 # Ctrl+L - Clears the screen in 'Insert' mode
 "\C-l": clear-screen
 
-# Ctrl+Space - Expand History on current line
-"\C- ": history-expand-line
+# Ctrl+Space - Expand Alias and History on current line
+"\C- ": history-and-alias-expand-line
 
 # Alt+. - Yank last arg
 "\e.": yank-last-arg
