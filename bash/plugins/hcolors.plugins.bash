@@ -143,3 +143,23 @@ hrainbow () {
     done
   done
 }
+
+#
+# Function: htruecolors()
+#
+# Show the 256-color palette
+#
+htruecolors () {
+  awk 'BEGIN {
+         s = "/\\/\\/\\/\\/\\";
+         s = s s s s s s s s;
+         for (c = 0; c < 77; c++) {
+           r = 255 - (c * 255 / 76);
+           g = (c * 510 / 76);
+           b = (c * 255 / 76);
+           if (g > 255) g = 510-g;
+           printf "%s %s %s \n", r, g, b;
+         }
+         printf "\n";
+       }'
+}
