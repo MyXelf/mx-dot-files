@@ -1,7 +1,9 @@
 # Directories Listings
 alias ls='ls --color=auto'
-alias ll='ls --all --human-readable --classify --group-directories-first -l'
+alias ll='ls --all --human-readable --classify --group-directories-first --literal -l -v'
 alias l1='ls --almost-all -1'
+alias l2='{ date +"%n%d.%b.%Y%n==========="; ls -AlhgG --time-style=+/ --ignore=*.{mxinfo,markd} | grep -v "^[dt]" | awk -F"/" '\''{ split($0, x, " "); printf "%5s  %s\n", x[3], $2 }'\''; }'
+alias l3='{ date +"%d.%b.%Y%n"; ls -AlhgG --time-style=+/ --ignore=*.{mxinfo,markd} | grep -v "^[dt]" | awk -F"/" '\''{ split($0, x, " "); printf "*%s :: %s\n", $2, x[3] }'\''; }'
 alias l?='ll | ?'
 alias lw='l1 | wcl'
 alias l='ll'
@@ -25,11 +27,11 @@ alias mv='mv -v'
 alias rm='rm -v'
 
 # Disk Space
-alias df='df --human-readable --print-type --exclude-type=tmpfs --exclude-type=devtmpfs'
-alias ducks='du -cksh * .* --exclude=. --exclude=.. 2>/dev/null | sort -rh | head -n21 | hl $RED ".*\ttotal$" $I_GREEN "^[0-9.]\+."'
+alias df='df --human-readable --print-type --exclude-type=tmpfs --exclude-type=devtmpfs --exclude-type=squashfs | hl $RED "\(100\|9.\)%"'
+alias ducks='du -cksh --exclude=. --exclude=.. -- * .* 2>/dev/null | sort -rh | head -n21 | hl $RED ".*\ttotal$" $I_GREEN "^[0-9.]\+."'
 
 # Find
-f? () { [ ${#1} = 1 ] && local t=$1 && shift; local p=$1; shift; find -type ${t:-f} -iname "*$p*" "$@"; }
+f? () { [ ${#1} = 1 ] && local t=$1 && shift; local p=$1; shift; find -type ${t:-f} -iname "*$p*" "$@" | sort; }
 
 # Grep
 alias ?='grep --ignore-case --initial-tab'
