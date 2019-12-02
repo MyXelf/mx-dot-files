@@ -154,7 +154,7 @@ _load_component () {
     # Load valid items reflected in the '.active-items.index' file
     while read item; do
       _load_component_item $component_dir/$item.$component.bash
-    done < <(grep '^[^!_~.#]' $items_index)
+    done < <(command grep '^[^!_~.#]' $items_index)
   else
     # Load all valid items because there is no index file
     for item in $component_dir/[^!_~]*.$component.bash; do
@@ -187,7 +187,7 @@ _describe_component_item () {
       '# Function:'* ) e_ac "Function: ${WHITE}${item:12}${R_COLOR}" ;;
       '# '*          ) e_hc "  ${I_GRAY}${item:2}${R_COLOR}" '\n' ;;
     esac
-  done < <(grep -A3 '^# Function: [^_]' $1)
+  done < <(command grep -A3 '^# Function: [^_]' $1)
 }
 
 # --------------------------------------------------------------------------------------------------
@@ -321,7 +321,7 @@ _mxdf_show_header () {
       *       ) name=$item
                 [[ $value =~ -' '(.*)' [' ]] && desc=" :: ${BASH_REMATCH[1]}" ;;
     esac
-  done < <(head -n9 $1 | grep '^# .*\(version\|date\)')
+  done < <(head -n9 $1 | command grep '^# .*\(version\|date\)')
 
   [ -n "$name" ] && e_hc "\n${name}${version}${desc}${date}\n"
 }

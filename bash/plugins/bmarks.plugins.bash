@@ -17,7 +17,7 @@ bms () {
   local bmark_match bmark_name bmark
 
   # Directory already BMarked
-  bmark_match=$(grep -m1 " = ${PWD}$" $BMARKS_FILE)
+  bmark_match=$(command grep -m1 " = ${PWD}$" $BMARKS_FILE)
 
   if [ ! -z "$bmark_match" ]; then
     e_em "Directory already BMarked: '$bmark_match'"
@@ -28,7 +28,7 @@ bms () {
   [ -z "$1" ] && bmark_name=$(basename $PWD) || bmark_name=$1
 
   # BMark name already in use
-  bmark_match=$(grep -m1 "^$bmark_name =" $BMARKS_FILE)
+  bmark_match=$(command grep -m1 "^$bmark_name =" $BMARKS_FILE)
 
   if [ ! -z "$bmark_match" ]; then
     echo "BMark name already in use: '$bmark_match'"
@@ -58,7 +58,7 @@ bmv () {
   fi
 
   # Check if supplied a valid BMark name
-  bmark_match=$(grep -m1 "^$1 =" $BMARKS_FILE)
+  bmark_match=$(command grep -m1 "^$1 =" $BMARKS_FILE)
 
   if [ -z "$bmark_match" ]; then
     e_em "Invalid BMark name"
@@ -162,7 +162,7 @@ _bmarks_complete () {
   local cur prev words cword bmarks
   _init_completion || return
 
-  bmarks=$(grep -o '^[^# ].*=' $BMARKS_FILE | cut -d' ' -f1)
+  bmarks=$(command grep -o '^[^# ].*=' $BMARKS_FILE | cut -d' ' -f1)
   COMPREPLY=( $(compgen -W "$bmarks" -- "$cur") )
 } &&
 complete -F _bmarks_complete bm bmv

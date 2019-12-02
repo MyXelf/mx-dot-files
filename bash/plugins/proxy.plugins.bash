@@ -60,7 +60,7 @@ _proxy_retrieve_active_preset_name () {
 
   if [ -f "$PROXY_PRESETS_FILE" ]; then
     # Retrieve the value of the 'active_preset' entry from the PROXY_PRESETS_FILE
-    IFS='= ' read -r _ pfile_active_preset < <(grep -m1 '^active_preset' "$PROXY_PRESETS_FILE" 2>/dev/null)
+    IFS='= ' read -r _ pfile_active_preset < <(command grep -m1 '^active_preset' "$PROXY_PRESETS_FILE" 2>/dev/null)
 
     if [ -z "$pfile_active_preset" ]; then
       e_wm "No 'active_preset' specified in the 'Proxy Presets' file."
@@ -105,7 +105,7 @@ _proxy_activate_preset () {
   preset_values['skip']='127.0.0.1'
 
   # Read the section title of the specified Preset from the PROXY_PRESETS_FILE
-  preset_name=$(grep -im1 "^\[${preset_id}\]" "$PROXY_PRESETS_FILE")
+  preset_name=$(command grep -im1 "^\[${preset_id}\]" "$PROXY_PRESETS_FILE")
   [ ! -z "$preset_name" ] && preset_name=${preset_name:1:-1} || preset_name=$preset_id
 
   # Read the specified Preset from the PROXY_PRESETS_FILE
@@ -122,7 +122,7 @@ _proxy_activate_preset () {
     # Only filtering the lines starting with the id of the preset, so we can
     # check later with BASH_REMATCH the correct formatting of all the lines. The
     # lines will be prefixed with the line number for pointing the wrong ones.
-  done < <(grep --line-number "^${preset_id}\." "$PROXY_PRESETS_FILE")
+  done < <(command grep --line-number "^${preset_id}\." "$PROXY_PRESETS_FILE")
 
   # The specified Preset was not found on the PROXY_PRESETS_FILE
   if [ $preset_found -eq 0 ]; then

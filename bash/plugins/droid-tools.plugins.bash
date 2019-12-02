@@ -583,7 +583,7 @@ _apk_rename_file () {
   [ $? -eq $E_FAILURE ] && return $E_FAILURE
 
   # Look for the package name in the templates and obtain the prefix to use
-  [ -f $DTOOLS_RC ] && IFS='=' read -r _ template_match < <(grep -m1 "^T \+${apk_values['package.name']} \+=" $DTOOLS_RC 2>/dev/null)
+  [[ -f $DTOOLS_RC ]] && IFS='=' read -r _ template_match < <(command grep -m1 "^T \+${apk_values['package.name']} \+=" $DTOOLS_RC 2>/dev/null)
 
   # Trim the $template_match variable (by reference)
   trim_var_whitespace template_match
@@ -743,7 +743,7 @@ afwi () {
         done < <(unzip -p "$fw_file" META-INF/MANIFEST.MF)
 
         echo
-        [ -n "$opt_list" ] && unzip -v "$fw_file" | grep -F '%' | column -t | sed 's/^/  /' && echo
+        [ -n "$opt_list" ] && unzip -v "$fw_file" | command grep -F '%' | column -t | sed 's/^/  /' && echo
         ;;
 
       # Samsung FW file

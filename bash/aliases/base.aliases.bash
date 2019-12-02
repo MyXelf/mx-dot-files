@@ -2,8 +2,8 @@
 alias ls='ls --color=auto'
 alias ll='ls --all --human-readable --classify --group-directories-first --literal -l -v'
 alias l1='ls --almost-all -1'
-alias l2='{ date +"%n%d.%b.%Y%n==========="; ls -AlhgG --time-style=+/ --ignore=*.{mxinfo,markd} | grep -v "^[dt]" | awk -F"/" '\''{ split($0, x, " "); printf "%5s  %s\n", x[3], $2 }'\''; }'
-alias l3='{ date +"%d.%b.%Y%n"; ls -AlhgG --time-style=+/ --ignore=*.{mxinfo,markd} | grep -v "^[dt]" | awk -F"/" '\''{ split($0, x, " "); printf "*%s :: %s\n", $2, x[3] }'\''; }'
+alias l2='{ date +"%n%d.%b.%Y%n==========="; ls -AlhgG --time-style=+/ --ignore=*.{mxinfo,markd} | command grep -v "^[dt]" | awk -F"/" '\''{ split($0, x, " "); printf "%5s  %s\n", x[3], $2 }'\''; }'
+alias l3='{ date +"%d.%b.%Y%n"; ls -AlhgG --time-style=+/ --ignore=*.{mxinfo,markd} | command grep -v "^[dt]" | awk -F"/" '\''{ split($0, x, " "); printf "*%s :: %s\n", $2, x[3] }'\''; }'
 alias l?='ll | ?'
 alias lw='l1 | wcl'
 alias l='ll'
@@ -45,7 +45,7 @@ h () { history ${1:-$((LINES - 4))} | hl $I_GREEN "^\s*[0-9]\+"; }
 profiler () { history | awk -v c1=$I_BLUE -v c2=$I_RED -v rc=$R_COLOR '{ comm[$2]++; t++ } END { for (w in comm) { printf "%s %4s %s %s %5.2f%% %s   %s\n", c1, comm[w], rc, c2, comm[w]/t*100, rc, w } }' | sort -nrk2 | head -n${1:-25}; }
 
 # Processes
-ps? () { local p="$@"; ps auxww | grep -i --color=never --regexp="^USER.*COMMAND$\|[${p:0:1}]${p:1}"; }
+ps? () { local p="$@"; ps auxww | command grep -i --color=never --regexp="^USER.*COMMAND$\|[${p:0:1}]${p:1}"; }
 
 # XDG
 alias xo='xdg-open'

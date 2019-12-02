@@ -50,7 +50,7 @@ av () {
   # AV Engine: Kaspersky
   local engine_kav_idxfile='index/u0607g.xml'
   local engine_kav_product='KAV'
-  local engine_kav_version="grep -m1 'UpdateDate=' \$ufile | sed -re 's/.*([0-9]{2})([0-9]{2})([0-9]{4}) ([0-9]{4}).*/\3\2\1-\4/'"
+  local engine_kav_version="command grep -m1 'UpdateDate=' \$ufile | sed -re 's/.*([0-9]{2})([0-9]{2})([0-9]{4}) ([0-9]{4}).*/\3\2\1-\4/'"
   local engine_kav_platfrm=''
   local engine_kav_dformat="kav-update [\${uversion}]"
 
