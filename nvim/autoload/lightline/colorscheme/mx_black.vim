@@ -5,7 +5,7 @@
 "  Version:   1.0.0.0
 "  Date:      30.Dec.2017
 "
-"  Legal:     Copyright (c) 2017-2018. Licensed under the MIT license.
+"  Legal:     Copyright © 2017-2024. Licensed under the MIT license.
 "
 
 let s:p = { 'normal': {}, 'insert': {}, 'replace': {}, 'visual': {}, 'tabline': {}, 'inactive': {} }

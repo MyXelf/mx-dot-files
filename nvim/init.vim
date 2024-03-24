@@ -5,7 +5,7 @@
 "  Version:   2.0
 "  Date:      03.Jan.2018
 "
-"  Legal:     Copyright (c) 2011-2018. Licensed under the MIT license.
+"  Legal:     Copyright © 2011-2024. Licensed under the MIT license.
 "
 
 " ----------------------------------------------------------------------------------------------------------------------

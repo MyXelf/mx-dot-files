@@ -5,7 +5,7 @@
 "  Version:   1.0
 "  Date:      03.Jan.2018
 "
-"  Legal:     Copyright (c) 2014-2018. Licensed under the MIT license.
+"  Legal:     Copyright © 2014-2024. Licensed under the MIT license.
 "
 
 " TODO: Include the following Highlight Groups:
