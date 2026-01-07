@@ -1,11 +1,11 @@
 "
 "  Script:    MX Neovim RC
 "
-"  Author:    Juan J Gonzalez Cardenas [Jota Jota] - <https://github.com/MyXelf/mx-dot-files>
+"  Author:    Juan J González Cárdenas [Jota Jota] - <https://github.com/MyXelf/mx-dot-files>
 "  Version:   2.0
 "  Date:      03.Jan.2018
 "
-"  Legal:     Copyright © 2011-2024. Licensed under the MIT license.
+"  Legal:     Copyright © 2011-2026. Licensed under the MIT license.
 "
 
 " ----------------------------------------------------------------------------------------------------------------------

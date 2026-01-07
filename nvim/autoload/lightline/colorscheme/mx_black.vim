@@ -1,11 +1,11 @@
 "
 "  Script:    mx_black.vim - MyXelf LightLine Color Scheme
 "
-"  Author:    Juan J Gonzalez Cardenas [Jota Jota] - <https://github.com/MyXelf/mx-dot-files>
+"  Author:    Juan J González Cárdenas [Jota Jota] - <https://github.com/MyXelf/mx-dot-files>
 "  Version:   1.0.0.0
 "  Date:      30.Dec.2017
 "
-"  Legal:     Copyright © 2017-2024. Licensed under the MIT license.
+"  Legal:     Copyright © 2017-2026. Licensed under the MIT license.
 "
 
 let s:p = { 'normal': {}, 'insert': {}, 'replace': {}, 'visual': {}, 'tabline': {}, 'inactive': {} }

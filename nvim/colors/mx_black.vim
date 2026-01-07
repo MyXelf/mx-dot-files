@@ -1,11 +1,11 @@
 "
 "  Script:    mx_black.vim
 "
-"  Author:    Juan J Gonzalez Cardenas [Jota Jota] - <https://github.com/MyXelf/mx-dot-files>
+"  Author:    Juan J González Cárdenas [Jota Jota] - <https://github.com/MyXelf/mx-dot-files>
 "  Version:   1.0
 "  Date:      03.Jan.2018
 "
-"  Legal:     Copyright © 2014-2024. Licensed under the MIT license.
+"  Legal:     Copyright © 2014-2026. Licensed under the MIT license.
 "
 
 " TODO: Include the following Highlight Groups:

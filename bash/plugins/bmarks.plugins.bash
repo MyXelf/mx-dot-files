@@ -1,11 +1,11 @@
 #
 #  BMARKS - BookMarks Handler [BASH script version]
 #
-#  author    Juan J Gonzalez Cardenas [Jota Jota] - <https://github.com/MyXelf/mx-dot-files>
+#  author    Juan J González Cárdenas [Jota Jota] - <https://github.com/MyXelf/mx-dot-files>
 #  version   1.0.0.3
 #  date      05.Oct.2014
 #
-#  legal     Copyright © 2012-2024. Licensed under the MIT license.
+#  legal     Copyright © 2012-2026. Licensed under the MIT license.
 #
 
 #

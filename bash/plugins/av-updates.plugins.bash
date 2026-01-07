@@ -1,11 +1,11 @@
 #
 #  AV-UPDATES - Antivirus Updates Helper [BASH script version]
 #
-#  author    Juan J Gonzalez Cardenas [Jota Jota] - <https://github.com/MyXelf/mx-dot-files>
+#  author    Juan J González Cárdenas [Jota Jota] - <https://github.com/MyXelf/mx-dot-files>
 #  version   1.0.0.1
 #  date      08.May.2015
 #
-#  legal     Copyright © 2014-2024. Licensed under the MIT license.
+#  legal     Copyright © 2014-2026. Licensed under the MIT license.
 #
 
 #
