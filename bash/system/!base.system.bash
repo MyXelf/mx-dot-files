@@ -336,8 +336,8 @@ _mxdf_show_header () {
 # Display the copyright banner of the MXDF
 #
 _mxdf_show_copyright () {
-  e_hc "\n8-;"
-  echo '  MXDF :: MyXelf Dot Files - <https://github.com/MyXelf/mx-dot-files>'
+  e_hr '8-;'
+  e_hc "  ${WHITE}MXDF${R_COLOR} ${I_GREEN}»${WHITE} MyXelf D${I_GREEN}●${WHITE}T Files${R_COLOR} - ${I_GRAY}<https://github.com/MyXelf/mx-dot-files>${R_COLOR}"
   e_hc '  Copyright © 2013-2026. Juan J González Cárdenas [Jota Jota]'
 }
 

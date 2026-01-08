@@ -1,6 +1,6 @@
-# MXDF :: MyXelf Dot Files (mx-dot-files) #
+# MXDF :: MyXelf D●T Files (mx-dot-files) #
 
-My ~/ for Linux (including BASH, Vim and more)
+My ~/ for Linux (including BASH, xVim and more)
 
 <https://github.com/MyXelf/mx-dot-files>
 
