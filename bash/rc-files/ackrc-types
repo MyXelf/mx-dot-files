@@ -1,3 +1,7 @@
+# ~~~~~~~~~~~~~~~
+# ack.rc - Ack RC
+# ~~~~~~~~~~~~~~~
+
 # Drupal
 --type-set=drupal:ext:php,module,inc,info,install,engine,theme,profile,test
 

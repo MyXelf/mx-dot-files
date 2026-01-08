@@ -1,3 +1,7 @@
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# prompt.system.bash (MXDF::BASH)
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 # PS Fragment :: LCRV (Last Command Resulting Value)
 PS_LCRV='$([ $LCRV -eq 0 ] && echo -e "\[${WHITE}\]✓ \[${GRAY}\]\t\[${R_COLOR}\]" || echo -e "\[${RED}\]✗ \[${I_RED}\]\t\[${R_COLOR}\]")'
 

@@ -1,3 +1,7 @@
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# base.aliases.bash (MXDF::BASH)
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 # Directories Listings
 alias ls='ls --color=auto'
 alias ll='ls --all --human-readable --classify --group-directories-first --literal -l -v'

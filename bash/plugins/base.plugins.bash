@@ -1,4 +1,14 @@
 #
+#  BASE - Base Functions [BASH script version]
+#
+#  author    Juan J González Cárdenas [Jota Jota] - <https://github.com/MyXelf/mx-dot-files>
+#  version   1.0.0.0
+#  date      19.Mar.2023
+#
+#  legal     Copyright © 2012-2026. Licensed under the MIT license.
+#
+
+#
 # Function: path_leader()
 #
 # Navigate directories around the 'Current Working Directory' (CWD)

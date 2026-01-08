@@ -1,3 +1,7 @@
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# drush.completions.bash (MXDF::BASH)
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 # d => drush
 if [ -r /usr/share/bash-completion/completions/drush ]; then
   source /usr/share/bash-completion/completions/drush

@@ -1,3 +1,13 @@
+#
+#  HCOLORS - Handy Colors [BASH script version]
+#
+#  author    Juan J González Cárdenas [Jota Jota] - <https://github.com/MyXelf/mx-dot-files>
+#  version   1.0.0.0
+#  date      06.Dec.2019
+#
+#  legal     Copyright © 2012-2026. Licensed under the MIT license.
+#
+
 # To disable the Handy Colors tips by default at startup, export the following
 # at someplace. For other options read Tip #2 in the hcolors() function.
 #
